@@ -81,7 +81,7 @@ function Toolbox(props: Props) {
                 <VideoMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
-                { additionalButtons.has('chat')
+                { false
                       && <ChatButton
                           styles = { buttonStylesBorderless }
                           toggledStyles = { backgroundToggledStyle } />}

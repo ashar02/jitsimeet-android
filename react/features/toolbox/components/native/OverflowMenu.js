@@ -137,25 +137,25 @@ class OverflowMenu extends PureComponent<Props, State> {
                 onSwipe = { this._onSwipe }
                 renderHeader = { this._renderMenuExpandToggle }>
                 <AudioRouteButton { ...buttonProps } />
-                {!toolbarButtons.has('invite') && <InviteButton { ...buttonProps } />}
+                {false && <InviteButton { ...buttonProps } />}
                 <AudioOnlyButton { ...buttonProps } />
-                {!toolbarButtons.has('raisehand') && <RaiseHandButton { ...buttonProps } />}
-                <LobbyModeButton { ...buttonProps } />
-                <ScreenSharingButton { ...buttonProps } />
-                <MoreOptionsButton { ...moreOptionsButtonProps } />
-                <Collapsible collapsed = { !showMore }>
-                    {!toolbarButtons.has('togglecamera') && <ToggleCameraButton { ...buttonProps } />}
-                    {!toolbarButtons.has('tileview') && <TileViewButton { ...buttonProps } />}
-                    <RecordButton { ...buttonProps } />
-                    <LiveStreamButton { ...buttonProps } />
-                    <SharedVideoButton { ...buttonProps } />
-                    <RoomLockButton { ...buttonProps } />
-                    <ClosedCaptionButton { ...buttonProps } />
-                    <SharedDocumentButton { ...buttonProps } />
-                    <MuteEveryoneButton { ...buttonProps } />
-                    <MuteEveryonesVideoButton { ...buttonProps } />
-                    <HelpButton { ...buttonProps } />
-                </Collapsible>
+                {false && <RaiseHandButton { ...buttonProps } />}
+                {false && <LobbyModeButton { ...buttonProps } />}
+                {false && <ScreenSharingButton { ...buttonProps } />}
+                {false && <MoreOptionsButton { ...moreOptionsButtonProps } />}
+                {false && <Collapsible collapsed = { false }>
+                    {false && <ToggleCameraButton { ...buttonProps } />}
+                    {false && <TileViewButton { ...buttonProps } />}
+                    {false && <RecordButton { ...buttonProps } />}
+                    {false && <LiveStreamButton { ...buttonProps } />}
+                    {false && <SharedVideoButton { ...buttonProps } />}
+                    {false && <RoomLockButton { ...buttonProps } />}
+                    {false && <ClosedCaptionButton { ...buttonProps } />}
+                    {false && <SharedDocumentButton { ...buttonProps } />}
+                    {false && <MuteEveryoneButton { ...buttonProps } />}
+                    {false && <MuteEveryonesVideoButton { ...buttonProps } />}
+                    {false && <HelpButton { ...buttonProps } />}
+                </Collapsible>}
             </BottomSheet>
         );
     }
