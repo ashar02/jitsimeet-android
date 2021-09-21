@@ -170,10 +170,10 @@ class OverflowMenu extends PureComponent<Props, State> {
     _renderMenuExpandToggle() {
         return (
             <View
-                style = { [
+                /* style = { [
                     this.props._bottomSheetStyles.sheet,
                     styles.expandMenuContainer
-                ] }>
+                ] } */ >
                 <TouchableOpacity onPress = { this._onToggleMenu }>
                     { /* $FlowFixMe */ }
                     <IconDragHandle
