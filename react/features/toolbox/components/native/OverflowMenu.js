@@ -142,6 +142,7 @@ class OverflowMenu extends PureComponent<Props, State> {
                 {false && <RaiseHandButton { ...buttonProps } />}
                 {false && <LobbyModeButton { ...buttonProps } />}
                 {false && <ScreenSharingButton { ...buttonProps } />}
+                <ToggleCameraButton { ...buttonProps } />
                 {false && <MoreOptionsButton { ...moreOptionsButtonProps } />}
                 {false && <Collapsible collapsed = { false }>
                     {false && <ToggleCameraButton { ...buttonProps } />}
