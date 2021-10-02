@@ -83,7 +83,7 @@ export function showErrorNotification(props: Object) {
 export function showNotification(props: Object = {}, timeout: ?number) {
     return function(dispatch: Function, getState: Function) {
         const { notifications } = getState()['features/base/config'];
-        const enabledFlag = getFeatureFlag(getState(), NOTIFICATIONS_ENABLED, true);
+        const enabledFlag = false /* getFeatureFlag(getState(), NOTIFICATIONS_ENABLED, true) */;
 
         const shouldDisplay = enabledFlag
             && (!notifications

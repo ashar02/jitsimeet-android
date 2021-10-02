@@ -129,22 +129,22 @@ class OverflowMenu extends PureComponent<Props, State> {
                 onCancel = { this._onCancel }
                 renderFooter = { toolbarButtons.has('raisehand')
                     ? null
-                    : this._renderReactionMenu }>
+                    : null /* this._renderReactionMenu */ }>
                 <AudioRouteButton { ...topButtonProps } />
-                {!toolbarButtons.has('invite') && <InviteButton { ...buttonProps } />}
-                <AudioOnlyButton { ...buttonProps } />
-                <SecurityDialogButton { ...buttonProps } />
-                <ScreenSharingButton { ...buttonProps } />
+                {false && !toolbarButtons.has('invite') && <InviteButton { ...buttonProps } />}
+                {false && <AudioOnlyButton { ...buttonProps } />}
+                {false && <SecurityDialogButton { ...buttonProps } />}
+                {false && <ScreenSharingButton { ...buttonProps } />}
                 {!toolbarButtons.has('togglecamera') && <ToggleCameraButton { ...buttonProps } />}
-                {!toolbarButtons.has('tileview') && <TileViewButton { ...buttonProps } />}
-                <RecordButton { ...buttonProps } />
-                <LiveStreamButton { ...buttonProps } />
-                <SharedVideoButton { ...buttonProps } />
-                <ClosedCaptionButton { ...buttonProps } />
-                <SharedDocumentButton { ...buttonProps } />
-                <MuteEveryoneButton { ...buttonProps } />
-                <MuteEveryonesVideoButton { ...buttonProps } />
-                <HelpButton { ...buttonProps } />
+                {false && !toolbarButtons.has('tileview') && <TileViewButton { ...buttonProps } />}
+                {false && <RecordButton { ...buttonProps } />}
+                {false && <LiveStreamButton { ...buttonProps } />}
+                {false && <SharedVideoButton { ...buttonProps } />}
+                {false && <ClosedCaptionButton { ...buttonProps } />}
+                {false && <SharedDocumentButton { ...buttonProps } />}
+                {false && <MuteEveryoneButton { ...buttonProps } />}
+                {false && <MuteEveryonesVideoButton { ...buttonProps } />}
+                {false && <HelpButton { ...buttonProps } />}
             </BottomSheet>
         );
     }
