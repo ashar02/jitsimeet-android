@@ -59,8 +59,10 @@ var config = {
         // simulcast is turned off for the desktop share. If presenter is turned
         // on while screensharing is in progress, the max bitrate is automatically
         // adjusted to 2.5 Mbps. This takes a value between 0 and 1 which determines
-        // the probability for this to be enabled.
-        // capScreenshareBitrate: 1 // 0 to disable
+        // the probability for this to be enabled. This setting has been deprecated.
+        // desktopSharingFrameRate.max now determines whether simulcast will be enabled
+        // or disabled for the screenshare.
+        // capScreenshareBitrate: 1 // 0 to disable - deprecated.
 
         // Enable callstats only for a percentage of users.
         // This takes a value between 0 and 100 which determines the probability for
@@ -80,6 +82,9 @@ var config = {
     // Media
     //
 
+    // Enable unified plan implementation support on Chromium based browsers.
+    // enableUnifiedOnChrome: false,
+
     // Audio
 
     // Disable measuring of audio levels.
@@ -95,6 +100,10 @@ var config = {
     // used to collect debug information (XMPP IQs, SDP offer/answer cycles)
     // about the call.
     // enableSaveLogs: false,
+
+    // Enabling this will hide the "Show More" link in the GSM popover that can be
+    // used to display more statistics about the connection (IP, Port, protocol, etc).
+    // disableShowMoreStats: true,
 
     // Enabling this will run the lib-jitsi-meet noise detection module which will
     // notify the user if there is noise, other than voice, coming from the current
@@ -117,13 +126,15 @@ var config = {
     // participants and to enable it back a reload is needed.
     // startSilent: false
 
-    // Sets the preferred target bitrate for the Opus audio codec by setting its
-    // 'maxaveragebitrate' parameter. Currently not available in p2p mode.
-    // Valid values are in the range 6000 to 510000
-    // opusMaxAverageBitrate: 20000,
-
     // Enables support for opus-red (redundancy for Opus).
-    // enableOpusRed: false
+    // enableOpusRed: false,
+
+    // Specify audio quality stereo and opusMaxAverageBitrate values in order to enable HD audio.
+    // Beware, by doing so, you are disabling echo cancellation, noise suppression and AGC.
+    // audioQuality: {
+    //     stereo: false,
+    //     opusMaxAverageBitrate: null // Value to fit the 6000 to 510000 range.
+    // },
 
     // Video
 
@@ -224,6 +235,11 @@ var config = {
     // Default value for the channel "last N" attribute. -1 for unlimited.
     channelLastN: -1,
 
+    // Provides a way for the lastN value to be controlled through the UI.
+    // When startLastN is present, conference starts with a last-n value of startLastN and channelLastN
+    // value will be used when the quality level is selected using "Manage Video Quality" slider.
+    // startLastN: 1,
+
     // Provides a way to use different "last N" values based on the number of participants in the conference.
     // The keys in an Object represent number of participants and the values are "last N" to be used when number of
     // participants gets to or above the number.
@@ -261,12 +277,24 @@ var config = {
     //    // to take effect.
     //    preferredCodec: 'VP8',
     //
+    //    // Provides a way to enforce the preferred codec for the conference even when the conference has endpoints
+    //    // that do not support the preferred codec. For example, older versions of Safari do not support VP9 yet.
+    //    // This will result in Safari not being able to decode video from endpoints sending VP9 video.
+    //    // When set to false, the conference falls back to VP8 whenever there is an endpoint that doesn't support the
+    //    // preferred codec and goes back to the preferred codec when that endpoint leaves.
+    //    // enforcePreferredCodec: false,
+    //
     //    // Provides a way to configure the maximum bitrates that will be enforced on the simulcast streams for
     //    // video tracks. The keys in the object represent the type of the stream (LD, SD or HD) and the values
     //    // are the max.bitrates to be set on that particular type of stream. The actual send may vary based on
     //    // the available bandwidth calculated by the browser, but it will be capped by the values specified here.
     //    // This is currently not implemented on app based clients on mobile.
     //    maxBitratesVideo: {
+    //          H264: {
+    //              low: 200000,
+    //              standard: 500000,
+    //              high: 1500000
+    //          },
     //          VP8 : {
     //              low: 200000,
     //              standard: 500000,
@@ -332,8 +360,7 @@ var config = {
     // enableIceRestart: false,
 
     // Enables forced reload of the client when the call is migrated as a result of
-    // the bridge going down. Currently enabled by default as call migration through
-    // session-terminate is causing siganling issues when Octo is enabled.
+    // the bridge going down.
     // enableForcedReload: true,
 
     // Use TURN/UDP servers for the jitsi-videobridge connection (by default
@@ -369,7 +396,9 @@ var config = {
     // enableClosePage: false,
 
     // Disable hiding of remote thumbnails when in a 1-on-1 conference call.
-    // disable1On1Mode: false,
+    // Setting this to null, will also disable showing the remote videos
+    // when the toolbar is shown on mouse movements
+    // disable1On1Mode: null | false | true,
 
     // Default language for the user interface.
     // defaultLanguage: 'en',
@@ -414,6 +443,10 @@ var config = {
     // Base URL for a Gravatar-compatible service. Defaults to libravatar.
     // gravatarBaseURL: 'https://seccdn.libravatar.org/avatar/',
 
+    // App name to be displayed in the invitation email subject, as an alternative to
+    // interfaceConfig.APP_NAME.
+    // inviteAppName: null,
+
     // Moved from interfaceConfig(TOOLBAR_BUTTONS).
     // The name of the toolbar buttons to display in the toolbar, including the
     // "More actions" menu. If present, the button will display. Exceptions are
@@ -428,7 +461,7 @@ var config = {
     // toolbarButtons: [
     //    'microphone', 'camera', 'closedcaptions', 'desktop', 'embedmeeting', 'fullscreen',
     //    'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
-    //    'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
+    //    'livestreaming', 'etherpad', 'sharedvideo', 'shareaudio', 'settings', 'raisehand',
     //    'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
     //    'tileview', 'select-background', 'download', 'help', 'mute-everyone', 'mute-video-everyone', 'security'
     // ],
@@ -481,12 +514,8 @@ var config = {
         // connection.
         enabled: true,
 
-        // The STUN servers that will be used in the peer to peer connections
-        stunServers: [
-
-            // { urls: 'stun:jitsi-meet.example.com:3478' },
-            { urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }
-        ]
+        // Enable unified plan implementation support on Chromium for p2p connection.
+        // enableUnifiedOnChrome: false,
 
         // Sets the ICE transport policy for the p2p connection. At the time
         // of this writing the list of possible values are 'all' and 'relay',
@@ -498,7 +527,7 @@ var config = {
 
         // If set to true, it will prefer to use H.264 for P2P calls (if H.264
         // is supported). This setting is deprecated, use preferredCodec instead.
-        // preferH264: true
+        // preferH264: true,
 
         // Provides a way to set the video codec preference on the p2p connection. Acceptable
         // codec values are 'VP8', 'VP9' and 'H264'.
@@ -513,7 +542,14 @@ var config = {
 
         // How long we're going to wait, before going back to P2P after the 3rd
         // participant has left the conference (to filter out page reload).
-        // backToP2PDelay: 5
+        // backToP2PDelay: 5,
+
+        // The STUN servers that will be used in the peer to peer connections
+        stunServers: [
+
+            // { urls: 'stun:jitsi-meet.example.com:3478' },
+            { urls: 'stun:meet-jit-si-turnrelay.jitsi.net:443' }
+        ]
     },
 
     analytics: {
@@ -540,7 +576,7 @@ var config = {
         // The interval at which rtcstats will poll getStats, defaults to 1000ms.
         // If the value is set to 0 getStats won't be polled and the rtcstats client
         // will only send data related to RTCPeerConnection events.
-        // rtcstatsPolIInterval: 1000
+        // rtcstatsPolIInterval: 1000,
 
         // Array of script URLs to load as lib-jitsi-meet "analytics handlers".
         // scriptURLs: [
@@ -587,8 +623,8 @@ var config = {
     // localRecording: {
     // Enables local recording.
     // Additionally, 'localrecording' (all lowercase) needs to be added to
-    // TOOLBAR_BUTTONS in interface_config.js for the Local Recording
-    // button to show up on the toolbar.
+    // the `toolbarButtons`-array for the Local Recording button to show up
+    // on the toolbar.
     //
     //     enabled: true,
     //
@@ -651,7 +687,9 @@ var config = {
     // Options related to the remote participant menu.
     // remoteVideoMenu: {
     //     // If set to true the 'Kick out' button will be disabled.
-    //     disableKick: true
+    //     disableKick: true,
+    //     // If set to true the 'Grant moderator' button will be disabled.
+    //     disableGrantModerator: true
     // },
 
     // If set to true all muting operations of remote participants will be disabled.
@@ -663,8 +701,11 @@ var config = {
     /**
      External API url used to receive branding specific information.
      If there is no url set or there are missing fields, the defaults are applied.
+     The config file should be in JSON.
      None of the fields are mandatory and the response must have the shape:
      {
+         // The domain url to apply (will replace the domain in the sharing conference link/embed section)
+         inviteDomain: 'example-company.org,
          // The hex value for the colour used as background
          backgroundColor: '#fff',
          // The url for the image used as background
@@ -689,13 +730,13 @@ var config = {
     // disableTileView: true,
 
     // Hides the conference subject
-    // hideConferenceSubject: true
+    // hideConferenceSubject: true,
 
     // Hides the conference timer.
     // hideConferenceTimer: true,
 
     // Hides the participants stats
-    // hideParticipantsStats: true
+    // hideParticipantsStats: true,
 
     // Sets the conference subject
     // subject: 'Conference Subject',
@@ -704,6 +745,18 @@ var config = {
     // jitsi-meet will use the local storage of the host page instead of its own. This option is useful if the browser
     // is not persisting the local storage inside the iframe.
     // useHostPageLocalStorage: true,
+
+    // etherpad ("shared document") integration.
+    //
+
+    // If set, add a "Open shared document" link to the bottom right menu that
+    // will open an etherpad document.
+    // etherpad_base: 'https://your-etherpad-installati.on/p/',
+
+    // If etherpad_base is set, and useRoomAsSharedDocumentName is set to true,
+    // open a pad with the name of the room (lowercased) instead of a pad with a
+    // random UUID.
+    // useRoomAsSharedDocumentName: true,
 
     // List of undocumented settings used in jitsi-meet
     /**
@@ -717,7 +770,6 @@ var config = {
      dialOutCodesUrl
      disableRemoteControl
      displayJids
-     etherpad_base
      externalConnectUrl
      firefox_fake_device
      googleApiApplicationClientID
@@ -759,6 +811,11 @@ var config = {
      websocketKeepAlive
      websocketKeepAliveUrl
      */
+
+    /**
+     * Default interval (milliseconds) for triggering mouseMoved iframe API event
+     */
+    mouseMoveCallbackInterval: 1000,
 
     /**
         Use this array to configure which notifications will be shown to the user
@@ -819,7 +876,10 @@ var config = {
     //     'toolbar.noisyAudioInputTitle', // shown when noise is detected for the current microphone
     //     'toolbar.talkWhileMutedPopup', // shown when user tries to speak while muted
     //     'transcribing.failedToStart' // shown when transcribing fails to start
-    // ]
+    // ],
+
+    // Prevent the filmstrip from autohiding when screen width is under a certain threshold
+    // disableFilmstripAutohiding: false,
 
     // Allow all above example options to include a trailing comma and
     // prevent fear when commenting out the last value.

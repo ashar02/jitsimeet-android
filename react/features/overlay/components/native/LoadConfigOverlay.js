@@ -87,7 +87,7 @@ class LoadConfigOverlay extends Component<Props> {
  */
 function _mapStateToProps(state) {
     return {
-        _styles: ColorSchemeRegistry.get(state, 'PreMeetingLoadConfigOverlay')
+        _styles: ColorSchemeRegistry.get(state, 'LoadConfigOverlay')
     };
 }
 

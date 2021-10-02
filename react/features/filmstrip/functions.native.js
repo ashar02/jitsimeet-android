@@ -1,8 +1,8 @@
 // @flow
 
-//import { getFeatureFlag, FILMSTRIP_ENABLED } from '../base/flags';
+import { getFeatureFlag, FILMSTRIP_ENABLED } from '../base/flags';
+import { getParticipantCountWithFake } from '../base/participants';
 import { toState } from '../base/redux';
-import { isLocalCameraTrackMuted } from '../base/tracks';
 
 /**
  * Returns true if the filmstrip on mobile is visible, false otherwise.
@@ -17,15 +17,11 @@ import { isLocalCameraTrackMuted } from '../base/tracks';
 export function isFilmstripVisible(stateful: Object | Function) {
     const state = toState(stateful);
 
-    //const enabled = getFeatureFlag(state, FILMSTRIP_ENABLED, true);
-    const tracks = state['features/base/tracks'];
-    const enabled = !isLocalCameraTrackMuted(tracks);
+    const enabled = getFeatureFlag(state, FILMSTRIP_ENABLED, true);
 
     if (!enabled) {
         return false;
     }
 
-    const { length: participantCount } = state['features/base/participants'];
-
-    return participantCount > 1;
+    return getParticipantCountWithFake(state) > 1;
 }

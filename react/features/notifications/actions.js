@@ -33,10 +33,10 @@ export function clearNotifications() {
  * removed.
  * @returns {{
  *     type: HIDE_NOTIFICATION,
- *     uid: number
+ *     uid: string
  * }}
  */
-export function hideNotification(uid: number) {
+export function hideNotification(uid: string) {
     return {
         type: HIDE_NOTIFICATION,
         uid
@@ -83,7 +83,7 @@ export function showErrorNotification(props: Object) {
 export function showNotification(props: Object = {}, timeout: ?number) {
     return function(dispatch: Function, getState: Function) {
         const { notifications } = getState()['features/base/config'];
-        const enabledFlag = false /* getFeatureFlag(getState(), NOTIFICATIONS_ENABLED, true) */;
+        const enabledFlag = getFeatureFlag(getState(), NOTIFICATIONS_ENABLED, true);
 
         const shouldDisplay = enabledFlag
             && (!notifications
@@ -95,7 +95,7 @@ export function showNotification(props: Object = {}, timeout: ?number) {
                 type: SHOW_NOTIFICATION,
                 props,
                 timeout,
-                uid: window.Date.now()
+                uid: props.uid || window.Date.now().toString()
             });
         }
     };

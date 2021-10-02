@@ -4,7 +4,6 @@ import { jitsiLocalStorage } from '@jitsi/js-utils';
 import Logger from 'jitsi-meet-logger';
 
 import { redirectToTokenAuthService } from './modules/UI/authentication/AuthHandler';
-import { hideLoginDialog } from './react/features/authentication/actions.web';
 import { LoginDialog } from './react/features/authentication/components';
 import { isTokenAuthEnabled } from './react/features/authentication/functions';
 import {
@@ -12,11 +11,14 @@ import {
     connectionFailed
 } from './react/features/base/connection/actions';
 import { openDialog } from './react/features/base/dialog/actions';
+import { setJWT } from './react/features/base/jwt';
 import {
     isFatalJitsiConnectionError,
     JitsiConnectionErrors,
     JitsiConnectionEvents
 } from './react/features/base/lib-jitsi-meet';
+import { isVpaasMeeting } from './react/features/billing-counter/functions';
+import { getJaasJWT } from './react/features/jaas/functions';
 import { setPrejoinDisplayNameRequired } from './react/features/prejoin/actions';
 const logger = Logger.getLogger(__filename);
 
@@ -83,9 +85,15 @@ function checkForAttachParametersAndConnect(id, password, connection) {
  * @returns {Promise<JitsiConnection>} connection if
  * everything is ok, else error.
  */
-export function connect(id, password, roomName) {
+export async function connect(id, password, roomName) {
     const connectionConfig = Object.assign({}, config);
-    const { jwt } = APP.store.getState()['features/base/jwt'];
+    const state = APP.store.getState();
+    let { jwt } = state['features/base/jwt'];
+
+    if (!jwt && isVpaasMeeting(state, false)) {
+        jwt = await getJaasJWT(state);
+        APP.store.dispatch(setJWT(jwt));
+    }
 
     // Use Websocket URL for the web app if configured. Note that there is no 'isWeb' check, because there's assumption
     // that this code executes only on web browsers/electron. This needs to be changed when mobile and web are unified.
@@ -243,7 +251,6 @@ function requestAuth(roomName) {
 
     return new Promise(resolve => {
         const onSuccess = connection => {
-            APP.store.dispatch(hideLoginDialog());
             resolve(connection);
         };
 

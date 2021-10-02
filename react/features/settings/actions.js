@@ -5,15 +5,27 @@ import { openDialog } from '../base/dialog';
 import { i18next } from '../base/i18n';
 import { updateSettings } from '../base/settings';
 import { setPrejoinPageVisibility } from '../prejoin/actions';
+import { setScreenshareFramerate } from '../screen-share/actions';
 
 import {
     SET_AUDIO_SETTINGS_VISIBILITY,
     SET_VIDEO_SETTINGS_VISIBILITY
 } from './actionTypes';
-import { SettingsDialog } from './components';
+import { LogoutDialog, SettingsDialog } from './components';
 import { getMoreTabProps, getProfileTabProps } from './functions';
 
 declare var APP: Object;
+
+/**
+ * Opens {@code LogoutDialog}.
+ *
+ * @param {Function} onLogout - The event in {@code LogoutDialog} that should be
+ *  enabled on click.
+ * @returns {Function}
+ */
+export function openLogoutDialog(onLogout: Function) {
+    return openDialog(LogoutDialog, { onLogout });
+}
 
 /**
  * Opens {@code SettingsDialog}.
@@ -87,6 +99,12 @@ export function submitMoreTab(newState: Object): Function {
 
         if (newState.currentLanguage !== currentState.currentLanguage) {
             i18next.changeLanguage(newState.currentLanguage);
+        }
+
+        if (newState.currentFramerate !== currentState.currentFramerate) {
+            const frameRate = parseInt(newState.currentFramerate, 10);
+
+            dispatch(setScreenshareFramerate(frameRate));
         }
     };
 }

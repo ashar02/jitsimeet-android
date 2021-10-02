@@ -33,7 +33,7 @@ export const bottomSheetStyles = {
     },
 
     scrollView: {
-        paddingHorizontal: MD_ITEM_MARGIN_PADDING
+        paddingHorizontal: 0
     },
 
     /**
@@ -116,6 +116,24 @@ const brandedDialogText = {
     textAlign: 'center'
 };
 
+const brandedDialogLabelStyle = {
+    color: ColorPalette.white,
+    flexShrink: 1,
+    fontSize: MD_FONT_SIZE,
+    opacity: 0.90
+};
+
+const brandedDialogItemContainerStyle = {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: MD_ITEM_HEIGHT
+};
+
+const brandedDialogIconStyle = {
+    color: ColorPalette.white,
+    fontSize: 24
+};
+
 export const inputDialog = {
     bottomField: {
         marginBottom: 0
@@ -145,41 +163,39 @@ ColorSchemeRegistry.register('BottomSheet', {
          * Style for the {@code Icon} element in a generic item of the menu.
          */
         iconStyle: {
-            color: schemeColor('icon'),
-            fontSize: 24
+            ...brandedDialogIconStyle
         },
 
         /**
          * Style for the label in a generic item rendered in the menu.
          */
         labelStyle: {
-            color: schemeColor('text'),
-            flexShrink: 1,
-            fontSize: MD_FONT_SIZE,
-            marginLeft: 32,
-            opacity: 0.90
+            ...brandedDialogLabelStyle,
+            marginLeft: 32
         },
 
         /**
          * Container style for a generic item rendered in the menu.
          */
         style: {
-            alignItems: 'center',
-            flexDirection: 'row',
-            height: MD_ITEM_HEIGHT
+            ...brandedDialogItemContainerStyle,
+            backgroundColor: ColorPalette.darkBackground,
+            paddingHorizontal: MD_ITEM_MARGIN_PADDING
         },
 
         /**
          * Additional style that is not directly used as a style object.
          */
-        underlayColor: ColorPalette.overflowMenuItemUnderlay
+        underlayColor: ColorPalette.toggled
     },
 
     /**
      * Bottom sheet's base style.
      */
     sheet: {
-        backgroundColor: schemeColor('background')
+        backgroundColor: ColorPalette.black,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16
     }
 });
 
@@ -256,5 +272,30 @@ ColorSchemeRegistry.register('Dialog', {
     topBorderContainer: {
         borderTopColor: schemeColor('border'),
         borderTopWidth: 1
+    }
+});
+
+ColorSchemeRegistry.register('SecurityDialog', {
+    /**
+     * Field on an input dialog.
+     */
+    field: {
+        borderBottomWidth: 1,
+        borderColor: schemeColor('border'),
+        color: schemeColor('text'),
+        fontSize: 14,
+        paddingBottom: 8
+    },
+
+    text: {
+        color: schemeColor('text'),
+        fontSize: 14,
+        marginTop: 8
+    },
+
+    title: {
+        color: schemeColor('text'),
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 });
