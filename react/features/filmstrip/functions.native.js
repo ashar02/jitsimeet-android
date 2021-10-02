@@ -5,7 +5,6 @@ import { getParticipantCountWithFake } from '../base/participants';
 import { toState } from '../base/redux';
 import { isLocalCameraTrackMuted } from '../base/tracks';
 
-
 /**
  * Returns true if the filmstrip on mobile is visible, false otherwise.
  *
