@@ -18,7 +18,7 @@ import { isLocalCameraTrackMuted } from '../base/tracks';
 export function isFilmstripVisible(stateful: Object | Function) {
     const state = toState(stateful);
 
-    //const enabled = getFeatureFlag(state, FILMSTRIP_ENABLED, true);
+    // const enabled = getFeatureFlag(state, FILMSTRIP_ENABLED, true);
     const tracks = state['features/base/tracks'];
     const enabled = !isLocalCameraTrackMuted(tracks);
 

@@ -1,12 +1,13 @@
 // @flow
 
 import React from 'react';
+import { NativeModules } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 import { setColorScheme } from '../../base/color-scheme';
 import { DialogContainer } from '../../base/dialog';
 import { updateFlags } from '../../base/flags/actions';
-import { CALL_INTEGRATION_ENABLED, SERVER_URL_CHANGE_ENABLED } from '../../base/flags/constants';
+import { CALL_INTEGRATION_ENABLED, SERVER_URL_CHANGE_ENABLED, INITIAL_ROUTE_EARPIECE_ENABLED } from '../../base/flags/constants';
 import { getFeatureFlag } from '../../base/flags/functions';
 import { Platform } from '../../base/react';
 import { DimensionsDetector, clientResized } from '../../base/responsive-ui';
@@ -20,6 +21,8 @@ import type { Props as AbstractAppProps } from './AbstractApp';
 // Register middlewares and reducers.
 import '../middlewares';
 import '../reducers';
+
+const { AudioMode } = NativeModules;
 
 declare var __DEV__;
 
@@ -116,6 +119,17 @@ export class App extends AbstractApp {
 
             if (typeof callIntegrationEnabled !== 'undefined') {
                 dispatch(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
+            }
+
+            const initialRouteEarpieceEnabled = this.props.flags[INITIAL_ROUTE_EARPIECE_ENABLED];
+
+            if (typeof initialRouteEarpieceEnabled !== 'undefined') {
+                // dispatch(updateSettings({ initialRouteEarpiece: initialRouteEarpieceEnabled }));
+                if (initialRouteEarpieceEnabled) {
+                    AudioMode.setInitialRouteToEarpiece(true);
+                } else {
+                    AudioMode.setInitialRouteToEarpiece(false);
+                }
             }
         });
     }
