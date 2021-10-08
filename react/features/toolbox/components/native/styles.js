@@ -1,7 +1,7 @@
 // @flow
 
-import { ColorSchemeRegistry, schemeColor } from "../../../base/color-scheme";
-import { BoxModel, ColorPalette } from "../../../base/styles";
+import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
+import { BoxModel, ColorPalette } from '../../../base/styles';
 
 const BUTTON_SIZE = 48;
 
@@ -14,9 +14,9 @@ const toolbarButton = {
     borderRadius: 24,
     borderWidth: 0,
     flex: 0,
-    flexDirection: "row",
+    flexDirection: 'row',
     height: BUTTON_SIZE,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginHorizontal: 6,
     marginTop: 6,
     width: BUTTON_SIZE,
@@ -27,17 +27,18 @@ const toolbarButton = {
  * The icon style of the toolbar buttons.
  */
 const toolbarButtonIcon = {
-    alignSelf: "center",
+    alignSelf: 'center',
     color: ColorPalette.darkGrey,
-    fontSize: 24,
+    fontSize: 24
 };
+
 
 /**
  * The icon style of toolbar buttons which display white icons.
  */
 const whiteToolbarButtonIcon = {
     ...toolbarButtonIcon,
-    color: ColorPalette.white,
+    color: ColorPalette.white
 };
 
 /**
@@ -45,10 +46,10 @@ const whiteToolbarButtonIcon = {
  */
 const reactionButton = {
     ...toolbarButton,
-    backgroundColor: "transparent",
-    alignItems: "center",
+    backgroundColor: 'transparent',
+    alignItems: 'center',
     marginTop: 0,
-    marginHorizontal: 0,
+    marginHorizontal: 0
 };
 
 /**
@@ -56,52 +57,53 @@ const reactionButton = {
  */
 const reactionEmoji = {
     fontSize: 20,
-    color: ColorPalette.white,
+    color: ColorPalette.white
 };
 
 const reactionMenu = {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: ColorPalette.black,
-    padding: 16,
+    padding: 16
 };
 
 /**
  * The Toolbox and toolbar related styles.
  */
 const styles = {
+
     sheetGestureRecognizer: {
-        alignItems: "stretch",
-        flexDirection: "column",
+        alignItems: 'stretch',
+        flexDirection: 'column'
     },
 
     /**
      * The style of the toolbar.
      */
     toolbox: {
-        alignItems: "center",
-        backgroundColor: "transparent",
+        alignItems: 'center',
+        backgroundColor: 'transparent',
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
-        flexDirection: "row",
+        flexDirection: 'row',
         flexGrow: 0,
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
         paddingHorizontal: BoxModel.margin,
-        paddingVertical: 20,
+        paddingVertical: 20
     },
 
     /**
      * The style of the root/top-level container of {@link Toolbox}.
      */
     toolboxContainer: {
-        flexDirection: "column",
+        flexDirection: 'column',
         flexGrow: 0,
-        width: "100%",
+        width: '100%',
         maxWidth: 580,
-        marginLeft: "auto",
-        marginRight: "auto",
-    },
+        marginLeft: 'auto',
+        marginRight: 'auto'
+    }
 };
 
 export default styles;
@@ -109,44 +111,40 @@ export default styles;
 /**
  * Color schemed styles for the @{Toolbox} component.
  */
-ColorSchemeRegistry.register("Toolbox", {
+ColorSchemeRegistry.register('Toolbox', {
     /**
      * Styles for buttons in the toolbar.
      */
     buttonStyles: {
         iconStyle: toolbarButtonIcon,
-        style: toolbarButton,
+        style: toolbarButton
     },
 
     buttonStylesBorderless: {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
-<<<<<<< HEAD
-        },
-=======
         }
->>>>>>> 512d3bc9cb970ab5c2ca53c5874ee3ede6f8d144
     },
 
     backgroundToggle: {
-        backgroundColor: ColorPalette.toggled,
+        backgroundColor: ColorPalette.toggled
     },
 
     hangupButtonStyles: {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
-            backgroundColor: schemeColor("hangup"),
+            backgroundColor: schemeColor('hangup')
         },
-        underlayColor: ColorPalette.buttonUnderlay,
+        underlayColor: ColorPalette.buttonUnderlay
     },
 
     reactionDialog: {
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        backgroundColor: "transparent",
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'transparent'
     },
 
     overflowReactionMenu: reactionMenu,
@@ -154,53 +152,53 @@ ColorSchemeRegistry.register("Toolbox", {
     reactionMenu: {
         ...reactionMenu,
         borderRadius: 3,
-        width: 360,
+        width: 360
     },
 
     reactionRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-        marginBottom: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 16
     },
 
     reactionButton: {
         style: reactionButton,
         underlayColor: ColorPalette.toggled,
-        emoji: reactionEmoji,
+        emoji: reactionEmoji
     },
 
     raiseHandButton: {
         style: {
             ...reactionButton,
             backgroundColor: ColorPalette.toggled,
-            width: "100%",
-            borderRadius: 6,
+            width: '100%',
+            borderRadius: 6
         },
         underlayColor: ColorPalette.toggled,
         emoji: reactionEmoji,
         text: {
             color: ColorPalette.white,
-            fontWeight: "600",
+            fontWeight: '600',
             marginLeft: 8,
-            lineHeight: 24,
+            lineHeight: 24
         },
         container: {
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-        },
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }
     },
 
     emojiAnimation: {
         color: ColorPalette.white,
-        position: "absolute",
+        position: 'absolute',
         zIndex: 1001,
         elevation: 2,
         fontSize: 20,
-        left: "50%",
-        top: "100%",
+        left: '50%',
+        top: '100%'
     },
 
     /**
@@ -209,7 +207,7 @@ ColorSchemeRegistry.register("Toolbox", {
     toggledButtonStyles: {
         iconStyle: whiteToolbarButtonIcon,
         style: {
-            ...toolbarButton,
-        },
-    },
+            ...toolbarButton
+        }
+    }
 });

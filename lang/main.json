@@ -849,7 +849,7 @@
             "shareRoom": "Invite someone",
             "shareYourScreen": "Start / Stop sharing your screen",
             "shortcuts": "Toggle shortcuts",
-            "show": "Pin",
+            "show": "Show on stage",
             "smile": "Smile",
             "speakerStats": "Toggle speaker statistics",
             "surprised": "Surprised",
@@ -1007,7 +1007,7 @@
         "muted": "Muted",
         "videoMuted": "Camera disabled",
         "remoteControl": "Start / Stop remote control",
-        "show": "Pin",
+        "show": "Show on stage",
         "videomute": "Participant has stopped the camera"
     },
     "welcomepage": {
