@@ -121,7 +121,7 @@ export class App extends AbstractApp {
                 dispatch(updateSettings({ disableCallIntegration: !callIntegrationEnabled }));
             }
 
-            const initialRouteEarpieceEnabled = this.props.flags[INITIAL_ROUTE_EARPIECE_ENABLED];
+            /* const initialRouteEarpieceEnabled = this.props.flags[INITIAL_ROUTE_EARPIECE_ENABLED];
 
             if (typeof initialRouteEarpieceEnabled !== 'undefined') {
                 // dispatch(updateSettings({ initialRouteEarpiece: initialRouteEarpieceEnabled }));
@@ -130,7 +130,7 @@ export class App extends AbstractApp {
                 } else {
                     AudioMode.setInitialRouteToEarpiece(false);
                 }
-            }
+            } */
         });
     }
 

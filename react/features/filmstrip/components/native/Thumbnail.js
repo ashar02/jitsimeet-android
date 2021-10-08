@@ -170,29 +170,20 @@ function Thumbnail(props: Props) {
             touchFeedback={false}
         >
             <ParticipantView
-                avatarSize={tileView ? AVATAR_SIZE * 1.5 : AVATAR_SIZE}
-                disableVideo={isScreenShare || participant.isFakeParticipant}
-                participantId={participantId}
-                style={
-                    (_styles.participantViewStyle,
-                    {
-                        borderWidth: renderDominantSpeakerIndicator ? 2 : 0,
-                        borderColor: "#D2A622",
-                    })
-                }
-                tintEnabled={participantInLargeVideo && !disableTint}
-                tintStyle={_styles.activeThumbnailTint}
-                zOrder={1}
-            />
+                avatarSize = { tileView ? AVATAR_SIZE * 1.5 : AVATAR_SIZE }
+                disableVideo = { isScreenShare || participant.isFakeParticipant }
+                participantId = { participantId }
+                style = { _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator ? 2 : 0, borderColor:'#02A622' } }
+                tintEnabled = { participantInLargeVideo && !disableTint }
+                tintStyle = { _styles.activeThumbnailTint }
+                zOrder = { 1 } />
 
-            {renderDisplayName && (
-                <Container style={styles.displayNameContainer}>
-                    <DisplayNameLabel participantId={participantId} />
-                </Container>
-            )}
+            { renderDisplayName && <Container style = { styles.displayNameContainer }>
+                <DisplayNameLabel participantId = { participantId } />
+            </Container> }
 
-            {renderModeratorIndicator && (
-                <View style={styles.moderatorIndicatorContainer}>
+            { renderModeratorIndicator
+                && <View style = { styles.moderatorIndicatorContainer }>
                     <ModeratorIndicator />
                 </View>
             )}
