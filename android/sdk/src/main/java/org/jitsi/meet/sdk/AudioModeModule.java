@@ -365,6 +365,7 @@ class AudioModeModule extends ReactContextBaseJavaModule {
 
         boolean bluetoothAvailable = availableDevices.contains(DEVICE_BLUETOOTH);
         boolean headsetAvailable = availableDevices.contains(DEVICE_HEADPHONES);
+        boolean earpieceAvailable = availableDevices.contains(DEVICE_EARPIECE);
 
         // Pick the desired device based on what's available and the mode.
         String audioDevice;
@@ -374,7 +375,7 @@ class AudioModeModule extends ReactContextBaseJavaModule {
             audioDevice = DEVICE_HEADPHONES;
         } else {
             //audioDevice = DEVICE_SPEAKER;
-            if (initialRouteToEarpiece) {
+            if (initialRouteToEarpiece && earpieceAvailable) {
                 audioDevice = DEVICE_EARPIECE;
             } else {
                 audioDevice = DEVICE_SPEAKER;
