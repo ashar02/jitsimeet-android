@@ -11,7 +11,6 @@ const BUTTON_SIZE = 48;
  * The style of toolbar buttons.
  */
 const toolbarButton = {
-    borderRadius: 3,
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
@@ -19,7 +18,9 @@ const toolbarButton = {
     justifyContent: 'center',
     marginHorizontal: 6,
     marginTop: 6,
-    width: BUTTON_SIZE
+    width: BUTTON_SIZE,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 24
 };
 
 /**
@@ -123,7 +124,6 @@ ColorSchemeRegistry.register('Toolbox', {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
-            backgroundColor: 'transparent'
         }
     },
 
