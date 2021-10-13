@@ -130,12 +130,12 @@ class Labels extends Component<Props, State> {
                             } >
                             <InsecureRoomNameLabel />
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             hitSlop = { LabelHitSlop }
                             onPress = {
                                 this._createOnPress(LABEL_ID_QUALITY) } >
                             <VideoQualityLabel />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
                 { this._renderExpandedLabel() }
