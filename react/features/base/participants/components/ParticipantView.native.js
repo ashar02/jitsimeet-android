@@ -34,11 +34,7 @@ type Props = {
      */
     _connectionStatus: string,
 
-        /**
-     * Whether local audio (microphone) is muted or not.
-     */
-         _audioMuted: boolean,
-
+        
     /**
      * True if the participant which this component represents is fake.
      *
@@ -195,10 +191,8 @@ class ParticipantView extends Component<Props> {
         const {
             _connectionStatus: connectionStatus,
             _isFakeParticipant,
-            _participantName,
             _renderVideo: renderVideo,
             _videoTrack: videoTrack,
-            _audioMuted: audioMuted,
             disableVideo,
             onPress,
             tintStyle
@@ -246,12 +240,7 @@ class ParticipantView extends Component<Props> {
                         <Avatar
                             participantId = { this.props.participantId }
                             size = { this.props.avatarSize } />
-                            {
-                                audioMuted == true && this.props.largeMode ? (
-                                    <Text style={{color:'#fff', marginTop:6}}>{_participantName} muted this call</Text>
-                                ):(<></>)
-                            }
-                           
+                            
                     </View> }
 
                 { useTint
@@ -281,10 +270,6 @@ class ParticipantView extends Component<Props> {
 function _mapStateToProps(state, ownProps) {
     const { disableVideo, participantId } = ownProps;
     const participant = getParticipantById(state, participantId);
-    const tracks = state['features/base/tracks'];
-    const id = participant?.id;
-    const audioTrack
-        = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, id);
     let connectionStatus;
     let participantName = participant?.name;
     return {
@@ -298,8 +283,7 @@ function _mapStateToProps(state, ownProps) {
             getTrackByMediaTypeAndParticipant(
                 state['features/base/tracks'],
                 MEDIA_TYPE.VIDEO,
-                participantId),
-        _audioMuted: audioTrack?.muted ?? true,
+                participantId)
     };
 }
 
