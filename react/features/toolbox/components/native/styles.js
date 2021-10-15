@@ -62,14 +62,14 @@ const styles = {
      */
     toolbox: {
         alignItems: 'center',
-        backgroundColor: ColorPalette.darkBackground,
+        backgroundColor: 'transparent',
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
         justifyContent: 'space-between',
         paddingHorizontal: BoxModel.margin,
-        paddingVertical: 8
+        paddingVertical: 20
     },
 
     /**
