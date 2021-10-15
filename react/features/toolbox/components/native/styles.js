@@ -20,7 +20,7 @@ const toolbarButton = {
     marginHorizontal: 6,
     marginTop: 6,
     width: BUTTON_SIZE,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+    backgroundColor: 'rgba(115, 115, 115, 0.5)'
 };
 
 /**
