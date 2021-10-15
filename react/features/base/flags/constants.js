@@ -190,3 +190,9 @@ export const VIDEO_SHARE_BUTTON_ENABLED = 'video-share.enabled';
  * Default: disabled (false).
  */
 export const WELCOME_PAGE_ENABLED = 'welcomepage.enabled';
+
+/**
+ * Flag indicating if the initial route is earpiece.
+ * Default: disabled (false).
+ */
+ export const INITIAL_ROUTE_EARPIECE_ENABLED = 'initial-route-earpiece.enabled';
