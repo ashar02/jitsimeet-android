@@ -73,8 +73,8 @@ function Toolbox(props: Props) {
             style = { styles.toolboxContainer }>
             <SafeAreaView
                 accessibilityRole = 'toolbar'
-                pointerEvents = 'box-none'
-                style = { styles.toolbox }>
+                pointerEvents = 'box-none'>
+                <View style = { styles.toolbox }>
                 <AudioMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
@@ -99,8 +99,11 @@ function Toolbox(props: Props) {
                 <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
-                <HangupButton
-                    styles = { hangupButtonStyles } />
+                </View>
+                <View style={{alignSelf:'center', marginBottom:12}}>
+                    <HangupButton
+                        styles = { hangupButtonStyles } />
+                </View>
             </SafeAreaView>
         </View>
     );

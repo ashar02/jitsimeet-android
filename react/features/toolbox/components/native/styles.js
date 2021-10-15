@@ -68,7 +68,7 @@ const styles = {
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         paddingHorizontal: BoxModel.margin,
         paddingVertical: 20
     },
