@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { NativeModules, SafeAreaView, StatusBar, View } from 'react-native';
+import { NativeModules, SafeAreaView, StatusBar, View, Text } from 'react-native';
 
 import { appNavigate } from '../../../app/actions';
 import { PIP_ENABLED, FULLSCREEN_ENABLED, getFeatureFlag } from '../../../base/flags';
@@ -13,6 +13,11 @@ import { ConferenceNotification, isCalendarEnabled } from '../../../calendar-syn
 import { Chat } from '../../../chat';
 import { DisplayNameLabel } from '../../../display-name';
 import { SharedDocument } from '../../../etherpad';
+import { getTrackByMediaTypeAndParticipant } from '../../../base/tracks';
+import {
+    MEDIA_TYPE,
+    VideoTrack
+} from '../../../base/media';
 import {
     FILMSTRIP_SIZE,
     Filmstrip,
@@ -27,6 +32,7 @@ import { Captions } from '../../../subtitles';
 import { setToolboxVisible } from '../../../toolbox/actions';
 import { Toolbox } from '../../../toolbox/components/native';
 import { isToolboxVisible } from '../../../toolbox/functions';
+import { getParticipantById } from '../../../base/participants/functions';
 import {
     AbstractConference,
     abstractMapStateToProps
@@ -47,6 +53,18 @@ type Props = AbstractProps & {
      * Application's aspect ratio.
      */
     _aspectRatio: Symbol,
+
+    /**
+     * Whether local audio (microphone) is muted or not.
+     */
+    _audioMuted: boolean,
+
+    /**
+     * The name of the participant which this component represents.
+     *
+     * @private
+     */
+    _participantName: string,
 
     /**
      * Wherther the calendar feature is enabled or not.
@@ -239,7 +257,9 @@ class Conference extends AbstractConference<Props, *> {
             _connecting,
             _largeVideoParticipantId,
             _reducedUI,
-            _shouldDisplayTileView
+            _shouldDisplayTileView,
+            _audioMuted: audioMuted,
+            _participantName
         } = this.props;
 
         if (_reducedUI) {
@@ -275,6 +295,11 @@ class Conference extends AbstractConference<Props, *> {
                 <View
                     pointerEvents = 'box-none'
                     style = { styles.toolboxAndFilmstripContainer }>
+                    {
+                        audioMuted == true && !_shouldDisplayTileView ? (
+                        <Text style={{color:'#fff', marginTop:6, marginBottom:6, textAlign:'center'}}> {_participantName} muted this call</Text>
+                        ):(<></>)
+                    }
 
                     <Captions onPress = { this._onClick } />
 
@@ -391,7 +416,10 @@ function _mapStateToProps(state) {
         membersOnly,
         leaving
     } = state['features/base/conference'];
+    const participant = getParticipantById(state, state['features/large-video'].participantId);
     const { aspectRatio, reducedUI } = state['features/base/responsive-ui'];
+    const tracks = state['features/base/tracks'];
+    const audioTrack = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, participant?.id);
 
     // XXX There is a window of time between the successful establishment of the
     // XMPP connection and the subsequent commencement of joining the MUC during
