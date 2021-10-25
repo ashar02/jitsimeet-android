@@ -3,7 +3,7 @@
 import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
 
-const BUTTON_SIZE = 48;
+const BUTTON_SIZE = 60;
 
 // Toolbox, toolbar:
 
@@ -11,7 +11,7 @@ const BUTTON_SIZE = 48;
  * The style of toolbar buttons.
  */
 const toolbarButton = {
-    borderRadius: 24,
+    borderRadius: 30,
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
@@ -20,7 +20,7 @@ const toolbarButton = {
     marginHorizontal: 6,
     marginTop: 6,
     width: BUTTON_SIZE,
-    backgroundColor: 'rgba(115, 115, 115, 0.5)'
+    backgroundColor: 'rgba(115, 115, 115, 0.4)'
 };
 
 /**
