@@ -82,7 +82,8 @@ const styles = {
         width: '100%',
         maxWidth: 500,
         marginLeft: 'auto',
-        marginRight: 'auto'
+        marginRight: 'auto',
+        marginBottom: 30
     }
 };
 
