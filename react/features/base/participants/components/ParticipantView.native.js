@@ -235,11 +235,9 @@ class ParticipantView extends Component<Props> {
                         zoomEnabled = { this.props.zoomEnabled } /> }
 
                 { !renderYoutubeLargeVideo && !renderVideo
-                    && <View style = { styles.avatarContainer, {marginTop: this.props.largeMode ? -90 : 0, alignSelf:'center'}}>
-                        <Avatar
-                            participantId = { this.props.participantId }
-                            size = { this.props.avatarSize } />
-                    </View> }
+                    &&  <Avatar
+                    participantId = { this.props.participantId }
+                    size = { this.props.avatarSize } /> }
 
                 { useTint
 
