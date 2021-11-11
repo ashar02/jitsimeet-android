@@ -754,7 +754,7 @@
             "shareRoom": "Invite someone",
             "shareYourScreen": "Toggle screenshare",
             "shortcuts": "Toggle shortcuts",
-            "show": "Show on stage",
+            "show": "Pin",
             "speakerStats": "Toggle speaker statistics",
             "tileView": "Toggle tile view",
             "toggleCamera": "Toggle camera",
@@ -889,7 +889,7 @@
         "muted": "Muted",
         "videoMuted": "Camera disabled",
         "remoteControl": "Start / Stop remote control",
-        "show": "Show on stage",
+        "show": "Pin",
         "videomute": "Participant has stopped the camera"
     },
     "welcomepage": {

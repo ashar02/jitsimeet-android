@@ -3,7 +3,7 @@
 import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
 
-const BUTTON_SIZE = 48;
+const BUTTON_SIZE = 60;
 
 // Toolbox, toolbar:
 
@@ -11,7 +11,7 @@ const BUTTON_SIZE = 48;
  * The style of toolbar buttons.
  */
 const toolbarButton = {
-    borderRadius: 3,
+    borderRadius: 30,
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
@@ -19,7 +19,8 @@ const toolbarButton = {
     justifyContent: 'center',
     marginHorizontal: 6,
     marginTop: 6,
-    width: BUTTON_SIZE
+    width: BUTTON_SIZE,
+    backgroundColor: 'rgba(115, 115, 115, 0.4)'
 };
 
 /**
@@ -67,7 +68,7 @@ const styles = {
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         paddingHorizontal: BoxModel.margin,
         paddingVertical: 20
     },
@@ -102,8 +103,7 @@ ColorSchemeRegistry.register('Toolbox', {
     buttonStylesBorderless: {
         iconStyle: whiteToolbarButtonIcon,
         style: {
-            ...toolbarButton,
-            backgroundColor: 'transparent'
+            ...toolbarButton
         }
     },
 
@@ -115,7 +115,9 @@ ColorSchemeRegistry.register('Toolbox', {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
-            backgroundColor: schemeColor('hangup')
+            backgroundColor: schemeColor('hangup'),
+            marginBottom:12,
+            alignSelf:'center'
         },
         underlayColor: ColorPalette.buttonUnderlay
     },
