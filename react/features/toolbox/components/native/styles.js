@@ -3,7 +3,7 @@
 import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
 
-const BUTTON_SIZE = 60;
+const BUTTON_SIZE = 48;
 
 // Toolbox, toolbar:
 
@@ -11,7 +11,7 @@ const BUTTON_SIZE = 60;
  * The style of toolbar buttons.
  */
 const toolbarButton = {
-    borderRadius: 30,
+    borderRadius: 3,
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
@@ -19,8 +19,7 @@ const toolbarButton = {
     justifyContent: 'center',
     marginHorizontal: 6,
     marginTop: 6,
-    width: BUTTON_SIZE,
-    backgroundColor: 'rgba(115, 115, 115, 0.4)'
+    width: BUTTON_SIZE
 };
 
 /**
@@ -68,7 +67,7 @@ const styles = {
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         paddingHorizontal: BoxModel.margin,
         paddingVertical: 20
     },
@@ -82,8 +81,7 @@ const styles = {
         width: '100%',
         maxWidth: 500,
         marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: 30
+        marginRight: 'auto'
     }
 };
 
@@ -105,6 +103,7 @@ ColorSchemeRegistry.register('Toolbox', {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
+            backgroundColor: 'transparent'
         }
     },
 

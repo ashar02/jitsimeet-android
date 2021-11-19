@@ -235,7 +235,7 @@ class ParticipantView extends Component<Props> {
                         zoomEnabled = { this.props.zoomEnabled } /> }
 
                 { !renderYoutubeLargeVideo && !renderVideo
-                    && <View style = { styles.avatarContainer, {marginTop: this.props.largeMode ? -90 : 0, alignSelf:'center'}}>
+                    && <View style = { styles.avatarContainer }>
                         <Avatar
                             participantId = { this.props.participantId }
                             size = { this.props.avatarSize } />
@@ -269,7 +269,7 @@ function _mapStateToProps(state, ownProps) {
     const { disableVideo, participantId } = ownProps;
     const participant = getParticipantById(state, participantId);
     let connectionStatus;
-    let participantName = participant?.name;
+    let participantName;
 
     return {
         _connectionStatus:
