@@ -3,7 +3,7 @@
 import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
 
-const BUTTON_SIZE = 60;
+const BUTTON_SIZE = 48;
 
 // Toolbox, toolbar:
 
@@ -11,7 +11,7 @@ const BUTTON_SIZE = 60;
  * The style of toolbar buttons.
  */
 const toolbarButton = {
-    borderRadius: 30,
+    borderRadius: 3,
     borderWidth: 0,
     flex: 0,
     flexDirection: 'row',
@@ -19,8 +19,7 @@ const toolbarButton = {
     justifyContent: 'center',
     marginHorizontal: 6,
     marginTop: 6,
-    width: BUTTON_SIZE,
-    backgroundColor: 'rgba(115, 115, 115, 0.4)'
+    width: BUTTON_SIZE
 };
 
 /**
@@ -42,16 +41,36 @@ const whiteToolbarButtonIcon = {
 };
 
 /**
+ * The style of reaction buttons.
+ */
+const reactionButton = {
+    ...toolbarButton,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    marginTop: 0,
+    marginHorizontal: 0
+};
+
+/**
+ * The style of the emoji on the reaction buttons.
+ */
+const reactionEmoji = {
+    fontSize: 20,
+    color: ColorPalette.white
+};
+
+const reactionMenu = {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: ColorPalette.black,
+    padding: 16
+};
+
+/**
  * The Toolbox and toolbar related styles.
  */
 const styles = {
-
-    expandMenuContainer: {
-        alignItems: 'center',
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-        flexDirection: 'column'
-    },
 
     sheetGestureRecognizer: {
         alignItems: 'stretch',
@@ -63,14 +82,14 @@ const styles = {
      */
     toolbox: {
         alignItems: 'center',
-        backgroundColor: 'transparent',
+        backgroundColor: ColorPalette.darkBackground,
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         paddingHorizontal: BoxModel.margin,
-        paddingVertical: 20
+        paddingVertical: 8
     },
 
     /**
@@ -80,7 +99,7 @@ const styles = {
         flexDirection: 'column',
         flexGrow: 0,
         width: '100%',
-        maxWidth: 500,
+        maxWidth: 580,
         marginLeft: 'auto',
         marginRight: 'auto'
     }
@@ -103,7 +122,8 @@ ColorSchemeRegistry.register('Toolbox', {
     buttonStylesBorderless: {
         iconStyle: whiteToolbarButtonIcon,
         style: {
-            ...toolbarButton
+            ...toolbarButton,
+            backgroundColor: 'transparent'
         }
     },
 
@@ -115,11 +135,70 @@ ColorSchemeRegistry.register('Toolbox', {
         iconStyle: whiteToolbarButtonIcon,
         style: {
             ...toolbarButton,
-            backgroundColor: schemeColor('hangup'),
-            marginBottom:12,
-            alignSelf:'center'
+            backgroundColor: schemeColor('hangup')
         },
         underlayColor: ColorPalette.buttonUnderlay
+    },
+
+    reactionDialog: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'transparent'
+    },
+
+    overflowReactionMenu: reactionMenu,
+
+    reactionMenu: {
+        ...reactionMenu,
+        borderRadius: 3,
+        width: 360
+    },
+
+    reactionRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 16
+    },
+
+    reactionButton: {
+        style: reactionButton,
+        underlayColor: ColorPalette.toggled,
+        emoji: reactionEmoji
+    },
+
+    raiseHandButton: {
+        style: {
+            ...reactionButton,
+            backgroundColor: ColorPalette.toggled,
+            width: '100%',
+            borderRadius: 6
+        },
+        underlayColor: ColorPalette.toggled,
+        emoji: reactionEmoji,
+        text: {
+            color: ColorPalette.white,
+            fontWeight: '600',
+            marginLeft: 8,
+            lineHeight: 24
+        },
+        container: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }
+    },
+
+    emojiAnimation: {
+        color: ColorPalette.white,
+        position: 'absolute',
+        zIndex: 1001,
+        elevation: 2,
+        fontSize: 20,
+        left: '50%',
+        top: '100%'
     },
 
     /**

@@ -7,13 +7,14 @@ import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { connect } from '../../../base/redux';
 import { StyleType } from '../../../base/styles';
 import { ChatButton } from '../../../chat';
-import { InviteButton } from '../../../invite';
+import { ParticipantsPaneButton } from '../../../participants-pane/components/native';
+import { ReactionsMenuButton } from '../../../reactions/components';
+import { isReactionsEnabled } from '../../../reactions/functions.any';
 import { TileViewButton } from '../../../video-layout';
 import { isToolboxVisible, getMovableButtons } from '../../functions.native';
 import AudioMuteButton from '../AudioMuteButton';
 import HangupButton from '../HangupButton';
 import VideoMuteButton from '../VideoMuteButton';
-import { isLocalCameraTrackMuted } from '../../../base/tracks';
 
 import OverflowMenuButton from './OverflowMenuButton';
 import RaiseHandButton from './RaiseHandButton';
@@ -35,15 +36,15 @@ type Props = {
      */
     _visible: boolean,
 
-        /**
-     * Whether video is currently muted or not.
-     */
-    _videoMuted: boolean,
-
     /**
      * The width of the screen.
      */
     _width: number,
+
+    /**
+     * Whether or not the reactions feature is enabled.
+     */
+    _reactionsEnabled: boolean,
 
     /**
      * The redux {@code dispatch} function.
@@ -62,7 +63,7 @@ function Toolbox(props: Props) {
         return null;
     }
 
-    const { _styles, _width, _videoMuted } = props;
+    const { _styles, _width, _reactionsEnabled } = props;
     const { buttonStylesBorderless, hangupButtonStyles, toggledButtonStyles } = _styles;
     const additionalButtons = getMovableButtons(_width);
     const backgroundToggledStyle = {
@@ -79,33 +80,38 @@ function Toolbox(props: Props) {
             style = { styles.toolboxContainer }>
             <SafeAreaView
                 accessibilityRole = 'toolbar'
-                pointerEvents = 'box-none'>
-                <View style = { styles.toolbox }>
+                pointerEvents = 'box-none'
+                style = { styles.toolbox }>
                 <AudioMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
                 <VideoMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
-                { false
+                { additionalButtons.has('chat')
                       && <ChatButton
                           styles = { buttonStylesBorderless }
                           toggledStyles = { backgroundToggledStyle } />}
 
-                { additionalButtons.has('raisehand')
-                      && <RaiseHandButton
-                          styles = { buttonStylesBorderless }
-                          toggledStyles = { backgroundToggledStyle } />}
+                { additionalButtons.has('raisehand') && (_reactionsEnabled
+                    ? <ReactionsMenuButton
+                        styles = { buttonStylesBorderless }
+                        toggledStyles = { backgroundToggledStyle } />
+                    : <RaiseHandButton
+                        styles = { buttonStylesBorderless }
+                        toggledStyles = { backgroundToggledStyle } />)}
                 {additionalButtons.has('tileview') && <TileViewButton styles = { buttonStylesBorderless } />}
-                {additionalButtons.has('invite') && <InviteButton styles = { buttonStylesBorderless } />}
+                {additionalButtons.has('participantspane')
+                && <ParticipantsPaneButton
+                    styles = { buttonStylesBorderless } />
+                }
                 {additionalButtons.has('togglecamera')
-                      && !_videoMuted && <ToggleCameraButton
+                      && <ToggleCameraButton
                           styles = { buttonStylesBorderless }
                           toggledStyles = { backgroundToggledStyle } />}
                 <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
-                </View>
                 <HangupButton
                     styles = { hangupButtonStyles } />
             </SafeAreaView>
@@ -123,12 +129,11 @@ function Toolbox(props: Props) {
  * @returns {Props}
  */
 function _mapStateToProps(state: Object): Object {
-    const tracks = state['features/base/tracks'];
     return {
         _styles: ColorSchemeRegistry.get(state, 'Toolbox'),
         _visible: isToolboxVisible(state),
         _width: state['features/base/responsive-ui'].clientWidth,
-        _videoMuted: isLocalCameraTrackMuted(tracks),
+        _reactionsEnabled: isReactionsEnabled(state)
     };
 }
 

@@ -136,12 +136,6 @@ class AudioModeModule extends ReactContextBaseJavaModule {
     private String userSelectedDevice;
 
     /**
-     * Initial route to earpiece depending on the
-     * value.
-     */
-    private Boolean initialRouteToEarpiece = false;
-
-    /**
      * Initializes a new module instance. There shall be a single instance of
      * this module throughout the lifetime of the application.
      *
@@ -331,17 +325,6 @@ class AudioModeModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Sets whether earpiece should be used (initially) as audio route
-     * or not.
-     *
-     * @param use Boolean indicator that earpiece should be used or not.
-     */
-    @ReactMethod
-    public void setInitialRouteToEarpiece(Boolean isInitialEarpiece) {
-        initialRouteToEarpiece = isInitialEarpiece;
-    }
-
-    /**
      * Updates the audio route for the given mode.
      *
      * @param mode the audio mode to be used when computing the audio route.
@@ -373,12 +356,7 @@ class AudioModeModule extends ReactContextBaseJavaModule {
         } else if (headsetAvailable) {
             audioDevice = DEVICE_HEADPHONES;
         } else {
-            // audioDevice = DEVICE_SPEAKER;
-            if (initialRouteToEarpiece) {
-                audioDevice = DEVICE_EARPIECE;
-            } else {
-                audioDevice = DEVICE_SPEAKER;
-            }
+            audioDevice = DEVICE_SPEAKER;
         }
 
         // Consider the user's selection

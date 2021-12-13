@@ -53,13 +53,3 @@ ColorSchemeRegistry.register('LoadConfigOverlay', {
         backgroundColor: schemeColor('background')
     }
 });
-
-ColorSchemeRegistry.register('PreMeetingLoadConfigOverlay', {
-    indicatorColor: 'white',
-    loadingOverlayText: {
-        color: 'white'
-    },
-    loadingOverlayWrapper: {
-        backgroundColor: 'black'
-    }
-});

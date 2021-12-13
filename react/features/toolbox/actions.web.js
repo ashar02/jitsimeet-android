@@ -2,6 +2,8 @@
 
 import type { Dispatch } from 'redux';
 
+import { isLayoutTileView } from '../video-layout';
+
 import {
     FULL_SCREEN_CHANGED,
     SET_FULL_SCREEN,
@@ -83,10 +85,13 @@ export function hideToolbox(force: boolean = false): Function {
 
         dispatch(clearToolboxTimeout());
 
+        const focusSelector = '.toolbox-content-items:focus-within,.filmstrip:focus-within,.remotevideomenu:hover';
+
         if (!force
                 && (hovered
                     || state['features/invite'].calleeInfoVisible
-                    || state['features/chat'].isOpen)) {
+                    || state['features/chat'].isOpen
+                    || document.querySelector(focusSelector))) {
             dispatch(
                 setToolboxTimeout(
                     () => dispatch(hideToolbox()),
@@ -126,10 +131,13 @@ export function showToolbox(timeout: number = 0): Object {
             alwaysVisible,
             enabled,
             timeoutMS,
-            visible
+            visible,
+            overflowDrawer
         } = state['features/toolbox'];
+        const { contextMenuOpened } = state['features/base/responsive-ui'];
+        const contextMenuOpenedInTileview = isLayoutTileView(state) && contextMenuOpened && !overflowDrawer;
 
-        if (enabled && !visible) {
+        if (enabled && !visible && !contextMenuOpenedInTileview) {
             dispatch(setToolboxVisible(true));
 
             // If the Toolbox is always visible, there's no need for a timeout
@@ -158,5 +166,23 @@ export function setOverflowDrawer(displayAsDrawer: boolean) {
     return {
         type: SET_OVERFLOW_DRAWER,
         displayAsDrawer
+    };
+}
+
+
+/**
+ * Disables and hides the toolbox on demand when in tile view.
+ *
+ * @returns {void}
+ */
+export function hideToolboxOnTileView() {
+    return (dispatch: Dispatch<any>, getState: Function) => {
+        const state = getState();
+        const { overflowDrawer } = state['features/toolbox'];
+
+
+        if (!overflowDrawer && isLayoutTileView(state)) {
+            dispatch(hideToolbox(true));
+        }
     };
 }

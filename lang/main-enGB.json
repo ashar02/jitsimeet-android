@@ -50,9 +50,11 @@
         "messagebox": "Type a message",
         "nickname": {
             "popover": "Choose a nickname",
-            "title": "Enter a nickname to use chat"
+            "title": "Enter a nickname to use chat",
+            "titleWithPolls": "Enter a nickname to use chat"
         },
         "title": "Chat",
+        "titleWithPolls": "Chat",
         "you": "",
         "privateNotice": "",
         "noMessagesMessage": "",
@@ -60,7 +62,7 @@
         "fieldPlaceHolder": ""
     },
     "connectingOverlay": {
-        "joiningRoom": "Connecting you to your call…"
+        "joiningRoom": "Connecting you to your meeting…"
     },
     "connection": {
         "ATTACHED": "Attached",
@@ -606,7 +608,7 @@
             "shareRoom": "Invite someone",
             "shareYourScreen": "Toggle screenshare",
             "shortcuts": "Toggle shortcuts",
-            "show": "Pin",
+            "show": "Show on stage",
             "speakerStats": "Toggle speaker statistics",
             "tileView": "Toggle tile view",
             "toggleCamera": "Toggle camera",
