@@ -29,7 +29,7 @@ const toolbarButton = {
 const toolbarButtonIcon = {
     alignSelf: 'center',
     color: ColorPalette.darkGrey,
-    fontSize: 24
+    fontSize: 28
 };
 
 
