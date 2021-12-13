@@ -129,7 +129,6 @@ class LargeVideo extends PureComponent<Props, State> {
                 avatarSize = { avatarSize }
                 disableVideo = { _disableVideo }
                 onPress = { onClick }
-                largeMode = {true}
                 participantId = { _participantId }
                 style = { _styles.largeVideo }
                 testHintId = 'org.jitsi.meet.LargeVideo'

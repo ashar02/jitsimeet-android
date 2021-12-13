@@ -719,7 +719,7 @@
         "mute": "Member is muted",
         "muted": "Muted",
         "remoteControl": "Remote control",
-        "show": "Pin",
+        "show": "",
         "videomute": "Member has stopped the camera"
     },
     "welcomepage": {

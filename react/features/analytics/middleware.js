@@ -1,14 +1,11 @@
 // @flow
 
-import { NativeModules } from 'react-native';
-
 import {
     CONFERENCE_JOINED,
     CONFERENCE_WILL_LEAVE,
     SET_ROOM
 } from '../base/conference';
 import { SET_CONFIG } from '../base/config';
-import { INITIAL_ROUTE_EARPIECE_ENABLED, getFeatureFlag} from '../base/flags';
 import { SET_NETWORK_INFO } from '../base/net-info';
 import { MiddlewareRegistry } from '../base/redux';
 import {
@@ -22,7 +19,6 @@ import {
 import { createLocalTracksDurationEvent, createNetworkInfoEvent } from './AnalyticsEvents';
 import { UPDATE_LOCAL_TRACKS_DURATION } from './actionTypes';
 import { createHandlers, initAnalytics, resetAnalytics, sendAnalytics } from './functions';
-const { AudioMode } = NativeModules;
 
 /**
  * Calculates the duration of the local tracks.
@@ -114,17 +110,6 @@ MiddlewareRegistry.register(store => next => action => {
         const { dispatch, getState } = store;
         const state = getState();
 
-        // const initialRouteEarpieceEnabled = getFeatureFlag(state, INITIAL_ROUTE_EARPIECE_ENABLED);
-        const initialRouteEarpieceEnabled = Boolean(getState()['features/base/audio-only'].enabled);
-
-        if (typeof initialRouteEarpieceEnabled !== 'undefined') {
-            if (initialRouteEarpieceEnabled) {
-                AudioMode.setInitialRouteToEarpiece(true);
-            } else {
-                AudioMode.setInitialRouteToEarpiece(false);
-            }
-        }
-        
         dispatch({
             type: UPDATE_LOCAL_TRACKS_DURATION,
             localTracksDuration: {
