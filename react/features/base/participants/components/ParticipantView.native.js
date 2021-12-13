@@ -269,7 +269,7 @@ function _mapStateToProps(state, ownProps) {
     const { disableVideo, participantId } = ownProps;
     const participant = getParticipantById(state, participantId);
     let connectionStatus;
-    let participantName;
+    let participantName = participant?.name;
 
     return {
         _connectionStatus:

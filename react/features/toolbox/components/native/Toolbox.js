@@ -31,14 +31,14 @@ type Props = {
     _styles: StyleType,
 
     /**
-     * The indicator which determines whether the toolbox is visible.
-     */
-    _visible: boolean,
-
-        /**
      * Whether video is currently muted or not.
      */
     _videoMuted: boolean,
+
+    /**
+     * The indicator which determines whether the toolbox is visible.
+     */
+    _visible: boolean,
 
     /**
      * The width of the screen.
@@ -62,7 +62,7 @@ function Toolbox(props: Props) {
         return null;
     }
 
-    const { _styles, _width, _videoMuted } = props;
+    const { _styles, _width } = props;
     const { buttonStylesBorderless, hangupButtonStyles, toggledButtonStyles } = _styles;
     const additionalButtons = getMovableButtons(_width);
     const backgroundToggledStyle = {
@@ -99,15 +99,17 @@ function Toolbox(props: Props) {
                 {additionalButtons.has('tileview') && <TileViewButton styles = { buttonStylesBorderless } />}
                 {additionalButtons.has('invite') && <InviteButton styles = { buttonStylesBorderless } />}
                 {additionalButtons.has('togglecamera')
-                      && !_videoMuted && <ToggleCameraButton
+                      && !props._videoMuted && <ToggleCameraButton
                           styles = { buttonStylesBorderless }
                           toggledStyles = { backgroundToggledStyle } />}
                 <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
                 </View>
-                <HangupButton
-                    styles = { hangupButtonStyles } />
+                <View style={{alignSelf:'center', marginBottom:12}}>
+                    <HangupButton
+                        styles = { hangupButtonStyles } />
+                </View>
             </SafeAreaView>
         </View>
     );
