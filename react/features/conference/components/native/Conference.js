@@ -22,7 +22,8 @@ import {
     FILMSTRIP_SIZE,
     Filmstrip,
     isFilmstripVisible,
-    TileView
+    TileView,
+    GridView
 } from '../../../filmstrip';
 import { AddPeopleDialog, CalleeInfoContainer } from '../../../invite';
 import { LargeVideo } from '../../../large-video';
@@ -272,7 +273,7 @@ class Conference extends AbstractConference<Props, *> {
                   * The LargeVideo is the lowermost stacking layer.
                   */
                     _shouldDisplayTileView
-                        ? <TileView onClick = { this._onClick } />
+                        ? <GridView onClick = { this._onClick }/>
                         : <LargeVideo onClick = { this._onClick } />
                 }
 

@@ -194,7 +194,7 @@ class TileView extends Component<Props> {
         }
 
         return {
-            height: tileWidth / TILE_ASPECT_RATIO,
+            height: heightToUse,
             width: tileWidth
         };
     }
