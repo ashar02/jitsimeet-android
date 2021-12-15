@@ -8,7 +8,7 @@ class GridView extends Component {
         super(props);
         this.state = {
             fullWidth: Dimensions.get("window").width,
-            fullHeight: Dimensions.get("window").height - 90,
+            fullHeight: Dimensions.get("window").height ,
             tileSize: 0,
         };
     }
@@ -19,14 +19,18 @@ class GridView extends Component {
         this.setState({ tileSize: tileSize });
     };
     renderItem = ({ item, index }) => {
+        const tileSize =
+            this.state.fullHeight /
+            (this.props?._participants?.length / 2).toFixed(0);
         const styleOverrides = {
-            aspectRatio: 1,
+            aspectRatio: 2,
             flex: 1,
-            height: this.state.tileSize,
-            maxHeight: this.state.tileSize,
+            height: tileSize,
+            maxHeight: tileSize,
             maxWidth: this.state.fullWidth / 2,
             width: this.state.fullWidth / 2,
         };
+        
 
         if (
             this.props?._participants?.length % 2 !== 0
@@ -35,11 +39,7 @@ class GridView extends Component {
         ) {
             return (
                 <View
-                    style={{
-                        width: this.state.fullWidth / 2,
-                        height: this.state.tileSize,
-                        backgroundColor: "#fff",
-                    }}
+                   
                 >
                     <Thumbnail
                         disableTint={true}
@@ -55,21 +55,26 @@ class GridView extends Component {
     };
 
     render() {
-        const styleOverrides = {
-            aspectRatio: 1,
-            flex: 1,
-            height: this.state.tileSize,
-            maxHeight: this.state.tileSize,
-            maxWidth: this.state.fullWidth,
-            width: this.state.fullWidth,
-            alignSelf:'center'
-        };
+
+        const tileSize =
+            this.state.fullHeight /
+            (this.props?._participants?.length / 2).toFixed(0);
+            const styleOverrides = {
+                aspectRatio: null,
+                flex: 1,
+                height: tileSize - 10,
+                maxHeight: tileSize - 11,
+                maxWidth: this.state.fullWidth,
+                width: this.state.fullWidth,
+                alignSelf:'center'
+            };
         return (
             <View style={{ flex: 1 }}>
                 <View
                     style={{
                         width: this.state.fullWidth,
                         height: this.state.fullHeight,
+                        alignSelf:'center'
                     }}
                 >
                     <FlatList
@@ -81,8 +86,7 @@ class GridView extends Component {
                     {this.props?._participants?.length % 2 !== 0 ? (
                     <View
                         style={{
-                            width: this.state.fullWidth,
-                            height: this.state.tileSize,
+                          
                             alignSelf:'center'
                         }}
                     >
