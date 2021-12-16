@@ -65,14 +65,14 @@ class GridView extends Component {
                 height: tileSize - 10,
                 maxHeight: tileSize - 11,
                 maxWidth: this.state.fullWidth,
-                width: this.state.fullWidth,
+                width: this.state.fullWidth - 12,
                 alignSelf:'center'
             };
         return (
             <View style={{ flex: 1 }}>
                 <View
                     style={{
-                        width: this.state.fullWidth,
+                        width: this.state.fullWidth - 12,
                         height: this.state.fullHeight,
                         alignSelf:'center'
                     }}
@@ -87,13 +87,14 @@ class GridView extends Component {
                     <View
                         style={{
                           
-                            alignSelf:'center'
+                            alignSelf:'center',
+                            marginBottom:3
                         }}
                     >
                         <Thumbnail
                             disableTint={true}
-                            key={this.props._participants.id}
-                            participant={this.props._participants}
+                            key={this.props._participants[this.props?._participants?.length - 1].id}
+                            participant={this.props._participants[this.props?._participants?.length - 1]}
                             renderDisplayName={true}
                             styleOverrides={styleOverrides}
                             tileView={true}
