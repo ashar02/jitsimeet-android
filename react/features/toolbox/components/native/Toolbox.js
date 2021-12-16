@@ -15,6 +15,7 @@ import HangupButton from '../HangupButton';
 import VideoMuteButton from '../VideoMuteButton';
 import { isLocalCameraTrackMuted } from '../../../base/tracks';
 
+import { AudioRouteButton } from '../../../mobile/audio-mode';
 import OverflowMenuButton from './OverflowMenuButton';
 import RaiseHandButton from './RaiseHandButton';
 import ToggleCameraButton from './ToggleCameraButton';
@@ -102,9 +103,14 @@ function Toolbox(props: Props) {
                       && !props._videoMuted && <ToggleCameraButton
                           styles = { buttonStylesBorderless }
                           toggledStyles = { backgroundToggledStyle } />}
-                <OverflowMenuButton
+                
+                {/* <OverflowMenuButton
                     styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
+                    toggledStyles = { toggledButtonStyles } /> */}
+                <AudioRouteButton 
+                styles = { buttonStylesBorderless }
+                toggledStyles = { toggledButtonStyles }
+                />
                 </View>
                 <View style={{alignSelf:'center', marginBottom:12}}>
                     <HangupButton
