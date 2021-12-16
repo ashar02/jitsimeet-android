@@ -82,10 +82,14 @@ function Toolbox(props: Props) {
                 accessibilityRole = 'toolbar'
                 pointerEvents = 'box-none'>
                 <View style = { styles.toolbox }>
-                <AudioMuteButton
+                <AudioRouteButton 
+                styles = { buttonStylesBorderless }
+                toggledStyles = { toggledButtonStyles }
+                />
+                <VideoMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
-                <VideoMuteButton
+                <AudioMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
                 { false
@@ -107,10 +111,6 @@ function Toolbox(props: Props) {
                 {/* <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } /> */}
-                <AudioRouteButton 
-                styles = { buttonStylesBorderless }
-                toggledStyles = { toggledButtonStyles }
-                />
                 </View>
                 <View style={{alignSelf:'center', marginBottom:12}}>
                     <HangupButton
