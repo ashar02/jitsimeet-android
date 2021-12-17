@@ -27,8 +27,8 @@ class GridView extends Component {
             flex: 1,
             height: tileSize,
             maxHeight: tileSize,
-            maxWidth: this.state.fullWidth / 2,
-            width: this.state.fullWidth / 2,
+            maxWidth: (this.state.fullWidth / 2) - 10,
+            width: (this.state.fullWidth / 2) - 10,
         };
         
 
@@ -65,14 +65,14 @@ class GridView extends Component {
                 height: tileSize - 10,
                 maxHeight: tileSize - 11,
                 maxWidth: this.state.fullWidth,
-                width: this.state.fullWidth - 12,
+                width: this.state.fullWidth - 13,
                 alignSelf:'center'
             };
         return (
             <View style={{ flex: 1 }}>
                 <View
                     style={{
-                        width: this.state.fullWidth - 12,
+                        width: this.state.fullWidth - 10,
                         height: this.state.fullHeight,
                         alignSelf:'center'
                     }}
@@ -82,6 +82,7 @@ class GridView extends Component {
                         renderItem={this.renderItem}
                         numColumns={2}
                         key={1}
+                        scrollEnabled={false}
                     />
                     {this.props?._participants?.length % 2 !== 0 ? (
                     <View
