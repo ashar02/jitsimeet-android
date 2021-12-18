@@ -342,6 +342,22 @@ class AudioModeModule extends ReactContextBaseJavaModule {
     }
 
     /**
+     * Public method to get the selected audio device.
+     */
+    @ReactMethod
+    public void getSelectedDevice(final Promise promise) {
+        promise.resolve(selectedDevice);
+    }
+
+    /**
+     * Public method to get the user selected audio device.
+     */
+    @ReactMethod
+    public void getUserSelectedDevice(final Promise promise) {
+        promise.resolve(userSelectedDevice);
+    }
+
+    /**
      * Updates the audio route for the given mode.
      *
      * @param mode the audio mode to be used when computing the audio route.
