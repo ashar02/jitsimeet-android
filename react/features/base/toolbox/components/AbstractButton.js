@@ -227,6 +227,9 @@ export default class AbstractButton<P: Props, S: *> extends Component<P, S> {
     _isDisabled() {
         return false;
     }
+    _isIconChange(){
+
+    }
 
     /**
      * Helper function to be implemented by subclasses, which must return a
@@ -237,7 +240,7 @@ export default class AbstractButton<P: Props, S: *> extends Component<P, S> {
      * @returns {?boolean}
      */
     _isToggled() {
-        return undefined;
+        return this._isIconChange()
     }
 
     _onClick: (*) => void;
@@ -251,7 +254,6 @@ export default class AbstractButton<P: Props, S: *> extends Component<P, S> {
      */
     _onClick() {
         const { afterClick } = this.props;
-
         this._handleClick();
         afterClick && afterClick();
     }

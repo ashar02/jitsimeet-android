@@ -16,7 +16,7 @@ import {
 } from '../../../base/icons';
 import { connect } from '../../../base/redux';
 import { ColorPalette, type StyleType } from '../../../base/styles';
-
+import { setToolboxVisible } from '../../../toolbox/actions';
 import styles from './styles';
 
 const { AudioMode } = NativeModules;
@@ -218,7 +218,11 @@ class AudioRoutePickerDialog extends Component<Props, State> {
      * @returns {void}
      */
     _hide() {
+        this.props.dispatch(setToolboxVisible(false));
         this.props.dispatch(hideDialog(AudioRoutePickerDialog_));
+        setTimeout(() => {
+        this.props.dispatch(setToolboxVisible(true));
+        }, 200);
     }
 
     _onCancel: () => void;
