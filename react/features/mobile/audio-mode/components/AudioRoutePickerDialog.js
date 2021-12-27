@@ -218,10 +218,10 @@ class AudioRoutePickerDialog extends Component<Props, State> {
      * @returns {void}
      */
     _hide() {
-        this.props.dispatch(setToolboxVisible(false));
-        this.props.dispatch(hideDialog(AudioRoutePickerDialog_));
+        this.props.dispatch(setToolboxVisible(false));   
         setTimeout(() => {
         this.props.dispatch(setToolboxVisible(true));
+        this.props.dispatch(hideDialog(AudioRoutePickerDialog_));
         }, 200);
     }
 
