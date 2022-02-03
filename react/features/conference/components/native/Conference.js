@@ -296,11 +296,11 @@ class Conference extends AbstractConference<Props, *> {
                 <View
                     pointerEvents = 'box-none'
                     style = { styles.toolboxAndFilmstripContainer }>
-                    {
+                    {/* {
                         audioMuted == true && !_shouldDisplayTileView ? (
                         <Text style={{color:'#fff', marginTop:6, marginBottom:6, textAlign:'center'}}> {_participantName} muted this call</Text>
                         ):(<></>)
-                    }
+                    } */}
 
                     <Captions onPress = { this._onClick } />
 

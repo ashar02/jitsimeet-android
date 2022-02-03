@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View, Text } from 'react-native';
 
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { connect } from '../../../base/redux';
@@ -14,12 +14,13 @@ import AudioMuteButton from '../AudioMuteButton';
 import HangupButton from '../HangupButton';
 import VideoMuteButton from '../VideoMuteButton';
 import { isLocalCameraTrackMuted } from '../../../base/tracks';
-
+import { Avatar } from '../../../base/avatar';
 import { AudioRouteButton } from '../../../mobile/audio-mode';
 import OverflowMenuButton from './OverflowMenuButton';
 import RaiseHandButton from './RaiseHandButton';
 import ToggleCameraButton from './ToggleCameraButton';
 import styles from './styles';
+import { getParticipantById } from '../../../base/participants/functions';
 
 /**
  * The type of {@link Toolbox}'s React {@code Component} props.
@@ -35,6 +36,8 @@ type Props = {
      * Whether video is currently muted or not.
      */
     _videoMuted: boolean,
+
+    _participant: Object,
 
     /**
      * The indicator which determines whether the toolbox is visible.
@@ -73,7 +76,6 @@ function Toolbox(props: Props) {
             _styles.backgroundToggle
         ]
     };
-
     return (
         <View
             pointerEvents = 'box-none'
@@ -81,6 +83,21 @@ function Toolbox(props: Props) {
             <SafeAreaView
                 accessibilityRole = 'toolbar'
                 pointerEvents = 'box-none'>
+                <View style={{marginLeft:14, marginTop:10, flexDirection:'row',  justifyContent:'space-between', alignItems:'center'}}>
+                <View style={{alignItems:'center', flexDirection:'row'}}>
+                <Avatar
+                    participantId = { props?._participant?.id }
+                    size = { 50 } />
+                   <View>
+                <Text style={{color:'#fff', fontWeight:'bold', fontSize:17, paddingLeft:6}}>{props?._participant?.name}</Text>
+                <Text style={{color:'#fff', fontSize:14, paddingLeft:6}}>Circleit call</Text>
+                </View>
+                </View>
+                <View>
+                <HangupButton
+                    styles = { hangupButtonStyles } />
+                </View>
+                </View>
                 <View style = { styles.toolbox }>
                 <AudioRouteButton 
                 styles = { buttonStylesBorderless }
@@ -89,9 +106,9 @@ function Toolbox(props: Props) {
                 <VideoMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
-                {!props._videoMuted && <ToggleCameraButton
+                <ToggleCameraButton
                           styles = { buttonStylesBorderless }
-                          toggledStyles = { backgroundToggledStyle } />}
+                          toggledStyles = { backgroundToggledStyle } />
                 <AudioMuteButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } />
@@ -114,11 +131,10 @@ function Toolbox(props: Props) {
                 {/* <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } /> */}
+
+               
                 </View>
-                <View style={{alignSelf:'center', marginBottom:12}}>
-                    <HangupButton
-                        styles = { hangupButtonStyles } />
-                </View>
+               
             </SafeAreaView>
         </View>
     );
@@ -135,11 +151,13 @@ function Toolbox(props: Props) {
  */
 function _mapStateToProps(state: Object): Object {
     const tracks = state['features/base/tracks'];
+    const participant = getParticipantById(state, state['features/large-video'].participantId);
     return {
         _styles: ColorSchemeRegistry.get(state, 'Toolbox'),
         _visible: isToolboxVisible(state),
         _width: state['features/base/responsive-ui'].clientWidth,
         _videoMuted: isLocalCameraTrackMuted(tracks),
+        _participant: participant
     };
 }
 
