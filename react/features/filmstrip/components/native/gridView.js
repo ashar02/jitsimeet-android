@@ -27,8 +27,9 @@ class GridView extends Component {
             flex: 1,
             height: tileSize,
             maxHeight: tileSize,
-            maxWidth: (this.state.fullWidth / 2) - 10,
-            width: (this.state.fullWidth / 2) - 10,
+            maxWidth: (this.state.fullWidth / 2) - 15,
+            width: (this.state.fullWidth / 2) - 15,
+            borderRadius:12
         };
         
 
@@ -62,19 +63,21 @@ class GridView extends Component {
             const styleOverrides = {
                 aspectRatio: null,
                 flex: 1,
-                height: tileSize - 10,
-                maxHeight: tileSize - 11,
+                height: tileSize - 14,
+                maxHeight: tileSize - 14,
                 maxWidth: this.state.fullWidth,
-                width: this.state.fullWidth - 13,
-                alignSelf:'center'
+                width: this.state.fullWidth - 24,
+                alignSelf:'center',
+                borderRadius:12
             };
         return (
             <View style={{ flex: 1 }}>
                 <View
                     style={{
-                        width: this.state.fullWidth - 10,
+                        width: this.state.fullWidth,
                         height: this.state.fullHeight,
-                        alignSelf:'center'
+                        alignSelf:'center',
+                        alignItems:'center',
                     }}
                 >
                     <FlatList

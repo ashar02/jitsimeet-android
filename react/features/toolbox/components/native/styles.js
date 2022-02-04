@@ -82,7 +82,7 @@ const styles = {
         flexDirection: 'column',
         flexGrow: 0,
         width: '100%',
-        maxWidth: 390,
+        maxWidth: 380,
         marginLeft: 'auto',
         marginRight: 'auto',
         backgroundColor:'#564732',
