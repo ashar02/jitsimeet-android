@@ -90,7 +90,7 @@ function Toolbox(props: Props) {
                     size = { 50 } />
                    <View>
                 <Text style={{color:'#fff', fontWeight:'bold', fontSize:17, paddingLeft:6}}>{props?._participant?.name}</Text>
-                <Text style={{color:'#fff', fontSize:14, paddingLeft:6}}>Circleit call</Text>
+                <Text style={{color:'#fff', fontSize:14, paddingLeft:6}}>Circleit {props._videoMuted ? 'audio' : 'video'} call</Text>
                 </View>
                 </View>
                 <View>
