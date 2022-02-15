@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import { SafeAreaView, View, Text } from 'react-native';
+import React, {useState} from 'react';
+import { SafeAreaView, View, Text, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
 
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { connect } from '../../../base/redux';
@@ -38,6 +38,11 @@ type Props = {
     _videoMuted: boolean,
 
     _participant: Object,
+
+     /**
+     * The participants in the conference.
+     */
+      _participants: Array<Object>,
 
     /**
      * The indicator which determines whether the toolbox is visible.
@@ -76,6 +81,7 @@ function Toolbox(props: Props) {
             _styles.backgroundToggle
         ]
     };
+    const [modalVisible, setModalVisible] = useState(false);
     return (
         <View
             pointerEvents = 'box-none'
@@ -83,6 +89,7 @@ function Toolbox(props: Props) {
             <SafeAreaView
                 accessibilityRole = 'toolbar'
                 pointerEvents = 'box-none'>
+                    <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
                 <View style={{marginLeft:14, marginTop:10, flexDirection:'row',  justifyContent:'space-between', alignItems:'center'}}>
                 <View style={{alignItems:'center', flexDirection:'row'}}>
                 <Avatar
@@ -98,6 +105,7 @@ function Toolbox(props: Props) {
                     styles = { hangupButtonStyles } />
                 </View>
                 </View>
+                </TouchableWithoutFeedback>
                 <View style = { styles.toolbox }>
                 <AudioRouteButton 
                 styles = { buttonStylesBorderless }
@@ -134,7 +142,98 @@ function Toolbox(props: Props) {
 
                
                 </View>
-               
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center", backgroundColor: '#564732', opacity: 0.98
+                    }}>
+
+                        <View style={{ position: 'absolute', right: 10, top: 30 }}>
+                            <Text style={{ fontSize: 14, color: '#fff', fontWeight: 'bold' }} onPress={() => setModalVisible(false)}>Done</Text>
+                        </View>
+
+                        <View style={{ alignSelf: 'center', marginTop: -200 }}>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                                {
+                                    props._participants.map(function (participant, index) {
+                                        return (
+                                            <View style={{ marginLeft: -10, marginTop: 4 }}>
+                                                <Avatar
+                                                    participantId={participant?.id}
+                                                    size={50} />
+                                            </View>
+                                        )
+                                    })
+                                }
+                            </View>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 12 }}>
+                                {props._participants?.length <= 3 ? (
+                                    props._participants?.map(function (user, index) {
+                                        return (
+                                            <Text
+                                                ellipsizeMode="tail"
+                                                numberOfLines={1}
+                                                style={{
+                                                    color: '#ffffff',
+                                                    fontSize: 18, fontWeight: 'bold'
+                                                }}>
+                                                {user.name}
+                                                {props._participants.length == 2 && props._participants.length - 1 !== index ? ' & ' : props._participants.length - 1 == index ? '' : ', '}
+                                            </Text>
+                                        );
+                                    })
+                                ) : (
+                                    <Text style={{
+                                        color: '#ffffff',
+                                        fontSize: 14,
+                                    }}>
+                                        {`${props._participants[0]?.name} and ${props._participants?.length - 1
+                                            } others`}
+                                    </Text>
+                                )}
+                            </View>
+                        </View>
+
+                        <View style={{ borderRadius: 12, width: Dimensions.get('screen').width - 60, backgroundColor: '#343333', opacity: 0.7, alignSelf: 'center', marginTop: 50 }}>
+                            <View style={{ margin: 12 }}>
+                                <View style={{ borderBottomWidth: 1, borderBottomColor: '#fff', paddingBottom: 8 }}>
+                                    <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>CircleIt</Text>
+                                    <Text style={{ color: '#fff', fontSize: 12, fontWeight: 'bold' }}>{props._participants.length} People Active</Text>
+                                </View>
+
+                                {
+                                    props._participants.map(function (participant, index) {
+                                        return (
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12 }}>
+                                                <View>
+                                                    <Avatar
+                                                        participantId={participant?.id}
+                                                        size={40} />
+                                                </View>
+                                                <View style={{ marginLeft: 12 }}>
+                                                    <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>
+                                                        {participant.name}
+                                                    </Text>
+                                                    <Text style={{ color: '#fff', fontSize: 12 }}>
+                                                        circleit {props._videoMuted ? 'audio' : 'video'} call
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        )
+                                    })
+                                }
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
             </SafeAreaView>
         </View>
     );
@@ -152,12 +251,14 @@ function Toolbox(props: Props) {
 function _mapStateToProps(state: Object): Object {
     const tracks = state['features/base/tracks'];
     const participant = getParticipantById(state, state['features/large-video'].participantId);
+    const participants =  state['features/base/participants'];
     return {
         _styles: ColorSchemeRegistry.get(state, 'Toolbox'),
         _visible: isToolboxVisible(state),
         _width: state['features/base/responsive-ui'].clientWidth,
         _videoMuted: isLocalCameraTrackMuted(tracks),
-        _participant: participant
+        _participant: participant,
+        _participants: participants
     };
 }
 
