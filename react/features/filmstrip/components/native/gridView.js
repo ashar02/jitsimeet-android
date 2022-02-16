@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Dimensions, FlatList } from "react-native";
+import { View, Text, Dimensions, FlatList, SafeAreaView } from "react-native";
 import { connect } from "../../../base/redux";
 import Thumbnail from "./Thumbnail";
 
@@ -29,7 +29,7 @@ class GridView extends Component {
             maxHeight: tileSize,
             maxWidth: (this.state.fullWidth / 2) - 15,
             width: (this.state.fullWidth / 2) - 15,
-            borderRadius:12
+            borderRadius:10
         };
         
 
@@ -68,9 +68,10 @@ class GridView extends Component {
                 maxWidth: this.state.fullWidth,
                 width: this.state.fullWidth - 24,
                 alignSelf:'center',
-                borderRadius:12
+                borderRadius:10
             };
         return (
+            <SafeAreaView>
             <View style={{ flex: 1 }}>
                 <View
                     style={{
@@ -110,6 +111,7 @@ class GridView extends Component {
                 </View>
                 
             </View>
+            </SafeAreaView>
         );
     }
 }

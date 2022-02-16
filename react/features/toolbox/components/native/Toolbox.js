@@ -156,11 +156,11 @@ function Toolbox(props: Props) {
                         alignItems: "center", backgroundColor: '#564732', opacity: 0.98
                     }}>
 
-                        <View style={{ position: 'absolute', right: 10, top: 30 }}>
+                        <View style={{ position: 'absolute', right: 20, top: 50 }}>
                             <Text style={{ fontSize: 14, color: '#fff', fontWeight: 'bold' }} onPress={() => setModalVisible(false)}>Done</Text>
                         </View>
 
-                        <View style={{ alignSelf: 'center', marginTop: -200 }}>
+                        <View style={{ alignSelf: 'center' }}>
                             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                 {
                                     props._participants.map(function (participant, index) {
