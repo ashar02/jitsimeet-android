@@ -29,10 +29,18 @@ class LocalThumbnail extends Component<Props> {
      */
     render() {
         const { _localParticipant } = this.props;
-
+        const styleOverrides = {
+            aspectRatio: null,
+            flex: 1,
+            height: 240,
+            maxHeight: 140,
+            maxWidth: 140,
+            width: 240,
+            borderRadius:10
+        };
         return (
             <View style = { styles.localThumbnail }>
-                <Thumbnail participant = { _localParticipant } />
+                <Thumbnail participant = { _localParticipant } styleOverrides={styleOverrides} />
             </View>
         );
     }

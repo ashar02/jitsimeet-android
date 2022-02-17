@@ -70,8 +70,8 @@ const styles = {
         flexDirection: 'row',
         flexGrow: 0,
         justifyContent: 'space-around',
-        paddingHorizontal: BoxModel.margin,
-        paddingVertical: 5,
+        paddingHorizontal: 6,
+        paddingVertical: 10,
         
         alignSelf: 'flex-start'
     },
@@ -89,7 +89,6 @@ const styles = {
         backgroundColor:'#564732',
         borderRadius:35,
         alignSelf:'center',
-        opacity:0.7,
         marginBottom:10
     }
 };
