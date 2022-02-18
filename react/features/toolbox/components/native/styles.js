@@ -4,7 +4,7 @@ import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
 import {Dimensions} from 'react-native';
 
-const BUTTON_SIZE = 35;
+const BUTTON_SIZE = 45;
 
 // Toolbox, toolbar:
 
@@ -70,7 +70,7 @@ const styles = {
         flexDirection: 'row',
         flexGrow: 0,
         justifyContent: 'space-around',
-        paddingHorizontal: 6,
+        paddingHorizontal: 0,
         paddingVertical: 10,
         
         alignSelf: 'flex-start'
@@ -86,7 +86,7 @@ const styles = {
         maxWidth: Dimensions.get('screen').width - 34,
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor:'#564732',
+        backgroundColor:'#242424',
         borderRadius:35,
         alignSelf:'center',
         marginBottom:10
@@ -119,16 +119,20 @@ ColorSchemeRegistry.register('Toolbox', {
     },
 
     hangupButtonStyles: {
-        iconStyle: whiteToolbarButtonIcon,
+        iconStyle: {
+            alignSelf: 'center',
+            color: ColorPalette.darkGrey,
+            fontSize: 40,
+            marginTop:-4
+        },
         style: {
             flex:0,
             backgroundColor: schemeColor('hangup'),
-            width:65,
+            width:62,
             height:32,
             borderRadius:16,
             marginRight:15,
-            alignItems:'center',
-            paddingVertical:4
+            alignItems:'center'
         },
         underlayColor: ColorPalette.buttonUnderlay
     },

@@ -129,8 +129,7 @@ export default {
     },
 
     tileViewRows: {
-        justifyContent: 'center',
-        padding:5
+        justifyContent: 'center'
     },
 
     tileViewRow: {
