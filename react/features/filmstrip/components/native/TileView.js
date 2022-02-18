@@ -75,6 +75,12 @@ const TILE_ASPECT_RATIO = 1;
  * @extends Component
  */
 class TileView extends Component<Props> {
+    constructor(props){
+        super(props);
+        this.state={
+            localParticipant: null
+        }
+    }
     /**
      * Implements React's {@link Component#componentDidMount}.
      *
@@ -102,8 +108,8 @@ class TileView extends Component<Props> {
     render() {
         const { _height, _width, onClick } = this.props;
         const rowElements = this._groupIntoRows(this._renderThumbnails(), this._getColumnCount());
-
         return (
+            <View>
             <ScrollView
                 style = {{
                     ...styles.tileView,
@@ -121,6 +127,27 @@ class TileView extends Component<Props> {
                     </View>
                 </TouchableWithoutFeedback>
             </ScrollView>
+            <View style={{position:'absolute', right:12,bottom:12}}>
+                {
+                    this.state.localParticipant &&  <Thumbnail
+                    disableTint = { true }
+                    key = { this.state.localParticipant?.id }
+                    participant = { this.state?.localParticipant }
+                    renderDisplayName = { true }
+                    styleOverrides = {{
+                        aspectRatio: null,
+                        flex: 1,
+                        height: 240,
+                        maxHeight: 140,
+                        maxWidth: 140,
+                        width: 240,
+                        borderRadius:10
+                    }}
+                    tileView = { true } />
+                }
+           
+            </View>
+            </View>
         );
     }
 
@@ -131,7 +158,7 @@ class TileView extends Component<Props> {
      * @private
      */
     _getColumnCount() {
-        const participantCount = this.props._participants.length;
+        const participantCount = this.props._participants.length - 1;
 
         // For narrow view, tiles should stack on top of each other for a lonely
         // call and a 1:1 call. Otherwise tiles should be grouped into rows of
@@ -165,8 +192,9 @@ class TileView extends Component<Props> {
                 participants.push(participant);
             }
         }
-
-        localParticipant && participants.push(localParticipant);
+        if(!this.state.localParticipant){
+        localParticipant && this.setState({localParticipant: localParticipant});
+        }
 
         return participants;
     }
@@ -188,13 +216,13 @@ class TileView extends Component<Props> {
         // If there is going to be at least two rows, ensure that at least two
         // rows display fully on screen.
         if (participantCount / columns > 1) {
-            tileWidth = Math.min(widthToUse / columns, heightToUse / 2);
+            tileWidth = Math.min(widthToUse / columns, heightToUse / 3.5);
         } else {
             tileWidth = Math.min(widthToUse / columns, heightToUse);
         }
 
         return {
-            height: heightToUse,
+            height: tileWidth / TILE_ASPECT_RATIO,
             width: tileWidth
         };
     }

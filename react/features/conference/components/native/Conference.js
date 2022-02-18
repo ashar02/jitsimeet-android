@@ -273,7 +273,7 @@ class Conference extends AbstractConference<Props, *> {
                   * The LargeVideo is the lowermost stacking layer.
                   */
                     _shouldDisplayTileView
-                        ? <GridView onClick = { this._onClick }/>
+                        ? <TileView onClick = { this._onClick }/>
                         : <LargeVideo onClick = { this._onClick } />
                 }
 
