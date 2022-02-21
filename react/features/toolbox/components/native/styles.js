@@ -4,7 +4,7 @@ import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
 import {Dimensions} from 'react-native';
 
-const BUTTON_SIZE = 45;
+const BUTTON_SIZE = 50;
 
 // Toolbox, toolbar:
 
@@ -30,7 +30,7 @@ const toolbarButton = {
 const toolbarButtonIcon = {
     alignSelf: 'center',
     color: ColorPalette.darkGrey,
-    fontSize: 24
+    fontSize: 26
 };
 
 
@@ -69,11 +69,11 @@ const styles = {
         borderTopRightRadius: 3,
         flexDirection: 'row',
         flexGrow: 0,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         paddingHorizontal: 0,
         paddingVertical: 10,
         
-        alignSelf: 'flex-start'
+        
     },
 
     /**
@@ -123,7 +123,8 @@ ColorSchemeRegistry.register('Toolbox', {
             alignSelf: 'center',
             color: ColorPalette.darkGrey,
             fontSize: 40,
-            marginTop:-4
+            marginTop:-3,
+            marginLeft:3
         },
         style: {
             flex:0,

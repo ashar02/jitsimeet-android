@@ -21,6 +21,8 @@ import RaiseHandButton from './RaiseHandButton';
 import ToggleCameraButton from './ToggleCameraButton';
 import styles from './styles';
 import { getParticipantById } from '../../../base/participants/functions';
+import { isLocalTrackMuted } from '../../../base/tracks';
+import { MEDIA_TYPE } from '../../../base/media';
 
 /**
  * The type of {@link Toolbox}'s React {@code Component} props.
@@ -38,6 +40,11 @@ type Props = {
     _videoMuted: boolean,
 
     _participant: Object,
+
+    /**
+     * Whether audio is currently muted or not.
+     */
+     _audioMuted: boolean,
 
      /**
      * The participants in the conference.
@@ -108,18 +115,58 @@ function Toolbox(props: Props) {
                 </TouchableWithoutFeedback>
                 <View style = { styles.toolbox }>
                 <AudioRouteButton 
-                styles = { buttonStylesBorderless }
-                toggledStyles = { toggledButtonStyles }
+                styles = {{iconStyle:{fontSize:28, color:'#000'}, style: {borderRadius: 25,
+                    borderWidth: 0,
+                    flex: 0,
+                    flexDirection: 'row',
+                    height: 50,
+                    justifyContent: 'center',
+                    marginHorizontal: 16,
+                    marginTop: 6,
+                    alignItems:'center',
+                    width: 50,
+                    backgroundColor: 'rgba(225, 225, 225, 1)'}}}
+                
                 />
                 <VideoMuteButton
-                    styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
+                    styles = { {iconStyle:{fontSize:28, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                        borderWidth: 0,
+                        flex: 0,
+                        flexDirection: 'row',
+                        height: 50,
+                        justifyContent: 'center',
+                        marginHorizontal: 18,
+                        marginTop: 6,
+                        alignItems:'center',
+                        width: 50,
+                        backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
+                     />
                 <ToggleCameraButton
-                          styles = { buttonStylesBorderless }
-                          toggledStyles = { backgroundToggledStyle } />
+                          styles = { {iconStyle:{fontSize:28, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                            borderWidth: 0,
+                            flex: 0,
+                            flexDirection: 'row',
+                            height: 50,
+                            justifyContent: 'center',
+                            marginHorizontal: 17,
+                            marginTop: 6,
+                            alignItems:'center',
+                            width: 50,
+                            backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
+                           />
                 <AudioMuteButton
-                    styles = { buttonStylesBorderless }
-                    toggledStyles = { toggledButtonStyles } />
+                    styles = { {iconStyle:{fontSize:28, color:props._audioMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                        borderWidth: 0,
+                        flex: 0,
+                        flexDirection: 'row',
+                        height: 50,
+                        justifyContent: 'center',
+                        marginHorizontal: 16,
+                        marginTop: 6,
+                        alignItems:'center',
+                        width: 50,
+                        backgroundColor: props._audioMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
+                     />
                 { false
                       && <ChatButton
                           styles = { buttonStylesBorderless }
@@ -153,7 +200,8 @@ function Toolbox(props: Props) {
                     <View style={{
                         flex: 1,
                         justifyContent: "center",
-                        alignItems: "center", backgroundColor: '#564732', opacity: 0.98
+                        alignItems: "center", backgroundColor: '#242424', opacity: 0.98,
+                        width: Dimensions.get('screen').width, height: Dimensions.get('screen').height
                     }}>
 
                         <View style={{ position: 'absolute', right: 20, top: 50 }}>
@@ -205,8 +253,8 @@ function Toolbox(props: Props) {
                         <View style={{ borderRadius: 12, width: Dimensions.get('screen').width - 60, backgroundColor: '#343333', opacity: 0.7, alignSelf: 'center', marginTop: 50 }}>
                             <View style={{ margin: 12 }}>
                                 <View style={{ borderBottomWidth: 1, borderBottomColor: '#fff', paddingBottom: 8 }}>
-                                    <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>CircleIt</Text>
-                                    <Text style={{ color: '#fff', fontSize: 12, fontWeight: 'bold' }}>{props._participants.length} People Active</Text>
+                                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>CircleIt</Text>
+                                    <Text style={{ color: '#fff', fontSize: 14, fontWeight: 'bold' }}>{props._participants.length} People Active</Text>
                                 </View>
 
                                 {
@@ -252,13 +300,15 @@ function _mapStateToProps(state: Object): Object {
     const tracks = state['features/base/tracks'];
     const participant = getParticipantById(state, state['features/large-video'].participantId);
     const participants =  state['features/base/participants'];
+    const _audioMuted = isLocalTrackMuted(state['features/base/tracks'], MEDIA_TYPE.AUDIO);
     return {
         _styles: ColorSchemeRegistry.get(state, 'Toolbox'),
         _visible: isToolboxVisible(state),
         _width: state['features/base/responsive-ui'].clientWidth,
         _videoMuted: isLocalCameraTrackMuted(tracks),
         _participant: participant,
-        _participants: participants
+        _participants: participants,
+        _audioMuted
     };
 }
 
