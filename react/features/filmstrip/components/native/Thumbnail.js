@@ -151,10 +151,10 @@ function Thumbnail(props: Props) {
             touchFeedback = { false }>
 
             <ParticipantView
-                avatarSize = { tileView ? AVATAR_SIZE * 1.5 : AVATAR_SIZE }
+                avatarSize = { tileView ? AVATAR_SIZE * 2 : AVATAR_SIZE }
                 disableVideo = { isScreenShare || participant.isFakeParticipant }
                 participantId = { participantId }
-                style = { _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator ? 2 : 0, borderColor:'#D2A622', borderRadius:8 } }
+                style = { _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator ? 2 : 0, borderColor:'#D2A622', borderRadius:16 } }
                 tintEnabled = { participantInLargeVideo && !disableTint }
                 tintStyle = { _styles.activeThumbnailTint }
                 zOrder = { 1 } />
@@ -222,7 +222,7 @@ function _mapDispatchToProps(dispatch: Function, ownProps): Object {
             if (tileView) {
                 dispatch(toggleToolboxVisible());
             } else {
-                dispatch(pinParticipant(participant.pinned ? null : participant.id));
+                //dispatch(pinParticipant(participant.pinned ? null : participant.id));
             }
         },
 

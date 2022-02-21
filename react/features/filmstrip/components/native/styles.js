@@ -103,10 +103,10 @@ export default {
      */
     thumbnailIndicatorContainer: {
         alignSelf: 'stretch',
-        bottom: 4,
+        bottom: 5,
         flex: 1,
         flexDirection: 'row',
-        left: 4,
+        left: 6,
         position: 'absolute'
     },
 

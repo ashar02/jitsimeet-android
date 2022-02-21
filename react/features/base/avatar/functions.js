@@ -11,7 +11,7 @@ const AVATAR_COLORS = [
 ];
 
 const AVATAR_OPACITY = 0.6;
-const AVATAR_BACKGROUND_OPACITY = 0.3
+const AVATAR_BACKGROUND_OPACITY = 0.15
 
 /**
  * Generates the background color of an initials based avatar.
