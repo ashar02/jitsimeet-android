@@ -10,7 +10,8 @@ const AVATAR_COLORS = [
     '234, 255, 128'
 ];
 
-const AVATAR_OPACITY = 0.4;
+const AVATAR_OPACITY = 0.6;
+const AVATAR_BACKGROUND_OPACITY = 0.3
 
 /**
  * Generates the background color of an initials based avatar.
@@ -33,7 +34,21 @@ export function getAvatarColor(initials: ?string) {
 
     return `rgba(${AVATAR_COLORS[colorIndex]}, ${AVATAR_OPACITY})`;
 }
+export function getAvatarBackgroundColor(initials: ?string) {
+    let colorIndex = 0;
 
+    if (initials) {
+        let nameHash = 0;
+
+        for (const s of initials) {
+            nameHash += s.codePointAt(0);
+        }
+
+        colorIndex = nameHash % AVATAR_COLORS.length;
+    }
+
+    return `rgba(${AVATAR_COLORS[colorIndex]}, ${AVATAR_BACKGROUND_OPACITY})`;
+}
 /**
  * Generates initials for a simple string.
  *
