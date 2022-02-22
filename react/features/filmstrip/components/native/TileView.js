@@ -143,7 +143,7 @@ class TileView extends Component<Props> {
                         maxHeight: this.props._participants.length == 3 ? 100 : this.props._participants.length > 5 ? 100 :  140 ,
                         maxWidth: this.props._participants.length == 3 ? 100 : this.props._participants.length > 5 ? 100 :  140,
                         width: 140,
-                        borderRadius:10,
+                        borderRadius:16,
                         backgroundColor:getAvatarBackgroundColor(this.state?.localParticipant.name),
                         
                     }}

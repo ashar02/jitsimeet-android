@@ -154,7 +154,7 @@ function Thumbnail(props: Props) {
                 avatarSize = { tileView ? AVATAR_SIZE * 2 : AVATAR_SIZE }
                 disableVideo = { isScreenShare || participant.isFakeParticipant }
                 participantId = { participantId }
-                style = { _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator ? 2 : 0, borderColor:'#D2A622', borderRadius:16 } }
+                style = { _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator ? 2 : 0, borderColor:'#D2A622', borderRadius:15 } }
                 tintEnabled = { participantInLargeVideo && !disableTint }
                 tintStyle = { _styles.activeThumbnailTint }
                 zOrder = { 1 } />

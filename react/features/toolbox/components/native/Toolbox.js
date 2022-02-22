@@ -271,7 +271,7 @@ function Toolbox(props: Props) {
                                                         {participant.name}
                                                     </Text>
                                                     <Text style={{ color: '#fff', fontSize: 12 }}>
-                                                        circleit {props._videoMuted ? 'audio' : 'video'} call
+                                                        Circleit {props._videoMuted ? 'Audio' : 'Video'} call
                                                     </Text>
                                                 </View>
                                             </View>
