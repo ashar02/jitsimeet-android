@@ -104,7 +104,7 @@ function Toolbox(props: Props) {
                     size = { 50 } />
                    <View>
                 <Text style={{color:'#fff', fontWeight:'bold', fontSize:17, paddingLeft:6}}>{props?._participant?.name}</Text>
-                <Text style={{color:'#fff', fontSize:14, paddingLeft:6}}>Circleit {props._videoMuted ? 'audio' : 'video'} call</Text>
+                <Text style={{color:'#fff', fontSize:14, paddingLeft:6}}>Circleit {props._videoMuted ? 'Audio' : 'Video'} call</Text>
                 </View>
                 </View>
                 <View>
@@ -115,56 +115,56 @@ function Toolbox(props: Props) {
                 </TouchableWithoutFeedback>
                 <View style = { styles.toolbox }>
                 <AudioRouteButton 
-                styles = {{iconStyle:{fontSize:28, color:'#000'}, style: {borderRadius: 25,
+                styles = {{iconStyle:{fontSize:26, color:'#000'}, style: {borderRadius: 25,
                     borderWidth: 0,
                     flex: 0,
                     flexDirection: 'row',
-                    height: 50,
+                    height: 45,
                     justifyContent: 'center',
                     marginHorizontal: 16,
                     marginTop: 6,
                     alignItems:'center',
-                    width: 50,
+                    width: 45,
                     backgroundColor: 'rgba(225, 225, 225, 1)'}}}
                 
                 />
                 <VideoMuteButton
-                    styles = { {iconStyle:{fontSize:28, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                    styles = { {iconStyle:{fontSize:26, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
                         borderWidth: 0,
                         flex: 0,
                         flexDirection: 'row',
-                        height: 50,
+                        height: 45,
                         justifyContent: 'center',
                         marginHorizontal: 18,
                         marginTop: 6,
                         alignItems:'center',
-                        width: 50,
+                        width: 45,
                         backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
                      />
                 <ToggleCameraButton
-                          styles = { {iconStyle:{fontSize:28, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                          styles = { {iconStyle:{fontSize:26, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
                             borderWidth: 0,
                             flex: 0,
                             flexDirection: 'row',
-                            height: 50,
+                            height: 45,
                             justifyContent: 'center',
                             marginHorizontal: 17,
                             marginTop: 6,
                             alignItems:'center',
-                            width: 50,
+                            width: 45,
                             backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
                            />
                 <AudioMuteButton
-                    styles = { {iconStyle:{fontSize:28, color:props._audioMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                    styles = { {iconStyle:{fontSize:26, color:props._audioMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
                         borderWidth: 0,
                         flex: 0,
                         flexDirection: 'row',
-                        height: 50,
+                        height: 45,
                         justifyContent: 'center',
                         marginHorizontal: 16,
                         marginTop: 6,
                         alignItems:'center',
-                        width: 50,
+                        width: 45,
                         backgroundColor: props._audioMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
                      />
                 { false
@@ -250,7 +250,7 @@ function Toolbox(props: Props) {
                             </View>
                         </View>
 
-                        <View style={{ borderRadius: 12, width: Dimensions.get('screen').width - 60, backgroundColor: '#343333', opacity: 0.7, alignSelf: 'center', marginTop: 50 }}>
+                        <View style={{ borderRadius: 12, width: Dimensions.get('screen').width - 60, backgroundColor: '#343333', alignSelf: 'center', marginTop: 50 }}>
                             <View style={{ margin: 12 }}>
                                 <View style={{ borderBottomWidth: 1, borderBottomColor: '#fff', paddingBottom: 8 }}>
                                     <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>CircleIt</Text>
