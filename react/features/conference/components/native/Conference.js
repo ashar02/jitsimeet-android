@@ -311,7 +311,10 @@ class Conference extends AbstractConference<Props, *> {
                     <LonelyMeetingExperience />
 
                     { _shouldDisplayTileView ? undefined : <Filmstrip /> }
-                    <Toolbox />
+                    
+                </View>
+                <View style = { styles.toolboxContainer }>
+                <Toolbox />
                 </View>
 
                 <SafeAreaView

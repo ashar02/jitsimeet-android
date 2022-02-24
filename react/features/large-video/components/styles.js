@@ -5,7 +5,7 @@ import { ColorSchemeRegistry, schemeColor } from '../../base/color-scheme';
 /**
  * Size for the Avatar.
  */
-export const AVATAR_SIZE = 200;
+export const AVATAR_SIZE = 150;
 
 /**
  * Color schemed styles for the @{LargeVideo} component.

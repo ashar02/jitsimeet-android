@@ -158,7 +158,15 @@ export default {
         right: 0,
         top: 0
     },
-
+    toolboxContainer:{
+        bottom: 0,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0
+    },
     insecureRoomNameLabel: {
         backgroundColor: INSECURE_ROOM_NAME_LABEL_COLOR
     }

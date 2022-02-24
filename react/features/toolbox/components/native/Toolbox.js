@@ -97,14 +97,14 @@ function Toolbox(props: Props) {
                 accessibilityRole = 'toolbar'
                 pointerEvents = 'box-none'>
                     <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
-                <View style={{marginLeft:14, marginTop:10, flexDirection:'row',  justifyContent:'space-between', alignItems:'center'}}>
+                <View style={{marginLeft:14, marginTop:7.5, flexDirection:'row',  justifyContent:'space-between', alignItems:'center'}}>
                 <View style={{alignItems:'center', flexDirection:'row'}}>
                 <Avatar
                     participantId = { props?._participant?.id }
-                    size = { 50 } />
+                    size = { 44 } />
                    <View>
-                <Text style={{color:'#fff', fontWeight:'bold', fontSize:17, paddingLeft:6}}>{props?._participant?.name}</Text>
-                <Text style={{color:'#fff', fontSize:14, paddingLeft:6}}>Circleit {props._videoMuted ? 'Audio' : 'Video'} call</Text>
+                <Text style={{color:'#fff', fontWeight:'bold', fontSize:15, paddingLeft:6}}>{props?._participant?.name}</Text>
+                <Text style={{color:'#fff', fontSize:12, paddingLeft:6}}>Circleit {props._videoMuted ? 'Audio' : 'Video'} call</Text>
                 </View>
                 </View>
                 <View>
@@ -114,63 +114,74 @@ function Toolbox(props: Props) {
                 </View>
                 </TouchableWithoutFeedback>
                 <View style = { styles.toolbox }>
-                <AudioRouteButton 
-                styles = {{iconStyle:{fontSize:26, color:'#000'}, style: {borderRadius: 25,
-                    borderWidth: 0,
-                    flex: 0,
-                    flexDirection: 'row',
-                    height: 45,
-                    justifyContent: 'center',
-                    marginHorizontal: 16,
-                    marginTop: 6,
-                    alignItems:'center',
-                    width: 45,
-                    backgroundColor: 'rgba(225, 225, 225, 1)'}}}
-                
-                />
-                <VideoMuteButton
-                    styles = { {iconStyle:{fontSize:26, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
-                        borderWidth: 0,
-                        flex: 0,
-                        flexDirection: 'row',
-                        height: 45,
-                        justifyContent: 'center',
-                        marginHorizontal: 18,
-                        marginTop: 6,
-                        alignItems:'center',
-                        width: 45,
-                        backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
-                     />
                 <ToggleCameraButton
-                          styles = { {iconStyle:{fontSize:26, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                          styles = { {iconStyle:{fontSize:24, color: '#fff'}, style: {borderRadius: 20,
                             borderWidth: 0,
                             flex: 0,
                             flexDirection: 'row',
-                            height: 45,
+                            height: 40,
                             justifyContent: 'center',
                             marginHorizontal: 17,
                             marginTop: 6,
                             alignItems:'center',
-                            width: 45,
-                            backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
+                            width: 40,
+                            backgroundColor: 'rgba(115, 115, 115, 0.5)'}} }
                            />
-                <AudioMuteButton
-                    styles = { {iconStyle:{fontSize:26, color:props._audioMuted ? '#fff' : '#000'}, style: {borderRadius: 25,
+                <AudioRouteButton 
+                styles = {{iconStyle:{fontSize:24, color:'#000'}, style: {borderRadius: 20,
+                    borderWidth: 0,
+                    flex: 0,
+                    flexDirection: 'row',
+                    height: 40,
+                    justifyContent: 'center',
+                    marginHorizontal: 16,
+                    marginTop: 6,
+                    alignItems:'center',
+                    width: 40,
+                    backgroundColor: 'rgba(225, 225, 225, 1)'}}}
+                
+                />
+                <VideoMuteButton
+                    styles = { {iconStyle:{fontSize:24, color: props._videoMuted ? '#fff' : '#000'}, style: {borderRadius: 20,
                         borderWidth: 0,
                         flex: 0,
                         flexDirection: 'row',
-                        height: 45,
+                        height: 40,
+                        justifyContent: 'center',
+                        marginHorizontal: 18,
+                        marginTop: 6,
+                        alignItems:'center',
+                        width: 40,
+                        backgroundColor: props._videoMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
+                     />
+                
+                <AudioMuteButton
+                    styles = { {iconStyle:{fontSize:24, color:props._audioMuted ? '#fff' : '#000'}, style: {borderRadius: 20,
+                        borderWidth: 0,
+                        flex: 0,
+                        flexDirection: 'row',
+                        height: 40,
                         justifyContent: 'center',
                         marginHorizontal: 16,
                         marginTop: 6,
                         alignItems:'center',
-                        width: 45,
+                        width: 40,
                         backgroundColor: props._audioMuted ? 'rgba(115, 115, 115, 0.5)' :'rgba(225, 225, 225, 1)'}} }
                      />
-                { false
+                { true
                       && <ChatButton
-                          styles = { buttonStylesBorderless }
-                          toggledStyles = { backgroundToggledStyle } />}
+                          styles = { {iconStyle:{fontSize:24, color: '#fff'}, style: {borderRadius: 20,
+                            borderWidth: 0,
+                            flex: 0,
+                            flexDirection: 'row',
+                            height: 40,
+                            justifyContent: 'center',
+                            marginHorizontal: 16,
+                            marginTop: 6,
+                            alignItems:'center',
+                            width: 40,
+                            backgroundColor: 'rgba(115, 115, 115, 0.5)'}} }
+                           />}
 
                 { additionalButtons.has('raisehand')
                       && <RaiseHandButton
