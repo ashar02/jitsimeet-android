@@ -23,6 +23,7 @@ import styles from './styles';
 import { getParticipantById } from '../../../base/participants/functions';
 import { isLocalTrackMuted } from '../../../base/tracks';
 import { MEDIA_TYPE } from '../../../base/media';
+import ConferenceTimer from '../../../conference/components/ConferenceTimer';
 
 /**
  * The type of {@link Toolbox}'s React {@code Component} props.
@@ -104,7 +105,7 @@ function Toolbox(props: Props) {
                     size = { 44 } />
                    <View>
                 <Text style={{color:'#fff', fontWeight:'bold', fontSize:15, paddingLeft:6}}>{props?._participant?.name}</Text>
-                <Text style={{color:'#fff', fontSize:12, paddingLeft:6}}>Circleit {props._videoMuted ? 'Audio' : 'Video'} call</Text>
+                <Text style={{color:'#fff', fontSize:12, paddingLeft:6}}>Circleit {props._videoMuted ? 'Audio' : 'Video'} Call ({<ConferenceTimer />})</Text>
                 </View>
                 </View>
                 <View>

@@ -152,16 +152,16 @@ export default {
     toolboxAndFilmstripContainer: {
         bottom: 0,
         flexDirection: 'column',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         left: 0,
         position: 'absolute',
         right: 0,
-        top: 0
+        top: 40
     },
     toolboxContainer:{
         bottom: 0,
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
         left: 0,
         position: 'absolute',
         right: 0,

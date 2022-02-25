@@ -2,7 +2,7 @@
 
 import { ColorSchemeRegistry, schemeColor } from '../../../base/color-scheme';
 import { BoxModel, ColorPalette } from '../../../base/styles';
-import {Dimensions, StatusBar} from 'react-native';
+import {Dimensions} from 'react-native';
 
 const BUTTON_SIZE = 30;
 
@@ -90,8 +90,7 @@ const styles = {
         marginRight: 'auto',
         backgroundColor:'#242424',
         borderRadius:35,
-        alignSelf:'center',
-        marginTop:StatusBar.currentHeight + 5
+        alignSelf:'center'
     }
 };
 
