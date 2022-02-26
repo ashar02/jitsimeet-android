@@ -47,7 +47,7 @@ class HeaderLabel extends Component<Props> {
                 style = { _headerStyles.headerTextWrapper }>
                 <Text
                     style = { [
-                        _headerStyles.headerText
+                        _headerStyles.headerText,{color:'#D2A622'}
                     ] }>
                     { this.props.t(this.props.labelKey) }
                 </Text>

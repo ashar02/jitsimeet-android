@@ -51,7 +51,7 @@ class HeaderWithNavigation extends Component<Props> {
         const { onPressBack, onPressForward } = this.props;
 
         return (
-            <Header>
+            <Header style={{backgroundColor:'#333333', color:'#000'}}>
                 { onPressBack && <BackButton onPress = { onPressBack } /> }
                 <HeaderLabel labelKey = { this.props.headerLabelKey } />
                 { onPressForward && <ForwardButton

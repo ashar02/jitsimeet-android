@@ -59,7 +59,7 @@ export default {
     },
 
     inputField: {
-        color: 'rgb(28, 32, 37)',
+        color: '#fff',
         flex: 1,
         height: 48
     },
@@ -98,7 +98,7 @@ export default {
     },
 
     sendButtonIcon: {
-        color: ColorPalette.darkGrey,
+        color: '#D2A622',
         fontSize: 22
     },
 
@@ -122,7 +122,7 @@ export default {
      * Text node for the timestamp.
      */
     timeText: {
-        color: 'rgb(164, 184, 209)',
+        color: '#fff',
         fontSize: 13
     }
 };
@@ -132,7 +132,7 @@ ColorSchemeRegistry.register('Chat', {
      * Background of the chat screen.
      */
     backdrop: {
-        backgroundColor: schemeColor('background'),
+        backgroundColor: '#181818',
         flex: 1
     },
 
@@ -140,17 +140,17 @@ ColorSchemeRegistry.register('Chat', {
      * The text node for the display name.
      */
     displayName: {
-        color: schemeColor('displayName'),
+        color: '#fff',
         fontSize: 13
     },
 
     emptyComponentText: {
-        color: schemeColor('displayName'),
+        color: '#fff',
         textAlign: 'center'
     },
 
     localMessageBubble: {
-        backgroundColor: schemeColor('localMsgBackground'),
+        backgroundColor: '#DADADA',
         borderTopRightRadius: 0
     },
 
@@ -167,23 +167,24 @@ ColorSchemeRegistry.register('Chat', {
     },
 
     messageRecipientText: {
-        color: schemeColor('text'),
+        color: '#fff',
         flex: 1
     },
 
     privateNotice: {
-        color: schemeColor('privateMsgNotice'),
+        color: '#fff',
         fontSize: 11,
         marginTop: 6
     },
 
     privateMessageBubble: {
-        backgroundColor: schemeColor('privateMsgBackground')
+        backgroundColor: 'rgb(204,172,55)'
     },
 
     remoteMessageBubble: {
-        backgroundColor: schemeColor('remoteMsgBackground'),
-        borderTopLeftRadius: 0
+        backgroundColor: '#000000',
+        borderTopLeftRadius: 0,
+        color:'#fff'
     },
 
     replyContainer: {

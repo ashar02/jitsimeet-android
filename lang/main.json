@@ -66,13 +66,13 @@
         "fieldPlaceHolder": "Type your message here",
         "messagebox": "Type a message",
         "messageTo": "Private message to {{recipient}}",
-        "noMessagesMessage": "There are no messages in the meeting yet. Start a conversation here!",
+        "noMessagesMessage": "Messages are end-to-end encrypted and 100% private. Nobody, not even CircleIt, can read your messages.",
         "nickname": {
             "popover": "Choose a nickname",
             "title": "Enter a nickname to use chat"
         },
         "privateNotice": "Private message to {{recipient}}",
-        "title": "Chat",
+        "title": "Circleit Chat",
         "you": "you"
     },
     "chromeExtensionBanner": {
