@@ -68,11 +68,12 @@ class AudioRouteButton extends AbstractButton<Props,*> {
         this.props.dispatch(openDialog(AudioRoutePickerDialog));
     }
     _isIconChange(){
-        if(deviceInfoMap[this.props._devices?.find(device => device.selected == true)?.type]?.icon){   
-            return true
-        }else{
-            this.props.dispatch(setToolboxVisible(false));
-        }
+        return true
+        // if(deviceInfoMap[this.props._devices?.find(device => device.selected == true)?.type]?.icon){   
+        //     return true
+        // }else{
+        //     this.props.dispatch(setToolboxVisible(false));
+        // }
     }
 }
 /**
