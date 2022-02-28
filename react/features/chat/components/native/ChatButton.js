@@ -36,7 +36,7 @@ class ChatButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
-        this.props.dispatch(openChat());
+        //this.props.dispatch(openChat());
     }
 
     /**
