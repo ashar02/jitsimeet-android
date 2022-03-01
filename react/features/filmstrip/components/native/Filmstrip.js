@@ -83,7 +83,7 @@ class Filmstrip extends Component<Props> {
     render() {
         const { _aspectRatio, _participants, _visible } = this.props;
 
-        if (!_visible) {
+        if (_participants.length + 1 == 2) {
             return null;
         }
 

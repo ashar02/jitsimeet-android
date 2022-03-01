@@ -129,7 +129,7 @@ class TileView extends Component<Props> {
                 </TouchableWithoutFeedback>
             </ScrollView>
             
-            <View style={{position:'absolute', right:12,bottom:12}}>
+            {/* <View style={{position:'absolute', right:12,bottom:12}}>
                 {
                     this.state.localParticipant && <Thumbnail
                     disableTint = { true }
@@ -150,7 +150,7 @@ class TileView extends Component<Props> {
                     tileView = { false } />
                 }
            
-            </View>
+            </View> */}
             
             </View>
         );

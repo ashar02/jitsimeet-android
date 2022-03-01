@@ -150,21 +150,13 @@ export default {
      * the {@link Toolbox}.
      */
     toolboxAndFilmstripContainer: {
-        bottom: 0,
-        flexDirection: 'column',
-        left: 0,
-        position: 'absolute',
-        right: 0,
-        top: 40
-    },
-    toolboxContainer:{
-        bottom: 0,
+        bottom: 15,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         left: 0,
         position: 'absolute',
         right: 0,
-        top: 0
+        top: 40
     },
     insecureRoomNameLabel: {
         backgroundColor: INSECURE_ROOM_NAME_LABEL_COLOR
