@@ -150,7 +150,7 @@ export default {
      * the {@link Toolbox}.
      */
     toolboxAndFilmstripContainer: {
-        bottom: 15,
+        bottom: 20,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         left: 0,
