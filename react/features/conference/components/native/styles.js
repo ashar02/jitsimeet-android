@@ -156,7 +156,7 @@ export default {
         left: 0,
         position: 'absolute',
         right: 0,
-        top: 40
+        top: 0
     },
     insecureRoomNameLabel: {
         backgroundColor: INSECURE_ROOM_NAME_LABEL_COLOR
