@@ -122,10 +122,10 @@ ColorSchemeRegistry.register('Toolbox', {
     hangupButtonStyles: {
         iconStyle: {
             color: ColorPalette.darkGrey,
-            fontSize: 42,
+            fontSize: 30,
             alignSelf:'center',
-            marginTop:-3,
-            marginLeft:3
+            marginTop:3
+           
         },
         style: {
             flex:0,
