@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import {
     ScrollView,
     TouchableWithoutFeedback,
-    View
+    View,
+    Dimensions
 } from 'react-native';
 import type { Dispatch } from 'redux';
 
@@ -109,8 +110,12 @@ class TileView extends Component<Props> {
     render() {
         const { _height, _width, onClick } = this.props;
         const rowElements = this._groupIntoRows(this._renderThumbnails(), this._getColumnCount());
+        const boxHeight = Dimensions.get('screen').height / 3 - 80;
+        const boxWidth = 240 
         return (
             <View>
+             {
+                    this.props._participants.length !== 4 ? (
             <ScrollView
                 style = {{
                     ...styles.tileView,
@@ -128,7 +133,32 @@ class TileView extends Component<Props> {
                     </View>
                 </TouchableWithoutFeedback>
             </ScrollView>
-            
+             ):(
+                this._getSortedParticipants().map(function (participant, index) {
+                    return(
+                        <View style={{position:'absolute', left: index%2 !== 0 ? Dimensions.get('screen').width - 250:10, top: index == 0 ? 30 : index == 1 ? 275 : 520}}>
+                            <Thumbnail
+                                disableTint={true}
+                                key={participant?.id}
+                                participant={participant}
+                                renderDisplayName={true}
+                                styleOverrides={{
+                                    aspectRatio: null,
+                                    flex: 1,
+                                    height: boxHeight,
+                                    maxHeight: boxHeight,
+                                    maxWidth: boxWidth,
+                                    width: boxWidth,
+                                    borderRadius: 16,
+                                    backgroundColor: getAvatarBackgroundColor(this.state?.localParticipant.name)
+                                }}
+                                tileView={true} />
+                        </View>
+                    )
+                })
+            )
+        }
+    
             {/* <View style={{position:'absolute', right:12,bottom:12}}>
                 {
                     this.state.localParticipant && <Thumbnail
