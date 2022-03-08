@@ -136,7 +136,7 @@ class TileView extends Component<Props> {
              ):(
                 this._getSortedParticipants().map(function (participant, index) {
                     return(
-                        <View style={{position:'absolute', left: index%2 !== 0 ? Dimensions.get('screen').width - 250:10, top: index== 0 ? 58 : index == 1 ? index*boxHeight+65 : index*boxHeight+72 }}>
+                        <View style={{position:'absolute', left: index%2 !== 0 ? Dimensions.get('screen').width - 250:10, top: index== 0 ? 58 : index == 1 ? index*boxHeight+40 : index*boxHeight+20 }}>
                             <Thumbnail
                                 disableTint={true}
                                 key={participant?.id}

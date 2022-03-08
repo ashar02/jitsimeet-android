@@ -9,9 +9,16 @@ const AVATAR_COLORS = [
     '105, 232, 194',
     '234, 255, 128'
 ];
+const AVATAR_BACK_COLORS = [
+    '156, 91, 122',
+    '212, 171, 129',
+    '67, 78, 161',
+    '64, 188, 142',
+    '158, 201, 138'
+]
 
 const AVATAR_OPACITY = 0.6;
-const AVATAR_BACKGROUND_OPACITY = 0.15
+const AVATAR_BACKGROUND_OPACITY = 1
 
 /**
  * Generates the background color of an initials based avatar.
@@ -44,10 +51,10 @@ export function getAvatarBackgroundColor(initials: ?string) {
             nameHash += s.codePointAt(0);
         }
 
-        colorIndex = nameHash % AVATAR_COLORS.length;
+        colorIndex = nameHash % AVATAR_BACK_COLORS.length;
     }
 
-    return `rgba(${AVATAR_COLORS[colorIndex]}, ${AVATAR_BACKGROUND_OPACITY})`;
+    return `rgba(${AVATAR_BACK_COLORS[colorIndex]}, ${AVATAR_BACKGROUND_OPACITY})`;
 }
 /**
  * Generates initials for a simple string.
