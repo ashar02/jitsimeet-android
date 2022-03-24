@@ -7,7 +7,7 @@ import {
     AbstractButton,
     type AbstractButtonProps
 } from '../../../base/toolbox/components';
-import { openChat } from '../../actions.native';
+import { closeChat } from '../../actions.native';
 import { getUnreadCount } from '../../functions';
 
 type Props = AbstractButtonProps & {
@@ -36,7 +36,7 @@ class ChatButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
-        //this.props.dispatch(openChat());
+        this.props.dispatch(closeChat());
     }
 
     /**

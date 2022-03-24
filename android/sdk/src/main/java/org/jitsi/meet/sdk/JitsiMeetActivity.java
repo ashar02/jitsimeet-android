@@ -201,6 +201,10 @@ public class JitsiMeetActivity extends FragmentActivity
         JitsiMeetLogger.i("Conference will join: " + extraData);
     }
 
+    protected void onChatButtonPressed(HashMap<String, Object> extraData) {
+        JitsiMeetLogger.i("Chat button pressed: " + extraData);
+    }
+
     protected void onParticipantJoined(HashMap<String, Object> extraData) {
         try {
             JitsiMeetLogger.i("Participant joined: ", extraData);
@@ -291,6 +295,9 @@ public class JitsiMeetActivity extends FragmentActivity
                     break;
                 case CONFERENCE_TERMINATED:
                     onConferenceTerminated(event.getData());
+                    break;
+                case CHAT_BUTTON_PRESSED:
+                    onChatButtonPressed(event.getData());
                     break;
                 case PARTICIPANT_JOINED:
                     onParticipantJoined(event.getData());

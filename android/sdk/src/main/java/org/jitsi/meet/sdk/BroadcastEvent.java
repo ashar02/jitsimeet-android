@@ -77,6 +77,7 @@ public class BroadcastEvent {
     public enum Type {
         CONFERENCE_JOINED("org.jitsi.meet.CONFERENCE_JOINED"),
         CONFERENCE_TERMINATED("org.jitsi.meet.CONFERENCE_TERMINATED"),
+        CHAT_BUTTON_PRESSED("org.jitsi.meet.CHAT_BUTTON_PRESSED"),
         CONFERENCE_WILL_JOIN("org.jitsi.meet.CONFERENCE_WILL_JOIN"),
         AUDIO_MUTED_CHANGED("org.jitsi.meet.AUDIO_MUTED_CHANGED"),
         PARTICIPANT_JOINED("org.jitsi.meet.PARTICIPANT_JOINED"),

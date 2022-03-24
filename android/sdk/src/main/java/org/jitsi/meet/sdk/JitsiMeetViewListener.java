@@ -48,4 +48,11 @@ public interface JitsiMeetViewListener {
      * @param data Map with a "url" key with the conference URL.
      */
     void onConferenceWillJoin(Map<String, Object> data);
+
+    /**
+     * Called when chat button pressed.
+     *
+     * @param data Map with a "isOpen" key.
+     */
+    void onChatButtonPressed(Map<String, Object> data);
 }

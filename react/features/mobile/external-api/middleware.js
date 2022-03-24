@@ -175,6 +175,11 @@ MiddlewareRegistry.register(store => next => action => {
             /* data */ {
                 isOpen: action.type === OPEN_CHAT
             });
+        sendEvent(
+            store,
+            'CHAT_BUTTON_PRESSED',
+            {}
+        );
         break;
     }
 
