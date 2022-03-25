@@ -52,7 +52,7 @@ public interface JitsiMeetViewListener {
     /**
      * Called when chat button pressed.
      *
-     * @param data Map with a "isOpen" key.
+     * @param data Map with empty key.
      */
     void onChatButtonPressed(Map<String, Object> data);
 }
