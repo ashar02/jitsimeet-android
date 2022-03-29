@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { NativeModules, SafeAreaView, StatusBar, View, Text } from 'react-native';
+import { NativeModules, SafeAreaView, StatusBar, View, Animated } from 'react-native';
 
 import { appNavigate } from '../../../app/actions';
 import { PIP_ENABLED, FULLSCREEN_ENABLED, getFeatureFlag } from '../../../base/flags';
@@ -134,6 +134,7 @@ class Conference extends AbstractConference<Props, *> {
         this._onClick = this._onClick.bind(this);
         this._onHardwareBackPress = this._onHardwareBackPress.bind(this);
         this._setToolboxVisible = this._setToolboxVisible.bind(this);
+        this._panelPosition = new Animated.Value(0)
     }
 
     /**
@@ -180,8 +181,6 @@ class Conference extends AbstractConference<Props, *> {
         );
     }
 
-    _onClick: () => void;
-
     /**
      * Changes the value of the toolboxVisible state, thus allowing us to switch
      * between Toolbox and Filmstrip and change their visibility.
@@ -190,6 +189,19 @@ class Conference extends AbstractConference<Props, *> {
      * @returns {void}
      */
     _onClick() {
+        let movedPosition = 0;
+        if (!this.props._toolboxVisible) {
+            movedPosition = 130;
+        }
+        Animated.spring(
+            this._panelPosition,
+            {
+                toValue: movedPosition,
+                velocity: 3,
+                tension: 2,
+                friction: 32,
+            }
+        ).start();
         this._setToolboxVisible(!this.props._toolboxVisible);
     }
 
@@ -293,9 +305,9 @@ class Conference extends AbstractConference<Props, *> {
                         </TintedView>
                 }
 
-                <View
+                <Animated.View
                     pointerEvents = 'box-none'
-                    style = { styles.toolboxAndFilmstripContainer }>
+                    style = { [styles.toolboxAndFilmstripContainer, {transform: [{translateY: this._panelPosition}]}] }>
                     {/* {
                         audioMuted == true && !_shouldDisplayTileView ? (
                         <Text style={{color:'#fff', marginTop:6, marginBottom:6, textAlign:'center'}}> {_participantName} muted this call</Text>
@@ -312,7 +324,7 @@ class Conference extends AbstractConference<Props, *> {
                     { <Filmstrip /> }   
                     <Toolbox />
                     
-                </View>
+                </Animated.View>
               
 
                 <SafeAreaView

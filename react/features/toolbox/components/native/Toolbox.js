@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState} from 'react';
-import { SafeAreaView, View, Text, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
+import { SafeAreaView, View, Text, Modal, TouchableWithoutFeedback, Dimensions, Animated } from 'react-native';
 
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { connect } from '../../../base/redux';
@@ -75,9 +75,6 @@ type Props = {
  * @returns {React$Element}.
  */
 function Toolbox(props: Props) {
-    if (!props._visible) {
-        return null;
-    }
 
     const { _styles, _width } = props;
     const { buttonStylesBorderless, hangupButtonStyles, toggledButtonStyles } = _styles;
@@ -91,13 +88,14 @@ function Toolbox(props: Props) {
     };
     const [modalVisible, setModalVisible] = useState(false);
     return (
-        <View
+        <View>
+        <Animated.View
             pointerEvents = 'box-none'
             style = { styles.toolboxContainer }>
             <SafeAreaView
                 accessibilityRole = 'toolbar'
                 pointerEvents = 'box-none'>
-                    <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
+                <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
                 <View style={{marginLeft:14, marginTop:7.5, flexDirection:'row',  justifyContent:'space-between', alignItems:'center'}}>
                 <View style={{alignItems:'center', flexDirection:'row'}}>
                 <Avatar
@@ -198,9 +196,10 @@ function Toolbox(props: Props) {
                 {/* <OverflowMenuButton
                     styles = { buttonStylesBorderless }
                     toggledStyles = { toggledButtonStyles } /> */}
-
-               
                 </View>
+
+                </SafeAreaView>
+            </Animated.View>
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -294,7 +293,6 @@ function Toolbox(props: Props) {
                         </View>
                     </View>
                 </Modal>
-            </SafeAreaView>
         </View>
     );
 }

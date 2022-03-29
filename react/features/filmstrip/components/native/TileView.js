@@ -152,7 +152,9 @@ class TileView extends Component<Props> {
                                     borderRadius: 16,
                                     backgroundColor: getAvatarBackgroundColor(this.state?.localParticipant.name)
                                 }}
-                                tileView={true} />
+                                tileView={true}
+                                onClick={ onClick }
+                                />
                         </View>
                     )
                 })
@@ -318,7 +320,9 @@ class TileView extends Component<Props> {
                         borderRadius:16,
                         backgroundColor:getAvatarBackgroundColor(participant.name)
                     }}
-                    tileView = { true } />));
+                    tileView = { true }
+                    onClick = { this.props.onClick }
+                    />));
     }
 
     /**

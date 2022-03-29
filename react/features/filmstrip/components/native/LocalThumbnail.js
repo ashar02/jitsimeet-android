@@ -37,7 +37,8 @@ class LocalThumbnail extends Component<Props> {
             maxWidth: participantsCount == 2 ? 140 : participantsCount == 3 ? 100 : participantsCount > 5 ? 100 : 140,
             width: 240,
             borderRadius:participantsCount == 2 ? 12 : 16,
-            marginRight:10
+            marginRight:10,
+            marginBottom:15
         };
         return (
             <View style = {{aspectRatio: participantsCount <= 2 ? 0.6 : 1}}>
