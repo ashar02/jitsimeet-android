@@ -53,6 +53,8 @@ type Props = {
      */
     _renderVideo: boolean,
 
+    _audioOnly: boolean,
+
     /**
      * The video Track of the participant with {@link #participantId}.
      */
@@ -194,7 +196,8 @@ class ParticipantView extends Component<Props> {
             _videoTrack: videoTrack,
             disableVideo,
             onPress,
-            tintStyle
+            tintStyle,
+            _audioOnly
         } = this.props;
 
         // If the connection has problems, we will "tint" the video / avatar.
@@ -234,12 +237,13 @@ class ParticipantView extends Component<Props> {
                         zOrder = { this.props.zOrder }
                         zoomEnabled = { this.props.zoomEnabled } /> }
 
-                { !renderYoutubeLargeVideo && !renderVideo
-                    && <View style = { styles.avatarContainer }>
+                {!renderYoutubeLargeVideo && !renderVideo && _audioOnly || videoTrack && videoTrack.muted ?
+                    <View style={styles.avatarContainer}>
                         <Avatar
-                            participantId = { this.props.participantId }
-                            size = { this.props.avatarSize } />
-                    </View> }
+                            participantId={this.props.participantId}
+                            size={this.props.avatarSize} />
+
+                    </View> : <></>}
 
                 { useTint
 
@@ -268,6 +272,7 @@ class ParticipantView extends Component<Props> {
 function _mapStateToProps(state, ownProps) {
     const { disableVideo, participantId } = ownProps;
     const participant = getParticipantById(state, participantId);
+    const audioOnly = state['features/base/audio-only'].enabled;
     let connectionStatus;
     let participantName = participant?.name;
 
@@ -282,7 +287,8 @@ function _mapStateToProps(state, ownProps) {
             getTrackByMediaTypeAndParticipant(
                 state['features/base/tracks'],
                 MEDIA_TYPE.VIDEO,
-                participantId)
+                participantId),
+        _audioOnly: audioOnly
     };
 }
 
