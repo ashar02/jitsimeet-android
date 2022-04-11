@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, NativeModules, LayoutAnimation, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import { getLocalParticipant } from '../../../base/participants';
