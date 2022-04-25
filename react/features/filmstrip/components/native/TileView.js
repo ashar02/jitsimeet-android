@@ -154,6 +154,7 @@ class TileView extends Component<Props> {
                                 }}
                                 tileView={true}
                                 onClick={ onClick }
+                                isLocalUser={false}
                                 />
                         </View>
                     )
@@ -321,6 +322,7 @@ class TileView extends Component<Props> {
                         backgroundColor:getAvatarBackgroundColor(participant.name)
                     }}
                     tileView = { true }
+                    isLocalUser={false}
                     onClick = { this.props.onClick }
                     />));
     }
