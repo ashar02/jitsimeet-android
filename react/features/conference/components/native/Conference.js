@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { NativeModules, SafeAreaView, StatusBar, View, Animated } from 'react-native';
+import { NativeModules, SafeAreaView, StatusBar, View, Animated, PanResponder } from 'react-native';
 
 import { appNavigate } from '../../../app/actions';
 import { PIP_ENABLED, FULLSCREEN_ENABLED, getFeatureFlag } from '../../../base/flags';
@@ -134,7 +134,24 @@ class Conference extends AbstractConference<Props, *> {
         this._onClick = this._onClick.bind(this);
         this._onHardwareBackPress = this._onHardwareBackPress.bind(this);
         this._setToolboxVisible = this._setToolboxVisible.bind(this);
-        this._panelPosition = new Animated.Value(0)
+        this._panelPosition = new Animated.Value(0);
+        this.pan = new Animated.ValueXY();
+        this.panResponder = PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+            onPanResponderGrant: () => {
+              this.pan.setOffset({
+                x: this.pan.x._value,
+                y: this.pan.y._value
+              });
+            },
+            onPanResponderMove: Animated.event([
+              null,
+              { dx: this.pan.x, dy: this.pan.y }
+            ]),
+            onPanResponderRelease: () => {
+              this.pan.flattenOffset();
+            }
+          });
     }
 
     /**
@@ -305,9 +322,9 @@ class Conference extends AbstractConference<Props, *> {
                         </TintedView>
                 }
 
-                <Animated.View
+                <View
                     pointerEvents = 'box-none'
-                    style = { [styles.toolboxAndFilmstripContainer, {transform: [{translateY: this._panelPosition}]}] }>
+                    style = { styles.toolboxAndFilmstripContainer }>
                     {/* {
                         audioMuted == true && !_shouldDisplayTileView ? (
                         <Text style={{color:'#fff', marginTop:6, marginBottom:6, textAlign:'center'}}> {_participantName} muted this call</Text>
@@ -321,10 +338,21 @@ class Conference extends AbstractConference<Props, *> {
                     </Container> } */}
 
                     <LonelyMeetingExperience />
-                    { <Filmstrip /> }   
+                    <Animated.View
+                        style={{
+                            transform: [{ translateX: this.pan.x }, { translateY: this.pan.y }]
+                        }}
+                        {...this.panResponder.panHandlers}
+                    >
+                    <Filmstrip onPress = { this._onClick } />
+                    </Animated.View>
+                    <Animated.View
+                    pointerEvents = 'box-none'
+                    style = {{transform: [{translateY: this._panelPosition}]} }>   
                     <Toolbox />
+                    </Animated.View>
                     
-                </Animated.View>
+                </View>
               
 
                 <SafeAreaView
