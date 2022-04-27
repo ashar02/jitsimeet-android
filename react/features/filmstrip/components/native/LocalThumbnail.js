@@ -88,11 +88,11 @@ function LocalThumbnail (props: Props) {
         maxHeight:  boxHeight,
         maxWidth: boxWidth,
         width: boxWidth,
-        borderRadius:participantsCount == 2 ? 12 : 16,
+        borderRadius:participantsCount == 2 ? 6 : 16,
         marginRight:10,
         marginBottom:15,
         alignSelf: 'center'
-    };
+    }
         return (
             <View style = {{aspectRatio: participantsCount <= 2 ? 0.6 : 1}}>
                 <Thumbnail participant = { _localParticipant } 
