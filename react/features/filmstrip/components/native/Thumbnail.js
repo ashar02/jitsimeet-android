@@ -157,7 +157,7 @@ function Thumbnail(props: Props) {
             touchFeedback = { false }>
 
             <ParticipantView
-                avatarSize = { isLocalUser ? AVATAR_SIZE : _participantCount == 3 || _participantCount == 4 ? AVATAR_SIZE * 3 : AVATAR_SIZE * 2 }
+                avatarSize = { isLocalUser ? AVATAR_SIZE : _participantCount == 3 || _participantCount == 4 ? AVATAR_SIZE * 2.3 : AVATAR_SIZE * 2 }
                 disableVideo = { isScreenShare || participant.isFakeParticipant }
                 participantId = { participantId }
                 style = {[ _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator && videoMuted ? 2 : 0, borderColor:'#D2A622', borderRadius:15} ]}
