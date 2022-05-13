@@ -13,6 +13,10 @@ import ConferenceTimer from '../ConferenceTimer';
 import Labels from './Labels';
 import styles from './styles';
 
+import { getParticipantById } from '../../../base/participants/functions';
+import { IconRecording }  from '../../../base/icons';
+import { AudioRouteButton } from '../../../mobile/audio-mode';
+import { ColorPalette } from '../../../base/styles';
 
 type Props = {
 
@@ -34,7 +38,9 @@ type Props = {
     /**
      * True if the navigation bar should be visible.
      */
-    _visible: boolean
+    _visible: boolean,
+
+    _participant: Object
 };
 
 /**
@@ -45,15 +51,15 @@ type Props = {
  * @returns {React.Node}
  */
 const NavigationBar = (props: Props) => {
-    if (!props._visible) {
-        return null;
-    }
+    // if (!props._visible) {
+    //     return null;
+    // }
 
     return (
         <View
             pointerEvents = 'box-none'
             style = { styles.navBarWrapper }>
-            <PictureInPictureButton
+            {/* <PictureInPictureButton
                 styles = { styles.navBarButton } />
             <View
                 pointerEvents = 'box-none'
@@ -71,14 +77,36 @@ const NavigationBar = (props: Props) => {
                             </Text>
                         </View>
                     }
-                    {/* {
+                    {
                         props._conferenceTimerEnabled
                             && <View style = { styles.roomTimerView }>
                                 <ConferenceTimer textStyle = { styles.roomTimer } />
                             </View>
-                    } */}
+                    } 
                 </View>
                 <Labels />
+            </View> */}
+            <View>
+                <IconRecording />
+            </View>
+            <View style={styles.nameLabel}>
+                <Text style={styles.nameText}>{props?._participant?.name}</Text>
+            </View>
+
+            <View>
+                <AudioRouteButton
+                    styles={{
+                        iconStyle: { fontSize: 24 }, style: {
+                            borderRadius: 20,
+                            borderWidth: 0,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: 36,
+                            width: 36,
+                            backgroundColor: ColorPalette.searGreenLight
+                        }
+                    }}
+                />
             </View>
         </View>
     );
@@ -92,14 +120,15 @@ const NavigationBar = (props: Props) => {
  */
 function _mapStateToProps(state) {
     const { hideConferenceTimer, hideConferenceSubject } = state['features/base/config'];
-
+    const participant = getParticipantById(state, state['features/large-video'].participantId);
     return {
         _conferenceTimerEnabled:
             getFeatureFlag(state, CONFERENCE_TIMER_ENABLED, true) && !hideConferenceTimer,
         _meetingName: getConferenceName(state),
         _meetingNameEnabled:
             getFeatureFlag(state, MEETING_NAME_ENABLED, true) && !hideConferenceSubject,
-        _visible: isToolboxVisible(state)
+        _visible: isToolboxVisible(state),
+        _participant: participant
     };
 }
 

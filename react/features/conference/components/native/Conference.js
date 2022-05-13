@@ -43,8 +43,8 @@ import type { AbstractProps } from '../AbstractConference';
 import LonelyMeetingExperience from './LonelyMeetingExperience';
 import NavigationBar from './NavigationBar';
 import styles from './styles';
-
-
+import {SecureIcon} from '../../../base/icons';
+import { ColorPalette } from '../../../base/styles';
 /**
  * The type of the React {@code Component} props of {@link Conference}.
  */
@@ -358,7 +358,10 @@ class Conference extends AbstractConference<Props, *> {
                 <SafeAreaView
                     pointerEvents = 'box-none'
                     style = { styles.navBarSafeView }>
-                     <Text style={{color: '#C4C4C4', textAlign: 'center', fontSize:12, lineHeight: 12, marginTop: 5}}>End-to-end Encrypted</Text>
+                      <View style={{flexDirection: 'row', alignSelf: 'center', alignItems: 'center'}}>
+                            <SecureIcon />
+                        <Text style={{color: ColorPalette.yellow, textAlign: 'center', fontSize:10, paddingLeft: 8, letterSpacing: 0.6, fontWeight: '500'}}>Secure Call</Text>
+                        </View>
                     <NavigationBar />
                     { this._renderNotificationsContainer() }
                     <KnockingParticipantList />

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { ColorSchemeRegistry, schemeColor } from '../../base/color-scheme';
+import { ColorPalette } from '../../base/styles';
 
 /**
  * Size for the Avatar.
@@ -18,7 +19,7 @@ ColorSchemeRegistry.register('LargeVideo', {
     largeVideo: {
         ...StyleSheet.absoluteFillObject,
         alignItems: 'stretch',
-        backgroundColor: schemeColor('background'),
+        backgroundColor: ColorPalette.appBackground,
         flex: 1,
         justifyContent: 'center'
     }
