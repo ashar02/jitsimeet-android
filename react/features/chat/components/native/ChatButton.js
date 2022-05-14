@@ -1,5 +1,7 @@
 // @flow
 
+import { NativeEventEmitter, NativeModules } from 'react-native';
+
 import { CHAT_ENABLED, getFeatureFlag } from '../../../base/flags';
 import { IconChat, IconChatUnread } from '../../../base/icons';
 import { connect } from '../../../base/redux';
@@ -9,6 +11,9 @@ import {
 } from '../../../base/toolbox/components';
 import { closeChat } from '../../actions.native';
 import { getUnreadCount } from '../../functions';
+
+const { ExternalAPI } = NativeModules;
+const eventEmitter = new NativeEventEmitter(ExternalAPI);
 
 type Props = AbstractButtonProps & {
 
@@ -47,6 +52,28 @@ class ChatButton extends AbstractButton<Props, *> {
      */
     _isToggled() {
         return Boolean(this.props._unreadMessageCount);
+    }
+
+    /**
+     * Sets event listener for chat message.
+     *
+     * @inheritdoc
+     * @returns {void}
+     */
+    componentWillMount() {
+        this.eventListener = eventEmitter.addListener(ExternalAPI.HIGHLIGHT_CHAT_BUTTON, ({ highlight }) => {
+            console.log(`Event highlight chat button ${highlight}.`);
+        });
+    }
+
+    /**
+     * Removes all listeners.
+     *
+     * @inheritdoc
+     * @returns {void}
+     */
+    componentWillUnmount() {
+        this.eventListener.remove();
     }
 }
 

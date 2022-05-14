@@ -72,3 +72,13 @@ export const STORE_VIDEO_TRANSFORM = 'STORE_VIDEO_TRANSFORM';
  * }
  */
 export const TOGGLE_CAMERA_FACING_MODE = 'TOGGLE_CAMERA_FACING_MODE';
+
+/**
+ * The type of (redux) action to highlight the chat button.
+ *
+ * {
+ *     type: HIGHLIGHT_CHAT_BUTTON,
+ *     highlight: boolean
+ * }
+ */
+export const HIGHLIGHT_CHAT_BUTTON = 'HIGHLIGHT_CHAT_BUTTON';
