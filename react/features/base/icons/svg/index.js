@@ -41,6 +41,7 @@ export { default as IconDeviceSpeaker } from './volume.svg';
 export { default as IconDeviceDocument } from './document.svg';
 export { default as SecureIcon } from './secure.svg';
 export { default as IconRecording } from './recording.svg';
+export { default as IconLeaveCall } from './leave.svg';
 export { default as IconDominantSpeaker } from './dominant-speaker.svg';
 export { default as IconDownload } from './download.svg';
 export { default as IconDragHandle } from './drag-handle.svg';

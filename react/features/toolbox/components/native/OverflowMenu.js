@@ -1,14 +1,14 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { BottomSheet, hideDialog, isDialogOpen } from '../../../base/dialog';
-import { IconDragHandle } from '../../../base/icons';
+import { IconDragHandle, IconChatSend, IconRecording, IconLeaveCall, IconDeviceSpeaker } from '../../../base/icons';
 import { connect } from '../../../base/redux';
-import { StyleType } from '../../../base/styles';
+import { ColorPalette, StyleType } from '../../../base/styles';
 import { SharedDocumentButton } from '../../../etherpad';
 import { InviteButton } from '../../../invite';
 import { LobbyModeButton } from '../../../lobby/components/native';
@@ -28,6 +28,7 @@ import MoreOptionsButton from './MoreOptionsButton';
 import RaiseHandButton from './RaiseHandButton';
 import ScreenSharingButton from './ScreenSharingButton.js';
 import ToggleCameraButton from './ToggleCameraButton';
+import { SlidingView } from '../../../base/react';
 import styles from './styles';
 
 /**
@@ -132,32 +133,58 @@ class OverflowMenu extends PureComponent<Props, State> {
         };
 
         return (
-            <BottomSheet
-                onCancel = { this._onCancel }
-                onSwipe = { this._onSwipe }
-                /* renderHeader = { this._renderMenuExpandToggle } */>
-                <AudioRouteButton { ...buttonProps } />
-                {false && <InviteButton { ...buttonProps } />}
-                <AudioOnlyButton { ...buttonProps } />
-                {false && <RaiseHandButton { ...buttonProps } />}
-                {false && <LobbyModeButton { ...buttonProps } />}
-                {false && <ScreenSharingButton { ...buttonProps } />}
-                <ToggleCameraButton { ...buttonProps } />
-                {false && <MoreOptionsButton { ...moreOptionsButtonProps } />}
-                {false && <Collapsible collapsed = { false }>
-                    {false && <ToggleCameraButton { ...buttonProps } />}
-                    {false && <TileViewButton { ...buttonProps } />}
-                    {false && <RecordButton { ...buttonProps } />}
-                    {false && <LiveStreamButton { ...buttonProps } />}
-                    {false && <SharedVideoButton { ...buttonProps } />}
-                    {false && <RoomLockButton { ...buttonProps } />}
-                    {false && <ClosedCaptionButton { ...buttonProps } />}
-                    {false && <SharedDocumentButton { ...buttonProps } />}
-                    {false && <MuteEveryoneButton { ...buttonProps } />}
-                    {false && <MuteEveryonesVideoButton { ...buttonProps } />}
-                    {false && <HelpButton { ...buttonProps } />}
-                </Collapsible>}
-            </BottomSheet>
+            <SlidingView 
+            accessibilityRole = 'menu'
+            //accessibilityViewIsModal = { true }
+            onHide = { this._onCancel }
+            position = 'bottom'
+            show = { true }
+       >
+            <View  style={styles.overflowMenuContainer}>
+            <View style={styles.actionItem}>
+                <Text style={styles.actionTitle}>SPEAKER</Text>
+                <IconDeviceSpeaker fill={ColorPalette.white} width={15} height={15} />
+            </View>
+            <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
+                <Text style={styles.actionTitle}>CHAT GROUP</Text>
+                <IconChatSend fill={ColorPalette.white} width={15} height={15} />
+            </View>
+            <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
+                <Text style={styles.actionTitle}>RECORD CALL</Text>
+                <IconRecording  width={15} height={15} />
+            </View>
+            <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
+                <Text style={[styles.actionTitle, { color: ColorPalette.red}]}>LEAVE CALL</Text>
+                <IconLeaveCall width={15} height={15} />
+            </View>
+            </View>
+        </SlidingView>
+            // <BottomSheet
+            //     onCancel = { this._onCancel }
+            //     onSwipe = { this._onSwipe }
+            //     /* renderHeader = { this._renderMenuExpandToggle } */>
+            //     <AudioRouteButton { ...buttonProps } />
+            //     {false && <InviteButton { ...buttonProps } />}
+            //     <AudioOnlyButton { ...buttonProps } />
+            //     {false && <RaiseHandButton { ...buttonProps } />}
+            //     {false && <LobbyModeButton { ...buttonProps } />}
+            //     {false && <ScreenSharingButton { ...buttonProps } />}
+            //     <ToggleCameraButton { ...buttonProps } />
+            //     {false && <MoreOptionsButton { ...moreOptionsButtonProps } />}
+            //     {false && <Collapsible collapsed = { false }>
+            //         {false && <ToggleCameraButton { ...buttonProps } />}
+            //         {false && <TileViewButton { ...buttonProps } />}
+            //         {false && <RecordButton { ...buttonProps } />}
+            //         {false && <LiveStreamButton { ...buttonProps } />}
+            //         {false && <SharedVideoButton { ...buttonProps } />}
+            //         {false && <RoomLockButton { ...buttonProps } />}
+            //         {false && <ClosedCaptionButton { ...buttonProps } />}
+            //         {false && <SharedDocumentButton { ...buttonProps } />}
+            //         {false && <MuteEveryoneButton { ...buttonProps } />}
+            //         {false && <MuteEveryonesVideoButton { ...buttonProps } />}
+            //         {false && <HelpButton { ...buttonProps } />}
+            //     </Collapsible>}
+            // </BottomSheet>
         );
     }
 
