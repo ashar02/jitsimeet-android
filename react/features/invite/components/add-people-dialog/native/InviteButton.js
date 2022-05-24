@@ -33,7 +33,7 @@ class InviteButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
-        this.props.dispatch(doInvitePeople());
+        //this.props.dispatch(doInvitePeople());
     }
 }
 
