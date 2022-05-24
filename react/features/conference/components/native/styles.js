@@ -93,10 +93,8 @@ export default {
     },
 
     navBarWrapper: {
-        alignItems: 'center',
+        alignSelf: 'center',
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         marginTop: 15,
         marginLeft: 20,
         marginRight: 28
@@ -164,7 +162,7 @@ export default {
      * the {@link Toolbox}.
      */
     toolboxAndFilmstripContainer: {
-        bottom: 20,
+        bottom: 64,
         flexDirection: 'column',
         justifyContent: 'flex-end',
         left: 0,

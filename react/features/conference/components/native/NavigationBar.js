@@ -86,14 +86,14 @@ const NavigationBar = (props: Props) => {
                 </View>
                 <Labels />
             </View> */}
-            <View>
+            {/* <View>
                 <IconRecording />
-            </View>
+            </View> */}
             <View style={styles.nameLabel}>
                 <Text style={styles.nameText}>{props?._participant?.name}</Text>
             </View>
 
-            <View>
+            {/* <View>
                 <AudioRouteButton
                     styles={{
                         iconStyle: { fontSize: 24 }, style: {
@@ -107,7 +107,7 @@ const NavigationBar = (props: Props) => {
                         }
                     }}
                 />
-            </View>
+            </View> */}
         </View>
     );
 };

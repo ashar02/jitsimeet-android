@@ -208,7 +208,7 @@ class Conference extends AbstractConference<Props, *> {
     _onClick() {
         let movedPosition = 0;
         if (!this.props._toolboxVisible) {
-            movedPosition = 130;
+            movedPosition = 174;
         }
         Animated.spring(
             this._panelPosition,
@@ -358,10 +358,6 @@ class Conference extends AbstractConference<Props, *> {
                 <SafeAreaView
                     pointerEvents = 'box-none'
                     style = { styles.navBarSafeView }>
-                      <View style={{flexDirection: 'row', alignSelf: 'center', alignItems: 'center'}}>
-                            <SecureIcon />
-                        <Text style={{color: ColorPalette.yellow, textAlign: 'center', fontSize:10, paddingLeft: 8, letterSpacing: 0.6, fontWeight: '500'}}>Secure Call</Text>
-                        </View>
                     <NavigationBar />
                     { this._renderNotificationsContainer() }
                     <KnockingParticipantList />
