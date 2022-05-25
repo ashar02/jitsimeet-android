@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Dimensions } from 'react-native';
 
 import { YoutubeLargeVideo } from '../../../shared-video/components';
 import { Avatar } from '../../avatar';
@@ -13,7 +13,7 @@ import {
 } from '../../media';
 import { Container, TintedView } from '../../react';
 import { connect } from '../../redux';
-import type { StyleType } from '../../styles';
+import { ColorPalette, StyleType } from '../../styles';
 import { TestHint } from '../../testing/components';
 import { getTrackByMediaTypeAndParticipant } from '../../tracks';
 import { shouldRenderParticipantVideo, getParticipantById } from '../functions';
@@ -128,7 +128,11 @@ type Props = {
     /**
      * Indicates whether zooming (pinch to zoom and/or drag) is enabled.
      */
-    zoomEnabled: boolean
+    zoomEnabled: boolean,
+
+    _totalParticiapnts: number,
+
+    _isLocalUser: boolean
 };
 
 /**
@@ -197,7 +201,9 @@ class ParticipantView extends Component<Props> {
             disableVideo,
             onPress,
             tintStyle,
-            _audioOnly
+            _audioOnly,
+            _totalParticiapnts,
+            _isLocalUser
         } = this.props;
 
         // If the connection has problems, we will "tint" the video / avatar.
@@ -221,7 +227,9 @@ class ParticipantView extends Component<Props> {
                     ...this.props.style
                 }}
                 touchFeedback = { false }>
-
+                {
+                    !renderVideo && _totalParticiapnts == 2 && !_isLocalUser && <View style={{ borderRadius: 10, position: 'absolute', height: Dimensions.get('screen').height /1.16,borderWidth:!renderVideo ? 1 : 0, borderColor: !renderVideo ? ColorPalette.gray : ColorPalette.appBackground, width: Dimensions.get('screen').width - 50, alignSelf: 'center'}} />
+                }
                 <TestHint
                     id = { testHintId }
                     onPress = { renderYoutubeLargeVideo ? undefined : onPress }
@@ -272,6 +280,7 @@ class ParticipantView extends Component<Props> {
 function _mapStateToProps(state, ownProps) {
     const { disableVideo, participantId } = ownProps;
     const participant = getParticipantById(state, participantId);
+    const participants = state['features/base/participants'];
     const audioOnly = state['features/base/audio-only'].enabled;
     let connectionStatus;
     let participantName = participant?.name;
@@ -288,7 +297,9 @@ function _mapStateToProps(state, ownProps) {
                 state['features/base/tracks'],
                 MEDIA_TYPE.VIDEO,
                 participantId),
-        _audioOnly: audioOnly
+        _audioOnly: audioOnly,
+        _totalParticiapnts: participants?.length,
+        _isLocalUser: participant?.local ?? false
     };
 }
 
