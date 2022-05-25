@@ -18,7 +18,7 @@ export default {
     indicator: {
         backgroundColor: ColorPalette.transparent,
         color: ColorPalette.white,
-        fontSize: 12,
+        fontSize: 16,
         textShadowColor: ColorPalette.black,
         textShadowOffset: {
             height: -1,

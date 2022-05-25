@@ -135,6 +135,14 @@ export default {
     tileViewRow: {
         flexDirection: 'row',
         justifyContent: 'center'
+    },
+    audioMuteIndicatorLayout: {
+        width: 22,
+        height: 22,
+        backgroundColor: ColorPalette.red,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 };
 
