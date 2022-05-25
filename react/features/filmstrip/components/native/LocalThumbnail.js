@@ -9,6 +9,7 @@ import { connect } from '../../../base/redux';
 import Thumbnail from './Thumbnail';
 import styles from './styles';
 import { isToolboxVisible } from '../../../toolbox/functions.native';
+import { ColorPalette } from '../../../base/styles';
 
 type Props = {
 
@@ -68,8 +69,8 @@ function LocalThumbnail (props: Props) {
         }
     }
     useEffect(()=>{           
-        let heightOfBox = props.participantsCount == 2 ? 270 : props.participantsCount == 3 ? 100 : props.participantsCount > 5 ? 100 : 135;
-        let widthOfBox = props.participantsCount == 2 ? 140 : props.participantsCount == 3 ? 100 : props.participantsCount > 5 ? 100 : 140; 
+        let heightOfBox = props.participantsCount == 2 ? 189 : props.participantsCount == 3 ? 100 : props.participantsCount > 5 ? 100 : 189;
+        let widthOfBox = props.participantsCount == 2 ? 121 : props.participantsCount == 3 ? 100 : props.participantsCount > 5 ? 100 : 121; 
         if(props.participantsCount >= 2){
         LayoutAnimation.spring();
         setBoxHeight(heightOfBox);
@@ -77,9 +78,9 @@ function LocalThumbnail (props: Props) {
         }
      }, [props.participantsCount])
 
-     useEffect(() => {
-         animateCurrentUserBoxSizeOnSlidingPanel(props._toolboxVisible)
-      }, [props._toolboxVisible])
+    //  useEffect(() => {
+    //      animateCurrentUserBoxSizeOnSlidingPanel(props._toolboxVisible)
+    //   }, [props._toolboxVisible])
    
      const styleOverrides = {
         aspectRatio: 1,
@@ -89,9 +90,10 @@ function LocalThumbnail (props: Props) {
         maxWidth: boxWidth,
         width: boxWidth,
         borderRadius:participantsCount == 2 ? 6 : 16,
-        marginRight:10,
-        marginBottom:15,
-        alignSelf: 'center'
+        marginRight:26,
+        marginTop:55,
+        alignSelf: 'center',
+        borderColor: ColorPalette.gray
     }
         return (
             <View style = {{aspectRatio: participantsCount <= 2 ? 0.6 : 1}}>
