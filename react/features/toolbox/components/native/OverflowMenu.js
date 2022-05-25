@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-
+import _ from 'lodash';
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { BottomSheet, hideDialog, isDialogOpen } from '../../../base/dialog';
 import { IconDragHandle, IconChatSend, IconRecording, IconLeaveCall, IconDeviceSpeaker } from '../../../base/icons';
@@ -22,7 +22,9 @@ import { getMovableButtons } from '../../functions.native';
 import HelpButton from '../HelpButton';
 import MuteEveryoneButton from '../MuteEveryoneButton';
 import MuteEveryonesVideoButton from '../MuteEveryonesVideoButton';
-
+import { createToolbarEvent, sendAnalytics } from '../../../analytics';
+import { appNavigate } from '../../../app/actions';
+import { disconnect } from '../../../base/connection';
 import AudioOnlyButton from './AudioOnlyButton';
 import MoreOptionsButton from './MoreOptionsButton';
 import RaiseHandButton from './RaiseHandButton';
@@ -102,6 +104,17 @@ class OverflowMenu extends PureComponent<Props, State> {
             showMore: false
         };
 
+        this._hangup = _.once(() => {
+            sendAnalytics(createToolbarEvent('hangup'));
+
+            // FIXME: these should be unified.
+            if (navigator.product === 'ReactNative') {
+                this.props.dispatch(appNavigate(undefined));
+            } else {
+                this.props.dispatch(disconnect(true));
+            }
+        });
+
         // Bind event handlers so they are only bound once per instance.
         this._onCancel = this._onCancel.bind(this);
         this._onSwipe = this._onSwipe.bind(this);
@@ -153,10 +166,12 @@ class OverflowMenu extends PureComponent<Props, State> {
                 <Text style={styles.actionTitle}>RECORD CALL</Text>
                 <IconRecording  width={15} height={15} />
             </View>
+            <TouchableOpacity onPress={this._hangup}>
             <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                 <Text style={[styles.actionTitle, { color: ColorPalette.red}]}>LEAVE CALL</Text>
                 <IconLeaveCall width={15} height={15} />
             </View>
+            </TouchableOpacity>
             </View>
         </SlidingView>
             // <BottomSheet

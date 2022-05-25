@@ -88,6 +88,7 @@ function Toolbox(props: Props) {
         ]
     };
     const [modalVisible, setModalVisible] = useState(false);
+    const [cameraFlipToogle, setCameraFlipToogle] = useState(false);
     return (
         <View>
         <Animated.View
@@ -120,10 +121,12 @@ function Toolbox(props: Props) {
                
                 <View style = { styles.toolBoxSection }>
                 <View style={{alignItems: 'center'}}>
+                <TouchableWithoutFeedback disabled={props._videoMuted} onPress={()=>setCameraFlipToogle(!cameraFlipToogle)}>
                 <ToggleCameraButton
                     styles = {{iconStyle:styles.iconStyle, style: [styles.customeButton,{
-                        backgroundColor: ColorPalette.magenta}]}}
+                        backgroundColor: cameraFlipToogle == true ? ColorPalette.searGreenLight : ColorPalette.magenta}]}}
                      />
+                </TouchableWithoutFeedback>
                 <Text style={styles.iconTitle}>FLIP</Text>
                 </View>
                 {/* <AudioRouteButton 

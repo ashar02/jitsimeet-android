@@ -194,11 +194,11 @@ function Thumbnail(props: Props) {
 
             { !participant.isFakeParticipant && <Container style = { styles.thumbnailIndicatorContainer }>
                 { audioMuted
-                    && <AudioMutedIndicator /> }
-                { videoMuted
+                    && <View style={styles.audioMuteIndicatorLayout}><AudioMutedIndicator /></View> }
+                {/* { videoMuted
                     && <VideoMutedIndicator /> }
                 { isScreenShare
-                    && <ScreenShareIndicator /> }
+                    && <ScreenShareIndicator /> } */}
             </Container> }
 
         </Container>
