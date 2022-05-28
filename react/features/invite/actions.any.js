@@ -13,7 +13,8 @@ import {
     REMOVE_PENDING_INVITE_REQUESTS,
     SET_CALLEE_INFO_VISIBLE,
     UPDATE_DIAL_IN_NUMBERS_FAILED,
-    UPDATE_DIAL_IN_NUMBERS_SUCCESS
+    UPDATE_DIAL_IN_NUMBERS_SUCCESS,
+    INVITE_PEOPLE
 } from './actionTypes';
 import {
     getDialInConferenceID,
@@ -264,5 +265,18 @@ export function addPendingInviteRequest(
 export function removePendingInviteRequests() {
     return {
         type: REMOVE_PENDING_INVITE_REQUESTS
+    };
+}
+
+/**
+ * Action to signal the open of invite people.
+ *
+ * @returns {{
+ *     type: INVITE_PEOPLE
+ * }}
+ */
+export function invitePeople() {
+    return {
+        type: INVITE_PEOPLE
     };
 }

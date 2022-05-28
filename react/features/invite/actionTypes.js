@@ -70,3 +70,12 @@ export const UPDATE_DIAL_IN_NUMBERS_FAILED
  */
 export const UPDATE_DIAL_IN_NUMBERS_SUCCESS
     = 'UPDATE_DIAL_IN_NUMBERS_SUCCESS';
+
+/**
+ * The type of the action which signals open of invite people panel.
+ *
+ * {
+ *     type: INVITE_PEOPLE
+ * }
+ */
+export const INVITE_PEOPLE = 'INVITE_PEOPLE';

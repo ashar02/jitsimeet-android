@@ -34,6 +34,7 @@ import { toggleScreensharing } from '../../base/tracks';
 import { OPEN_CHAT, CLOSE_CHAT } from '../../chat';
 import { openChat } from '../../chat/actions';
 import { sendMessage, setPrivateMessageRecipient, closeChat } from '../../chat/actions.any';
+import { INVITE_PEOPLE } from '../../invite';
 import { muteLocal } from '../../video-menu/actions';
 import { ENTER_PICTURE_IN_PICTURE } from '../picture-in-picture';
 
@@ -178,6 +179,15 @@ MiddlewareRegistry.register(store => next => action => {
         sendEvent(
             store,
             'CHAT_BUTTON_PRESSED',
+            {}
+        );
+        break;
+    }
+
+    case INVITE_PEOPLE: {
+        sendEvent(
+            store,
+            'INVITE_PEOPLE_BUTTON_PRESSED',
             {}
         );
         break;

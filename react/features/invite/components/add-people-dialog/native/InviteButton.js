@@ -7,7 +7,7 @@ import { translate } from '../../../../base/i18n';
 import { IconAddPeople } from '../../../../base/icons';
 import { connect } from '../../../../base/redux';
 import { AbstractButton, type AbstractButtonProps } from '../../../../base/toolbox/components';
-import { doInvitePeople } from '../../../actions.native';
+import { invitePeople } from '../../../actions.native';
 
 type Props = AbstractButtonProps & {
 
@@ -33,7 +33,7 @@ class InviteButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
-        //this.props.dispatch(doInvitePeople());
+        this.props.dispatch(invitePeople());
     }
 }
 

@@ -55,4 +55,11 @@ public interface JitsiMeetViewListener {
      * @param data Map with empty key.
      */
     void onChatButtonPressed(Map<String, Object> data);
+
+    /**
+     * Called when invite people button pressed.
+     *
+     * @param data Map with empty key.
+     */
+    void onInvitePeopleButtonPressed(Map<String, Object> data);
 }
