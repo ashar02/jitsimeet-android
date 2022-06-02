@@ -32,6 +32,9 @@ import ScreenSharingButton from './ScreenSharingButton.js';
 import ToggleCameraButton from './ToggleCameraButton';
 import { SlidingView } from '../../../base/react';
 import styles from './styles';
+import AudioRoutePickerDialog from '../../../mobile/audio-mode/components/AudioRoutePickerDialog';
+import { openDialog } from '../../../base/dialog';
+import { closeChat } from '../../../chat/actions.native';
 
 /**
  * The type of the React {@code Component} props of {@link OverflowMenu}.
@@ -115,6 +118,15 @@ class OverflowMenu extends PureComponent<Props, State> {
             }
         });
 
+        this._audioRoute = () => {
+            this.props.dispatch(openDialog(AudioRoutePickerDialog));
+        };
+
+        this._chat = () => {
+            this.props.dispatch(closeChat());
+            this.props.dispatch(hideDialog(OverflowMenu_));
+        };
+       
         // Bind event handlers so they are only bound once per instance.
         this._onCancel = this._onCancel.bind(this);
         this._onSwipe = this._onSwipe.bind(this);
@@ -154,14 +166,18 @@ class OverflowMenu extends PureComponent<Props, State> {
             show = { true }
        >
             <View  style={styles.overflowMenuContainer}>
-            <View style={styles.actionItem}>
-                <Text style={styles.actionTitle}>SPEAKER</Text>
-                <IconDeviceSpeaker fill={ColorPalette.white} width={15} height={15} />
-            </View>
-            <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
-                <Text style={styles.actionTitle}>CHAT GROUP</Text>
-                <IconChatSend fill={ColorPalette.white} width={15} height={15} />
-            </View>
+            <TouchableOpacity onPress={this._audioRoute}>
+                <View style={styles.actionItem}>
+                    <Text style={styles.actionTitle}>SPEAKER</Text>
+                    <IconDeviceSpeaker fill={ColorPalette.white} width={15} height={15} />
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._chat}>
+                <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
+                    <Text style={styles.actionTitle}>CHAT GROUP</Text>
+                    <IconChatSend fill={ColorPalette.white} width={15} height={15} />
+                </View>
+            </TouchableOpacity>
             <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                 <Text style={styles.actionTitle}>RECORD CALL</Text>
                 <IconRecording  width={15} height={15} />
