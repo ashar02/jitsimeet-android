@@ -1,7 +1,7 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Text, NativeModules } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import _ from 'lodash';
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
@@ -33,8 +33,10 @@ import ToggleCameraButton from './ToggleCameraButton';
 import { SlidingView } from '../../../base/react';
 import styles from './styles';
 import AudioRoutePickerDialog from '../../../mobile/audio-mode/components/AudioRoutePickerDialog';
+import { RawDevice, deviceInfoMap } from '../../../mobile/audio-mode/components/AudioRoutePickerDialog';
 import { openDialog } from '../../../base/dialog';
 import { closeChat } from '../../../chat/actions.native';
+const { AudioMode } = NativeModules;
 
 /**
  * The type of the React {@code Component} props of {@link OverflowMenu}.
@@ -60,6 +62,11 @@ type Props = {
      * The width of the screen.
      */
     _width: number,
+
+    /**
+     * Object describing available devices.
+     */
+    _devices: Array<RawDevice>,
 
     /**
      * Used for hiding the dialog when the selection was completed.
@@ -104,8 +111,20 @@ class OverflowMenu extends PureComponent<Props, State> {
 
         this.state = {
             scrolledToTop: true,
-            showMore: false
+            showMore: false,
+            selectedAudioDevice: ''
         };
+
+        AudioMode.updateDeviceList && AudioMode.updateDeviceList();
+        for (const device of this.props._devices) {
+            if (device.selected) {
+                const infoMap = deviceInfoMap[device.type];
+                const text = device.type === 'BLUETOOTH' && device.name ? device.name : infoMap.text;
+                const textArray = text.split('.');
+
+                this.state.selectedAudioDevice = textArray[1].toUpperCase();
+            }
+        }
 
         this._hangup = _.once(() => {
             sendAnalytics(createToolbarEvent('hangup'));
@@ -168,7 +187,7 @@ class OverflowMenu extends PureComponent<Props, State> {
             <View  style={styles.overflowMenuContainer}>
             <TouchableOpacity onPress={this._audioRoute}>
                 <View style={styles.actionItem}>
-                    <Text style={styles.actionTitle}>SPEAKER</Text>
+                    <Text style={styles.actionTitle}>{this.state.selectedAudioDevice}</Text>
                     <IconDeviceSpeaker fill={ColorPalette.white} width={15} height={15} />
                 </View>
             </TouchableOpacity>
@@ -313,7 +332,8 @@ function _mapStateToProps(state) {
     return {
         _bottomSheetStyles: ColorSchemeRegistry.get(state, 'BottomSheet'),
         _isOpen: isDialogOpen(state, OverflowMenu_),
-        _width: state['features/base/responsive-ui'].clientWidth
+        _width: state['features/base/responsive-ui'].clientWidth,
+        _devices: state['features/mobile/audio-mode'].devices
     };
 }
 
