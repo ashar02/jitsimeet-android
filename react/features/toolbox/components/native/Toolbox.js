@@ -121,12 +121,11 @@ function Toolbox(props: Props) {
                
                 <View style = { styles.toolBoxSection }>
                 <View style={{alignItems: 'center'}}>
-                <TouchableWithoutFeedback disabled={props._videoMuted} onPress={()=>setCameraFlipToogle(!cameraFlipToogle)}>
                 <ToggleCameraButton
+                    cameraFlipToogle={()=>setCameraFlipToogle(!cameraFlipToogle)}
                     styles = {{iconStyle:styles.iconStyle, style: [styles.customeButton,{
                         backgroundColor: cameraFlipToogle == true ? ColorPalette.searGreenLight : ColorPalette.magenta}]}}
                      />
-                </TouchableWithoutFeedback>
                 <Text style={styles.iconTitle}>FLIP</Text>
                 </View>
                 {/* <AudioRouteButton 

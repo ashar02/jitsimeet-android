@@ -44,6 +44,7 @@ class ToggleCameraButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
+        this.props.cameraFlipToogle();
         this.props.dispatch(toggleCameraFacingMode());
     }
 
