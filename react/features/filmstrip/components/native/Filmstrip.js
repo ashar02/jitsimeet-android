@@ -89,9 +89,9 @@ class Filmstrip extends Component<Props> {
     render() {
         const { _aspectRatio, _participants, _visible, _videoMuted, onPress } = this.props;
 
-        // if (_participants.length + 1 < 3 && _videoMuted) {
-        //     return null;
-        // }
+        if (_participants.length + 1 > 3 ) {
+            return null;
+        }
 
         const isNarrowAspectRatio = _aspectRatio === ASPECT_RATIO_NARROW;
         const filmstripStyle = isNarrowAspectRatio ? styles.filmstripNarrow : styles.filmstripWide;

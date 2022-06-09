@@ -19,10 +19,11 @@ export default {
      */
     displayNameContainer: {
         alignSelf: 'center',
-        bottom: 0,
+        top: 4,
         flex: 1,
         margin: 4,
-        position: 'absolute'
+        position: 'absolute',
+        borderRadius: 16
     },
 
     /**

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import type { Dispatch } from 'redux';
 
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
@@ -16,7 +16,7 @@ import {
 } from '../../../base/participants';
 import { Container } from '../../../base/react';
 import { connect } from '../../../base/redux';
-import { StyleType } from '../../../base/styles';
+import { ColorPalette ,StyleType } from '../../../base/styles';
 import { getTrackByMediaTypeAndParticipant } from '../../../base/tracks';
 import { ConnectionIndicator } from '../../../connection-indicator';
 import { DisplayNameLabel } from '../../../display-name';
@@ -157,7 +157,7 @@ function Thumbnail(props: Props) {
             touchFeedback = { false }>
 
             <ParticipantView
-                avatarSize = { isLocalUser ? AVATAR_SIZE : _participantCount == 3 || _participantCount == 4 ? AVATAR_SIZE * 2.3 : AVATAR_SIZE * 2 }
+                avatarSize = { isLocalUser ? AVATAR_SIZE * 1.2 : _participantCount == 3 ? AVATAR_SIZE * 3 : AVATAR_SIZE * 1.7 }
                 disableVideo = { isScreenShare || participant.isFakeParticipant }
                 participantId = { participantId }
                 style = {[ _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator && videoMuted ? 2 : 0, borderColor:'#D2A622', borderRadius:15} ]}
@@ -166,23 +166,34 @@ function Thumbnail(props: Props) {
                 onPress = { onClick }
                 zOrder = { 1 } />
 
-            { renderDisplayName && !isLocalUser && <Container style = { styles.displayNameContainer }>
-                <DisplayNameLabel participantId = { participantId } />
-            </Container> }
+            {renderDisplayName && <Container style={[styles.displayNameContainer, { backgroundColor: renderDominantSpeakerIndicator ? ColorPalette.seaGreen : ColorPalette.black }]}>
+                {
+                    isLocalUser ? (
+                        <Text style={{
+                            color: ColorPalette.white,
+                            fontSize: 14, paddingHorizontal: 16,
+                            paddingVertical: 4
+                        }}>You</Text>
+                    ) : (
+                        <DisplayNameLabel participantId={participantId} />
+                    )
+                }
 
-            { renderModeratorIndicator
+            </Container>}
+
+            {/* { renderModeratorIndicator
                 && <View style = { styles.moderatorIndicatorContainer }>
                     <ModeratorIndicator />
-                </View>}
+                </View>} */}
 
-            { !participant.isFakeParticipant && <View
+            {/* { !participant.isFakeParticipant && <View
                 style = { [
                     styles.thumbnailTopIndicatorContainer,
                     styles.thumbnailTopLeftIndicatorContainer
                 ] }>
                 <RaisedHandIndicator participantId = { participant.id } />
                 { renderDominantSpeakerIndicator && <DominantSpeakerIndicator /> }
-            </View> }
+            </View> } */}
 
             { !participant.isFakeParticipant && <View
                 style = { [

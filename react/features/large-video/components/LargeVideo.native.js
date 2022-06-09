@@ -46,6 +46,8 @@ type Props = {
      * Callback to invoke when the {@code LargeVideo} is clicked/pressed.
      */
     onClick: Function,
+
+    _participantName: string
 };
 
 /**
@@ -121,7 +123,8 @@ class LargeVideo extends PureComponent<Props, State> {
             _disableVideo,
             _participantId,
             _styles,
-            onClick
+            onClick,
+            _participantName
         } = this.props;
 
         return (
@@ -129,6 +132,7 @@ class LargeVideo extends PureComponent<Props, State> {
                 avatarSize = { avatarSize }
                 disableVideo = { _disableVideo }
                 onPress = { onClick }
+                _participantName= {_participantName}
                 largeMode = {true}
                 participantId = { _participantId }
                 style = { _styles.largeVideo }
@@ -161,6 +165,7 @@ function _mapStateToProps(state) {
         _disableVideo: disableVideo,
         _height: height,
         _participantId: participantId,
+        _participantName: participant.name,
         _styles: ColorSchemeRegistry.get(state, 'LargeVideo'),
         _width: width
     };

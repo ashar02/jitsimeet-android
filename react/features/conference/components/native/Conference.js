@@ -39,7 +39,7 @@ import {
     abstractMapStateToProps
 } from '../AbstractConference';
 import type { AbstractProps } from '../AbstractConference';
-
+import { VideoTileView } from '../../../filmstrip/components/native';
 import LonelyMeetingExperience from './LonelyMeetingExperience';
 import NavigationBar from './NavigationBar';
 import styles from './styles';
@@ -55,17 +55,6 @@ type Props = AbstractProps & {
      */
     _aspectRatio: Symbol,
 
-    /**
-     * Whether local audio (microphone) is muted or not.
-     */
-    _audioMuted: boolean,
-
-    /**
-     * The name of the participant which this component represents.
-     *
-     * @private
-     */
-    _participantName: string,
 
     /**
      * Wherther the calendar feature is enabled or not.
@@ -114,7 +103,9 @@ type Props = AbstractProps & {
     /**
      * The redux {@code dispatch} function.
      */
-    dispatch: Function
+    dispatch: Function,
+
+    _isAudioCall: boolean
 };
 
 /**
@@ -288,8 +279,7 @@ class Conference extends AbstractConference<Props, *> {
             _largeVideoParticipantId,
             _reducedUI,
             _shouldDisplayTileView,
-            _audioMuted: audioMuted,
-            _participantName
+            _isAudioCall
         } = this.props;
 
         if (_reducedUI) {
@@ -302,7 +292,8 @@ class Conference extends AbstractConference<Props, *> {
                   * The LargeVideo is the lowermost stacking layer.
                   */
                     _shouldDisplayTileView
-                        ? <TileView onClick = { this._onClick }/>
+                        ? _isAudioCall ? <TileView onClick = { this._onClick }/>
+                        : <VideoTileView onClick = { this._onClick } />
                         : <LargeVideo onClick = { this._onClick } />
                 }
 
@@ -356,7 +347,7 @@ class Conference extends AbstractConference<Props, *> {
                 <SafeAreaView
                     pointerEvents = 'box-none'
                     style = { styles.navBarSafeView }>
-                    <NavigationBar />
+                    {/* <NavigationBar /> */}
                     { this._renderNotificationsContainer() }
                     <KnockingParticipantList />
                 </SafeAreaView>
@@ -458,6 +449,7 @@ function _mapStateToProps(state) {
     } = state['features/base/conference'];
     const participant = getParticipantById(state, state['features/large-video'].participantId);
     const { aspectRatio, reducedUI } = state['features/base/responsive-ui'];
+    const { startAudioOnly } = state['features/base/settings'];
     const tracks = state['features/base/tracks'];
     const audioTrack = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, participant?.id);
 
@@ -484,8 +476,7 @@ function _mapStateToProps(state) {
         _pictureInPictureEnabled: getFeatureFlag(state, PIP_ENABLED),
         _reducedUI: reducedUI,
         _toolboxVisible: isToolboxVisible(state),
-        _audioMuted: audioTrack?.muted ?? true,
-        _participantName: participant?.name
+        _isAudioCall: startAudioOnly
     };
 }
 

@@ -48,34 +48,32 @@ function LocalThumbnail (props: Props) {
     //         setBoxHeight(boxHeight == 100 ? 140 : 100)
     //     }
     // }
-    const animateCurrentUserBoxSizeOnSlidingPanel  = (isToolbarHide) => {
-        if(props.participantsCount == 2 && isToolbarHide){
-            //LayoutAnimation.spring();
-            setBoxWidth(160);
-            setBoxHeight(270)
-        } else if(props.participantsCount == 2 && !isToolbarHide){
-            //LayoutAnimation.spring();
-            setBoxWidth(100);
-            setBoxHeight(190)
-        } else if(props.participantsCount > 2 && isToolbarHide){
-            //LayoutAnimation.spring();
-            setBoxWidth(135);
-            setBoxHeight(140)
-        }
-        else if(props.participantsCount > 2 && !isToolbarHide){
-            //LayoutAnimation.spring();
-            setBoxWidth(100);
-            setBoxHeight(100)
-        }
-    }
+    // const animateCurrentUserBoxSizeOnSlidingPanel  = (isToolbarHide) => {
+    //     if(props.participantsCount == 2 && isToolbarHide){
+    //         //LayoutAnimation.spring();
+    //         setBoxWidth(160);
+    //         setBoxHeight(270)
+    //     } else if(props.participantsCount == 2 && !isToolbarHide){
+    //         //LayoutAnimation.spring();
+    //         setBoxWidth(100);
+    //         setBoxHeight(190)
+    //     } else if(props.participantsCount > 2 && isToolbarHide){
+    //         //LayoutAnimation.spring();
+    //         setBoxWidth(135);
+    //         setBoxHeight(140)
+    //     }
+    //     else if(props.participantsCount > 2 && !isToolbarHide){
+    //         //LayoutAnimation.spring();
+    //         setBoxWidth(100);
+    //         setBoxHeight(100)
+    //     }
+    // }
     useEffect(()=>{           
-        let heightOfBox = props.participantsCount == 2 ? 189 : props.participantsCount == 3 ? 100 : props.participantsCount > 5 ? 100 : 189;
-        let widthOfBox = props.participantsCount == 2 ? 121 : props.participantsCount == 3 ? 100 : props.participantsCount > 5 ? 100 : 121; 
-        if(props.participantsCount >= 2){
+        let heightOfBox = 189;
+        let widthOfBox =  121; 
         LayoutAnimation.spring();
         setBoxHeight(heightOfBox);
         setBoxWidth(widthOfBox);
-        }
      }, [props.participantsCount])
 
     //  useEffect(() => {
@@ -89,17 +87,17 @@ function LocalThumbnail (props: Props) {
         maxHeight:  boxHeight,
         maxWidth: boxWidth,
         width: boxWidth,
-        borderRadius:participantsCount == 2 ? 6 : 16,
+        borderRadius:12,
         marginRight:26,
         marginTop:55,
         alignSelf: 'center',
         borderColor: ColorPalette.gray
     }
         return (
-            <View style = {{aspectRatio: participantsCount <= 2 ? 0.6 : 1}}>
+            <View style = {{aspectRatio: 0.6 }}>
                 <Thumbnail participant = { _localParticipant } 
                 styleOverrides={styleOverrides}
-                renderDisplayName = {participantsCount == 3 ? false : participantsCount > 5 ? false : true }
+                renderDisplayName = { true }
                 tileView={false}
                 isLocalUser={true}
                 />

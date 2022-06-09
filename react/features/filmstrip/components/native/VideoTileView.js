@@ -5,9 +5,7 @@ import {
     ScrollView,
     TouchableWithoutFeedback,
     View,
-    Dimensions,
-    FlatList,
-    SafeAreaView
+    Dimensions
 } from 'react-native';
 import type { Dispatch } from 'redux';
 
@@ -18,7 +16,6 @@ import { getAvatarBackgroundColor } from '../../../base/avatar/functions';
 
 import Thumbnail from './Thumbnail';
 import styles from './styles';
-import { ColorPalette } from '../../../base/styles';
 
 /**
  * The type of the React {@link Component} props of {@link TileView}.
@@ -63,7 +60,7 @@ type Props = {
  * @private
  * @type {number}
  */
-const MARGIN = 20;
+const MARGIN = 10;
 
 /**
  * The aspect ratio the tiles should display in.
@@ -71,7 +68,7 @@ const MARGIN = 20;
  * @private
  * @type {number}
  */
-const TILE_ASPECT_RATIO = 1.12;
+const TILE_ASPECT_RATIO = 1;
 
 /**
  * Implements a React {@link Component} which displays thumbnails in a two
@@ -79,12 +76,11 @@ const TILE_ASPECT_RATIO = 1.12;
  *
  * @extends Component
  */
-class TileView extends Component<Props> {
+class VideoTileView extends Component<Props> {
     constructor(props){
         super(props);
         this.state={
-            localParticipant: null,
-            pinnedParticipant: null
+            localParticipant: null
         }
     }
     /**
@@ -114,116 +110,56 @@ class TileView extends Component<Props> {
     render() {
         const { _height, _width, onClick } = this.props;
         const rowElements = this._groupIntoRows(this._renderThumbnails(), this._getColumnCount());
-        const rowallElements = this._groupIntoRows(this._renderAllThumbnails(), this._getColumnCount());
-        const pinnedElement = this._pinnedElement();
         const boxHeight = Dimensions.get('screen').height / 3 - 50;
-        const boxWidth = Dimensions.get('screen').width / 2 + 30 
+        const boxWidth = Dimensions.get('screen').width / 2 + 27; 
         return (
             <TouchableWithoutFeedback onPress = { onClick }>
             <View>
-            {
-                    this.props._participants.length > 4 && (   
-                        <SafeAreaView
-                        style = {{
-                            alignSelf: 'flex-start',
-                            height: _height,
-                            width: _width
-                        }}>
-                        {
-                            this.state.pinnedParticipant && (
-                                <View>
-                                    <Thumbnail
-                                        
-                                        disableTint={true}
-                                        key={this.state.pinnedParticipant?.id}
-                                        participant={this.state.pinnedParticipant}
-                                        renderDisplayName={true}
-                                        styleOverrides={{
-                                            aspectRatio: 2,
-                                            flex: 0,
-                                            height: 200,
-                                            maxHeight: 200,
-                                            maxWidth: Dimensions.get('screen').width - 30,
-                                            width: Dimensions.get('screen').width - 30,
-                                            borderRadius: 8,
-                                            backgroundColor: ColorPalette.appBackground,
-                                            marginBottom: 12,
-                                            justifyContent: 'center',
-                                            alignSelf: 'center'
-                                        }}
-                                        tileView={true}
-                                        isLocalUser={false}
-                                        onClick={onClick}
-                                    />
-                                </View>
-                            )
-
-                        }
-                            <View
-                                style = {{
-                                    alignSelf: 'flex-start',
-                                    minHeight: _height,
-                                    minWidth: _width
-                                }}>
-                                { rowallElements }
-                            </View>
-                        
-                    </SafeAreaView>
-                        )}
                 {
-                    this.props._participants.length < 4 && (   
-                        <SafeAreaView
+                    this.props._participants.length !== 4 ? (
+                        <ScrollView
                         style = {{
-                            alignSelf: 'center',
+                            ...styles.tileView,
                             height: _height,
                             width: _width
                         }}>
                         
                             <View
                                 style = {{
-                                    alignSelf: 'center',
+                                    ...styles.tileViewRows,
                                     minHeight: _height,
                                     minWidth: _width
                                 }}>
                                 { rowElements }
                             </View>
                         
-                    </SafeAreaView>
-                        )}
-                        { this.props._participants.length == 4 && (
-                            <SafeAreaView>
-                            <FlatList
-                                data={this.props._participants}
-                                numColumns={2}
-                                renderItem={({ item, index }) => (
+                    </ScrollView>
+                    ):(
+                        this._getSortedParticipants().map(function (participant, index) {
+                            return(
+                                <View style={{left: index%2 !== 0 ? Dimensions.get('screen').width /2.5:10, top: 58, width: boxWidth, height: boxHeight, marginTop: index > 0 ? -22 : 0,zIndex: participant.dominantSpeaker ? 1 : 0, elevation: participant.dominantSpeaker ? 5 : 0}}>
                                     <Thumbnail
-                                        key={index}
                                         disableTint={true}
-                                        key={item?.id}
-                                        participant={item}
+                                        key={participant?.id}
+                                        participant={participant}
                                         renderDisplayName={true}
                                         styleOverrides={{
-                                            aspectRatio: 0,
+                                            aspectRatio: null,
                                             flex: 1,
-                                            height: Dimensions.get('screen').height / 3,
-                                            maxHeight: Dimensions.get('screen').height / 3,
+                                            height: boxHeight,
+                                            maxHeight: boxHeight,
                                             maxWidth: boxWidth,
                                             width: boxWidth,
-                                            borderRadius: 8,
-                                            backgroundColor: ColorPalette.appBackground,
-                                            margin: 15,
-                                            justifyContent: 'center',
-                                            alignSelf: 'center',
-                                            borderWidth: 1,
-                                            borderColor: ColorPalette.gray
+                                            borderRadius: 16,
+                                            backgroundColor: getAvatarBackgroundColor(this.state?.localParticipant.name)
                                         }}
                                         tileView={true}
                                         isLocalUser={false}
-                                        onClick={onClick}
-                                    />
-                                )}
-                            />
-                            </SafeAreaView>
+                                        onClick={ onClick }
+                                        />
+                                </View>
+                            )
+                        })
                     )
                 }
           
@@ -260,20 +196,17 @@ class TileView extends Component<Props> {
      * @private
      */
     _getColumnCount() {
-        const participantCount = this.props._participants.length;
+        const participantCount = this.props._participants.length - 1;
 
         // For narrow view, tiles should stack on top of each other for a lonely
         // call and a 1:1 call. Otherwise tiles should be grouped into rows of
         // two.
-        if (participantCount == 3) {
-            return 1;
+        if (this.props._aspectRatio === ASPECT_RATIO_NARROW) {
+            return participantCount >= 3 ? 2 : 1;
         }
 
-        if (participantCount === 7 || participantCount > 8) {
+        if (participantCount === 4) {
             // In wide view, a four person call should display as a 2x2 grid.
-            return 3;
-        }
-        if(participantCount < 9){
             return 2;
         }
 
@@ -289,28 +222,17 @@ class TileView extends Component<Props> {
     _getSortedParticipants() {
         const participants = [];
         let localParticipant;
-        let pinnedParticipant;
 
-        for (const [index,participant] of this.props._participants.entries()) {
+        for (const participant of this.props._participants) {
             if (participant.local) {
                 localParticipant = participant;
-                if(this.props._participants.length > 3){
-                    participants.push(participant);
-                }
             } else {
-                if(participant.pinned || this.props._participants.length == 7 && index == this.props._participants.length -1){
-                    pinnedParticipant = participant
-                }else {
-                    participants.push(participant);
-                }
+                participants.push(participant);
             }
         }
-        if(this.state.pinnedParticipant && this.props._participants.length > 7){
-            this.setState({pinnedParticipant: null})
-        }
         if(!this.state.localParticipant){
-        localParticipant && this.setState({localParticipant: localParticipant, pinnedParticipant: pinnedParticipant});
-        }
+            localParticipant && this.setState({localParticipant: localParticipant});
+            }
 
         return participants;
     }
@@ -331,14 +253,14 @@ class TileView extends Component<Props> {
 
         // If there is going to be at least two rows, ensure that at least two
         // rows display fully on screen.
-        if (participantCount  <= 6) {
-            tileWidth = Math.min(widthToUse / columns );
-        }else{
-            tileWidth = heightToUse
+        if (participantCount / columns > 1) {
+            tileWidth = Math.min(widthToUse / columns, heightToUse / 2.6);
+        } else {
+            tileWidth = Math.min(widthToUse / columns, heightToUse);
         }
 
         return {
-            height: participantCount == 3 ? tileWidth / 1.12 : tileWidth,
+            height: tileWidth / TILE_ASPECT_RATIO,
             width: tileWidth
         };
     }
@@ -363,7 +285,7 @@ class TileView extends Component<Props> {
                 rowElements.push(
                     <View
                         key = { rowElements.length }
-                        style = {[ styles.tileViewRow, {alignSelf: this.props._participants.length == 5 ? 'flex-start' : 'center'} ]}>
+                        style = { styles.tileViewRow }>
                         { thumbnailsInRow }
                     </View>
                 );
@@ -371,10 +293,6 @@ class TileView extends Component<Props> {
         }
 
         return rowElements;
-    }
-
-    _pinnedElement(){
-
     }
 
     /**
@@ -385,7 +303,7 @@ class TileView extends Component<Props> {
      * @returns {ReactElement[]}
      */
     _renderThumbnails() {
-        
+
         return this._getSortedParticipants()
             .map(participant => (
                 <Thumbnail
@@ -394,52 +312,21 @@ class TileView extends Component<Props> {
                     participant = { participant }
                     renderDisplayName = { true }
                     styleOverrides = {{
-                        aspectRatio: 1.08,
+                        aspectRatio: TILE_ASPECT_RATIO,
                         flex: 0,
                         height: this._getTileDimensions().height,
                         maxHeight: null,
                         maxWidth: null,
                         width: null,
                         borderRadius:16,
-                        backgroundColor: ColorPalette.appBackground,
-                        borderColor: ColorPalette.gray,
-                        marginTop: 18,
-                    }}
-                    tileView = { true }
-                    isLocalUser={false}
-                    onClick = { this.props.onClick }
-                    />));
-    }
-    _renderAllThumbnails() {
-
-        return this._getSortedParticipants()
-            .map(participant => (
-                <Thumbnail
-                    disableTint = { true }
-                    key = { participant.id }
-                    participant = { participant }
-                    renderDisplayName = { true }
-                    styleOverrides = {{
-                        aspectRatio: this.props._participants.length > 7 ? 1 : 0.6,
-                        flex: 1,
-                        height: null,
-                        maxHeight: this._getTileDimensions().height,
-                        maxWidth: this._getTileDimensions().height,
-                        width: null,
-                        borderRadius:8,
-                        backgroundColor: ColorPalette.appBackground,
-                        borderColor: ColorPalette.gray,
-                        borderWidth: 1,
-                        marginRight: 15,
-                        marginLeft: 15,
-                        marginBottom: 8
-
+                        backgroundColor:getAvatarBackgroundColor(participant.name)
                     }}
                     tileView = { true }
                     isLocalUser ={ false }
                     onClick = { this.props.onClick }
                     />));
     }
+
     /**
      * Sets the receiver video quality based on the dimensions of the thumbnails
      * that are displayed.
@@ -477,4 +364,4 @@ function _mapStateToProps(state) {
     };
 }
 
-export default connect(_mapStateToProps)(TileView);
+export default connect(_mapStateToProps)(VideoTileView);

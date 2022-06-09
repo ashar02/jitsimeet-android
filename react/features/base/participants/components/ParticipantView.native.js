@@ -203,7 +203,8 @@ class ParticipantView extends Component<Props> {
             tintStyle,
             _audioOnly,
             _totalParticiapnts,
-            _isLocalUser
+            _isLocalUser,
+            _participantName
         } = this.props;
 
         // If the connection has problems, we will "tint" the video / avatar.
@@ -229,6 +230,11 @@ class ParticipantView extends Component<Props> {
                 touchFeedback = { false }>
                 {
                     !renderVideo && _totalParticiapnts == 2 && !_isLocalUser && <View style={{ borderRadius: 10, position: 'absolute', height: Dimensions.get('screen').height /1.16,borderWidth:!renderVideo ? 1 : 0, borderColor: !renderVideo ? ColorPalette.gray : ColorPalette.appBackground, width: Dimensions.get('screen').width - 50, alignSelf: 'center'}} />
+                }
+                {
+                    _totalParticiapnts == 2 && !_isLocalUser && <View style={{backgroundColor: ColorPalette.seaGreen, borderRadius: 16, padding: 4,paddingLeft: 6, paddingRight: 6, position: 'absolute', top: 60, alignSelf: 'center'}}>
+                    <Text style={{color: '#fff'}}>{_participantName}</Text>
+                    </View>
                 }
                 <TestHint
                     id = { testHintId }
