@@ -92,7 +92,7 @@ const styles = {
         flexDirection: 'column',
         flexGrow: 0,
         width: '100%',
-        maxWidth: Dimensions.get('screen').width - 50,
+        maxWidth: Dimensions.get('screen').width - 30,
         height:110,
         maxheight:138,
         marginLeft: 'auto',

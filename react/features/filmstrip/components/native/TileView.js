@@ -147,9 +147,11 @@ class TileView extends Component<Props> {
                                             width: Dimensions.get('screen').width - 30,
                                             borderRadius: 8,
                                             backgroundColor: ColorPalette.appBackground,
-                                            marginBottom: 12,
+                                            margin: 15,
                                             justifyContent: 'center',
-                                            alignSelf: 'center'
+                                            alignSelf: 'center',
+                                            borderWidth: 1,
+                                            borderColor: ColorPalette.gray
                                         }}
                                         tileView={true}
                                         isLocalUser={false}
@@ -292,24 +294,26 @@ class TileView extends Component<Props> {
         let pinnedParticipant;
 
         for (const [index,participant] of this.props._participants.entries()) {
-            if (participant.local) {
-                localParticipant = participant;
-                if(this.props._participants.length > 3){
+            if(this.props._participants.length == 7 || this.props._participants.length == 10){
+                if(index == this.props._participants.length - 1){
+                    pinnedParticipant = participant
+                }else{
                     participants.push(participant);
                 }
-            } else {
-                if(participant.pinned || this.props._participants.length == 7 && index == this.props._participants.length -1){
-                    pinnedParticipant = participant
-                }else {
+            }else {
+                if(participant.local && this.props._participants.length == 3){
+
+                }else{
                     participants.push(participant);
                 }
             }
         }
-        if(this.state.pinnedParticipant && this.props._participants.length > 7){
+        if(this.state.pinnedParticipant && this.props._participants.length != 10){
+            if(this.props._participants.length > 7 || this.props._participants.length < 7)
             this.setState({pinnedParticipant: null})
         }
-        if(!this.state.localParticipant){
-        localParticipant && this.setState({localParticipant: localParticipant, pinnedParticipant: pinnedParticipant});
+        if(!this.state.pinnedParticipant){
+        pinnedParticipant && this.setState({ pinnedParticipant: pinnedParticipant });
         }
 
         return participants;
@@ -394,7 +398,7 @@ class TileView extends Component<Props> {
                     participant = { participant }
                     renderDisplayName = { true }
                     styleOverrides = {{
-                        aspectRatio: 1.08,
+                        aspectRatio: 1.15,
                         flex: 0,
                         height: this._getTileDimensions().height,
                         maxHeight: null,
@@ -420,7 +424,7 @@ class TileView extends Component<Props> {
                     participant = { participant }
                     renderDisplayName = { true }
                     styleOverrides = {{
-                        aspectRatio: this.props._participants.length > 7 ? 1 : 0.6,
+                        aspectRatio: this.props._participants.length == 9 ? 0.58 :  this.props._participants.length > 8 ? 0.94 : this.props._participants.length > 7 ? 1.1  : 0.6,
                         flex: 1,
                         height: null,
                         maxHeight: this._getTileDimensions().height,
@@ -430,9 +434,7 @@ class TileView extends Component<Props> {
                         backgroundColor: ColorPalette.appBackground,
                         borderColor: ColorPalette.gray,
                         borderWidth: 1,
-                        marginRight: 15,
-                        marginLeft: 15,
-                        marginBottom: 8
+                        margin: 12
 
                     }}
                     tileView = { true }

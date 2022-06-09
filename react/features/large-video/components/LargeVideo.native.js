@@ -165,7 +165,7 @@ function _mapStateToProps(state) {
         _disableVideo: disableVideo,
         _height: height,
         _participantId: participantId,
-        _participantName: participant.name,
+        _participantName: participant?.name,
         _styles: ColorSchemeRegistry.get(state, 'LargeVideo'),
         _width: width
     };
