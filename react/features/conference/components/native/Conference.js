@@ -197,19 +197,19 @@ class Conference extends AbstractConference<Props, *> {
      * @returns {void}
      */
     _onClick() {
-        let movedPosition = 0;
-        if (!this.props._toolboxVisible) {
-            movedPosition = 174;
-        }
-        Animated.spring(
-            this._panelPosition,
-            {
-                toValue: movedPosition,
-                velocity: 3,
-                tension: 2,
-                friction: 32,
-            }
-        ).start();
+        // let movedPosition = 0;
+        // if (!this.props._toolboxVisible) {
+        //     movedPosition = 174;
+        // }
+        // Animated.spring(
+        //     this._panelPosition,
+        //     {
+        //         toValue: movedPosition,
+        //         velocity: 3,
+        //         tension: 2,
+        //         friction: 32,
+        //     }
+        // ).start();
         this._setToolboxVisible(!this.props._toolboxVisible);
     }
 

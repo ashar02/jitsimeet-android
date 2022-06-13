@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text } from 'react-native';
 import type { Dispatch } from 'redux';
 
@@ -31,6 +31,7 @@ import RaisedHandIndicator from './RaisedHandIndicator';
 import ScreenShareIndicator from './ScreenShareIndicator';
 import VideoMutedIndicator from './VideoMutedIndicator';
 import styles, { AVATAR_SIZE } from './styles';
+import ThumbnailMenu_ from './ThumbnailMenu';
 
 /**
  * Thumbnail component's property types.
@@ -122,8 +123,8 @@ function Thumbnail(props: Props) {
     const {
         _audioMuted: audioMuted,
         _largeVideo: largeVideo,
-        _onClick,
-        _onThumbnailLongPress,
+        // _onClick,
+        // _onThumbnailLongPress,
         _renderDominantSpeakerIndicator: renderDominantSpeakerIndicator,
         _renderModeratorIndicator: renderModeratorIndicator,
         _styles,
@@ -132,7 +133,7 @@ function Thumbnail(props: Props) {
         participant,
         renderDisplayName,
         tileView,
-        onClick,
+        // onClick,
         isLocalUser,
         _participantCount
 
@@ -144,6 +145,28 @@ function Thumbnail(props: Props) {
     const videoMuted = !videoTrack || videoTrack.muted;
     const isScreenShare = videoTrack && videoTrack.videoType === VIDEO_TYPE.DESKTOP;
 
+    const [ showThumbnailMenu, setShowThumbnailMenu ] = useState(false)
+     /**
+         * Handles long press on the thumbnail.
+         *
+         * @returns {void}
+         */
+      _onThumbnailLongPress=()=> {
+
+        setShowThumbnailMenu(true);
+        // if (participant.local) {
+        //     dispatch(openDialog(ConnectionStatusComponent, {
+        //         participantID: participant.id
+        //     }));
+        // } else {
+        //     dispatch(openDialog(RemoteVideoMenu, {
+        //         participant
+        //     }));
+        // }
+    }
+    _onClick = () => {
+        setShowThumbnailMenu(false);
+    }
     return (
         <Container
             onClick = { _onClick }
@@ -152,7 +175,10 @@ function Thumbnail(props: Props) {
                 styles.thumbnail,
                 participant.pinned && !tileView
                     ? _styles.thumbnailPinned : null,
-                props.styleOverrides || null
+                props.styleOverrides || null,
+                {
+                    overflow: 'visible'
+                }
             ] }
             touchFeedback = { false }>
 
@@ -163,7 +189,7 @@ function Thumbnail(props: Props) {
                 style = {[ _styles.participantViewStyle, { borderWidth: renderDominantSpeakerIndicator && videoMuted ? 2 : 0, borderColor:'#D2A622', borderRadius:15} ]}
                 tintEnabled = { participantInLargeVideo && !disableTint }
                 tintStyle = { _styles.activeThumbnailTint }
-                onPress = { onClick }
+                onPress = { _onClick }
                 zOrder = { 1 } />
 
             {renderDisplayName && <Container style={[styles.displayNameContainer, { backgroundColor: renderDominantSpeakerIndicator ? ColorPalette.seaGreen : ColorPalette.black }]}>
@@ -180,6 +206,19 @@ function Thumbnail(props: Props) {
                 }
 
             </Container>}
+
+            {
+                    showThumbnailMenu && !isLocalUser && (
+                        <View style={{ alignSelf: 'center',
+                        top: 4,
+                        flex: 1,
+                        margin: 4,
+                        position: 'absolute',zIndex: 1, elevation: 5, overflow:'visible'}}>
+                        <ThumbnailMenu_ participantCount={_participantCount} />
+                        </View>
+
+                    )
+                }
 
             {/* { renderModeratorIndicator
                 && <View style = { styles.moderatorIndicatorContainer }>
@@ -249,19 +288,19 @@ function _mapDispatchToProps(dispatch: Function, ownProps): Object {
          *
          * @returns {void}
          */
-        _onThumbnailLongPress() {
-            const { participant } = ownProps;
+        // _onThumbnailLongPress() {
+        //     const { participant } = ownProps;
 
-            if (participant.local) {
-                dispatch(openDialog(ConnectionStatusComponent, {
-                    participantID: participant.id
-                }));
-            } else {
-                dispatch(openDialog(RemoteVideoMenu, {
-                    participant
-                }));
-            }
-        }
+        //     if (participant.local) {
+        //         dispatch(openDialog(ConnectionStatusComponent, {
+        //             participantID: participant.id
+        //         }));
+        //     } else {
+        //         dispatch(openDialog(RemoteVideoMenu, {
+        //             participant
+        //         }));
+        //     }
+        // }
     };
 }
 
