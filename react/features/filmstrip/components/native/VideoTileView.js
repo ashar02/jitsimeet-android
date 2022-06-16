@@ -5,7 +5,9 @@ import {
     ScrollView,
     TouchableWithoutFeedback,
     View,
-    Dimensions
+    Dimensions,
+    FlatList,
+    SafeAreaView
 } from 'react-native';
 import type { Dispatch } from 'redux';
 
@@ -16,9 +18,10 @@ import { getAvatarBackgroundColor } from '../../../base/avatar/functions';
 
 import Thumbnail from './Thumbnail';
 import styles from './styles';
+import { ColorPalette } from '../../../base/styles';
 
 /**
- * The type of the React {@link Component} props of {@link TileView}.
+ * The type of the React {@link Component} props of {@link VideoTileView}.
  */
 type Props = {
 
@@ -50,7 +53,9 @@ type Props = {
     /**
      * Callback to invoke when tile view is tapped.
      */
-    onClick: Function
+    onClick: Function,
+
+    _isAudioCall: boolean
 };
 
 /**
@@ -60,7 +65,7 @@ type Props = {
  * @private
  * @type {number}
  */
-const MARGIN = 10;
+const MARGIN = 0;
 
 /**
  * The aspect ratio the tiles should display in.
@@ -68,7 +73,7 @@ const MARGIN = 10;
  * @private
  * @type {number}
  */
-const TILE_ASPECT_RATIO = 1;
+const TILE_ASPECT_RATIO = 1.12;
 
 /**
  * Implements a React {@link Component} which displays thumbnails in a two
@@ -80,7 +85,8 @@ class VideoTileView extends Component<Props> {
     constructor(props){
         super(props);
         this.state={
-            localParticipant: null
+            localParticipant: null,
+            pinnedParticipant: null
         }
     }
     /**
@@ -108,58 +114,117 @@ class VideoTileView extends Component<Props> {
      * @returns {ReactElement}
      */
     render() {
-        const { _height, _width, onClick } = this.props;
+        const { _height, _width, onClick, _isAudioCall } = this.props;
         const rowElements = this._groupIntoRows(this._renderThumbnails(), this._getColumnCount());
+        const rowallElements = this._groupIntoRows(this._renderAllThumbnails(), this._getColumnCount());
+        const pinnedElement = this._pinnedElement();
         const boxHeight = Dimensions.get('screen').height / 3 - 50;
         const boxWidth = Dimensions.get('screen').width / 2 + 27; 
+        
         return (
             <TouchableWithoutFeedback onPress = { onClick }>
             <View>
-                {
-                    this.props._participants.length !== 4 ? (
-                        <ScrollView
+            {
+                    this.props._participants.length > 4 && (   
+                        <SafeAreaView
                         style = {{
-                            ...styles.tileView,
                             height: _height,
                             width: _width
+                        }}>
+                        {
+                            this.state.pinnedParticipant && (
+                                <View>
+                                    <Thumbnail
+                                        
+                                        disableTint={true}
+                                        key={this.state.pinnedParticipant?.id}
+                                        participant={this.state.pinnedParticipant}
+                                        renderDisplayName={true}
+                                        styleOverrides={{
+                                            aspectRatio: 2,
+                                            flex: 0,
+                                            height: 200,
+                                            maxHeight: 200,
+                                            maxWidth: Dimensions.get('screen').width,
+                                            width: Dimensions.get('screen').width,
+                                           
+                                            backgroundColor: ColorPalette.appBackground,
+                                            
+                                           borderColor: ColorPalette.appBackground,
+                                            alignSelf: 'center'
+                                        }}
+                                        tileView={true}
+                                        isLocalUser={false}
+                                        onClick={onClick}
+                                    />
+                                </View>
+                            )
+
+                        }
+                            <View
+                                style = {{
+                                    minHeight: _height,
+                                    minWidth: _width
+                                }}>
+                                { rowallElements }
+                            </View>
+                        
+                    </SafeAreaView>
+                        )}
+                {
+                    this.props._participants.length < 4 && (   
+                        <SafeAreaView
+                        style = {{
+                            
+                            height: _height,
+                            width: _width,
+                            
                         }}>
                         
                             <View
                                 style = {{
-                                    ...styles.tileViewRows,
+                                    
                                     minHeight: _height,
                                     minWidth: _width
                                 }}>
                                 { rowElements }
                             </View>
                         
-                    </ScrollView>
-                    ):(
-                        this._getSortedParticipants().map(function (participant, index) {
-                            return(
-                                <View style={{left: index%2 !== 0 ? Dimensions.get('screen').width /2.5:10, top: 58, width: boxWidth, height: boxHeight, marginTop: index > 0 ? -22 : 0,zIndex: participant.dominantSpeaker ? 1 : 0, elevation: participant.dominantSpeaker ? 5 : 0}}>
+                    </SafeAreaView>
+                        )}
+                        { this.props._participants.length == 4 && (
+                            <SafeAreaView>
+                            <FlatList
+                                data={this.props._participants}
+                                numColumns={2}
+                                renderItem={({ item, index }) => (
                                     <Thumbnail
+                                        key={index}
                                         disableTint={true}
-                                        key={participant?.id}
-                                        participant={participant}
+                                        key={item?.id}
+                                        participant={item}
                                         renderDisplayName={true}
                                         styleOverrides={{
                                             aspectRatio: null,
-                                            flex: 1,
-                                            height: boxHeight,
-                                            maxHeight: boxHeight,
+                                            flex: 0.7,
+                                            height: Dimensions.get('screen').height / 2.2,
+                                            maxHeight: Dimensions.get('screen').height / 2.2,
                                             maxWidth: boxWidth,
                                             width: boxWidth,
-                                            borderRadius: 16,
-                                            backgroundColor: getAvatarBackgroundColor(this.state?.localParticipant.name)
+                                            
+                                            backgroundColor: ColorPalette.appBackground,
+                                            
+                                            
+                                            
+                                            borderColor: ColorPalette.appBackground
                                         }}
                                         tileView={true}
                                         isLocalUser={false}
-                                        onClick={ onClick }
-                                        />
-                                </View>
-                            )
-                        })
+                                        onClick={onClick}
+                                    />
+                                )}
+                            />
+                            </SafeAreaView>
                     )
                 }
           
@@ -196,16 +261,20 @@ class VideoTileView extends Component<Props> {
      * @private
      */
     _getColumnCount() {
-        const participantCount = this.props._participants.length - 1;
+        const participantCount = this.props._participants.length;
 
         // For narrow view, tiles should stack on top of each other for a lonely
         // call and a 1:1 call. Otherwise tiles should be grouped into rows of
         // two.
-        if (this.props._aspectRatio === ASPECT_RATIO_NARROW) {
-            return participantCount >= 3 ? 2 : 1;
+        if (participantCount == 3 && this.props._isAudioCall) {
+            return 1;
+        }else if(!this.props._isAudioCall && participantCount == 3){
+            return 2;
         }
-
-        if (participantCount === 4) {
+        if(participantCount == 7 || participantCount > 8){
+            return 3;
+        }
+        if (participantCount < 9 ) {
             // In wide view, a four person call should display as a 2x2 grid.
             return 2;
         }
@@ -222,16 +291,49 @@ class VideoTileView extends Component<Props> {
     _getSortedParticipants() {
         const participants = [];
         let localParticipant;
+        let pinnedParticipant;
 
-        for (const participant of this.props._participants) {
-            if (participant.local) {
-                localParticipant = participant;
-            } else {
-                participants.push(participant);
+        for (const [index,participant] of this.props._participants.entries()) {
+            if(this.props._participants.length == 7 || this.props._participants.length == 10 || this.props._participants.length == 5){
+                if(index == this.props._participants.length - 1){
+                    pinnedParticipant = participant
+                }else{
+                    participants.push(participant);
+                }
+                
+            }else {
+                if(participant.local && this.props._participants.length == 3 && this.props._isAudioCall){
+
+                }else{
+                    participants.push(participant);
+                }
+                   
+                
             }
+            // if (participant.local) {
+            //     localParticipant = participant;
+            //     if(this.props._participants.length > 3){
+            //         if(participant.pinned || this.props._participants.length == 7 || this.props._participants.length == 10 && index == this.props._participants.length -1){
+            //             pinnedParticipant = participant
+            //         }else {
+            //             participants.push(participant);
+            //         }
+            //     }
+            // } else {
+            //     if(participant.pinned || this.props._participants.length == 7  && index == this.props._participants.length -1){
+            //         pinnedParticipant = participant
+            //     }else {
+            //         participants.push(participant);
+            //     }
+                
+            // }
         }
-        if(!this.state.localParticipant){
-            localParticipant && this.setState({localParticipant: localParticipant});
+        if(this.state.pinnedParticipant && this.props._participants.length != 10){
+            if(this.props._participants.length != 7 && this.props._participants.length != 5  )
+            this.setState({pinnedParticipant: null})
+        }
+        if(!this.state.pinnedParticipant ){
+            pinnedParticipant && this.setState({ pinnedParticipant: pinnedParticipant});
             }
 
         return participants;
@@ -253,14 +355,14 @@ class VideoTileView extends Component<Props> {
 
         // If there is going to be at least two rows, ensure that at least two
         // rows display fully on screen.
-        if (participantCount / columns > 1) {
-            tileWidth = Math.min(widthToUse / columns, heightToUse / 2.6);
-        } else {
-            tileWidth = Math.min(widthToUse / columns, heightToUse);
+        if (participantCount  <= 6) {
+            tileWidth = Math.min(widthToUse / columns );
+        }else{
+            tileWidth = heightToUse
         }
 
         return {
-            height: tileWidth / TILE_ASPECT_RATIO,
+            height: participantCount == 3 ? tileWidth / 1.12 : tileWidth,
             width: tileWidth
         };
     }
@@ -295,6 +397,10 @@ class VideoTileView extends Component<Props> {
         return rowElements;
     }
 
+    _pinnedElement(){
+
+    }
+
     /**
      * Creates React Elements to display each participant in a thumbnail. Each
      * tile will be.
@@ -312,21 +418,44 @@ class VideoTileView extends Component<Props> {
                     participant = { participant }
                     renderDisplayName = { true }
                     styleOverrides = {{
-                        aspectRatio: TILE_ASPECT_RATIO,
-                        flex: 0,
-                        height: this._getTileDimensions().height,
+                        aspectRatio: 0.65,
+                        flex: 1,
+                        height: null,
                         maxHeight: null,
                         maxWidth: null,
                         width: null,
-                        borderRadius:16,
-                        backgroundColor:getAvatarBackgroundColor(participant.name)
+                        backgroundColor: ColorPalette.appBackground,
+                        borderColor: ColorPalette.appBackground
                     }}
                     tileView = { true }
                     isLocalUser ={ false }
                     onClick = { this.props.onClick }
                     />));
     }
+    _renderAllThumbnails() {
 
+        return this._getSortedParticipants()
+            .map(participant => (
+                <Thumbnail
+                    disableTint = { true }
+                    key = { participant.id }
+                    participant = { participant }
+                    renderDisplayName = { true }
+                    styleOverrides = {{
+                        aspectRatio: this.props._participants.length == 9 ? 0.5 :  this.props._participants.length > 8 ? 0.7 : this.props._participants.length == 6 ? 0.76 : this.props._participants.length == 7 ? 0.45 : this.props._participants.length > 7 ? 1  : 0.6,
+                        flex: 1,
+                        height: null,
+                        maxHeight: null,
+                        maxWidth: null,
+                        width: null,
+                        backgroundColor: ColorPalette.appBackground,
+                        borderColor: ColorPalette.appBackground
+                    }}
+                    tileView = { true }
+                    isLocalUser ={ false }
+                    onClick = { this.props.onClick }
+                    />));
+    }
     /**
      * Sets the receiver video quality based on the dimensions of the thumbnails
      * that are displayed.
@@ -347,7 +476,7 @@ class VideoTileView extends Component<Props> {
 }
 
 /**
- * Maps (parts of) the redux state to the associated {@code TileView}'s props.
+ * Maps (parts of) the redux state to the associated {@code VideoTileView}'s props.
  *
  * @param {Object} state - The redux state.
  * @private
@@ -355,12 +484,14 @@ class VideoTileView extends Component<Props> {
  */
 function _mapStateToProps(state) {
     const responsiveUi = state['features/base/responsive-ui'];
+    const { startAudioOnly } = state['features/base/settings'];
 
     return {
         _aspectRatio: responsiveUi.aspectRatio,
         _height: responsiveUi.clientHeight,
         _participants: state['features/base/participants'],
-        _width: responsiveUi.clientWidth
+        _width: responsiveUi.clientWidth,
+        _isAudioCall: startAudioOnly
     };
 }
 
