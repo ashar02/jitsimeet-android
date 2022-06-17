@@ -137,14 +137,14 @@ class OverflowMenu extends PureComponent<Props, State> {
             }
         });
 
-        this._audioRoute = () => {
+        this._audioRoute = _.once(() => {
             this.props.dispatch(openDialog(AudioRoutePickerDialog));
-        };
+        });
 
-        this._chat = () => {
+        this._chat = _.once(() => {
             this.props.dispatch(closeChat());
             this.props.dispatch(hideDialog(OverflowMenu_));
-        };
+        });
        
         // Bind event handlers so they are only bound once per instance.
         this._onCancel = this._onCancel.bind(this);

@@ -12,7 +12,7 @@ import { ColorPalette, StyleType } from '../../../base/styles';
 
 import { SlidingView } from '../../../base/react';
 import styles from './styles';
-import { closeChat } from '../../../chat/actions.native';
+import { profileInfo, privateChat } from '../../../filmstrip/actions.native';
 
 /**
  * The type of the React {@code Component} props of {@link OverflowMenu}.
@@ -87,10 +87,13 @@ class ThumbnailMenu extends PureComponent<Props, State> {
         };
 
 
-        this._chat = () => {
-            this.props.dispatch(closeChat());
-            this.props.dispatch(hideDialog(ThumbnailMenu_));
-        };
+        this._privateChat = _.once(() => {
+            this.props.dispatch(privateChat('email2'));
+        });
+
+        this._profileInfo = _.once(() => {
+            this.props.dispatch(profileInfo('email1'));
+        });
 
         // Bind event handlers so they are only bound once per instance.
         this._onCancel = this._onCancel.bind(this);
@@ -137,7 +140,7 @@ class ThumbnailMenu extends PureComponent<Props, State> {
                         <IconUserPin width={15} height={15} />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this._chat}>
+                <TouchableOpacity onPress={this._privateChat}>
                     <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                         <Text style={styles.actionTitle}>PRIVATE MESSAGE</Text>
                         <IconChatSend width={15} height={15} />
@@ -147,7 +150,7 @@ class ThumbnailMenu extends PureComponent<Props, State> {
                     <Text style={styles.actionTitle}>RECORD CALL</Text>
                     <IconRecording  width={15} height={15} />
                 </View> */}
-                <TouchableOpacity onPress={this._hangup}>
+                <TouchableOpacity onPress={this._profileInfo}>
                 <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                     <Text style={styles.actionTitle }>PROFILE INFO</Text>
                     <IconUserProfile width={15} height={15} />

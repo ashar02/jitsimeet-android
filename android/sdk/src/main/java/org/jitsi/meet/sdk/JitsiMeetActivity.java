@@ -225,6 +225,14 @@ public class JitsiMeetActivity extends FragmentActivity
         JitsiMeetLogger.i("Invite people button pressed: " + extraData);
     }
 
+    protected void onProfileInfoButtonPressed(HashMap<String, Object> extraData) {
+        JitsiMeetLogger.i("Profile info button pressed: " + extraData);
+    }
+
+    protected void onPrivateChatButtonPressed(HashMap<String, Object> extraData) {
+        JitsiMeetLogger.i("Profile chat button pressed: " + extraData);
+    }
+
     // Activity lifecycle methods
     //
 
@@ -311,6 +319,12 @@ public class JitsiMeetActivity extends FragmentActivity
                     break;
                 case INVITE_PEOPLE_BUTTON_PRESSED:
                     onInvitePeopleButtonPressed(event.getData());
+                    break;
+                case PROFILE_INFO_BUTTON_PRESSED:
+                    onProfileInfoButtonPressed(event.getData());
+                    break;
+                case PRIVATE_CHAT_BUTTON_PRESSED:
+                    onPrivateChatButtonPressed(event.getData());
                     break;
             }
         }

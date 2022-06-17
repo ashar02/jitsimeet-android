@@ -49,3 +49,21 @@ export const SET_TILE_VIEW_DIMENSIONS = 'SET_TILE_VIEW_DIMENSIONS';
  * }
  */
 export const SET_HORIZONTAL_VIEW_DIMENSIONS = 'SET_HORIZONTAL_VIEW_DIMENSIONS';
+
+/**
+ * The type of the action which signals open of profile info panel.
+ *
+ * {
+ *     type: PROFILE_INFO
+ * }
+ */
+export const PROFILE_INFO = 'PROFILE_INFO';
+
+/**
+ * The type of the action which signals open of private chat panel.
+ *
+ * {
+ *     type: PRIVATE_CHAT
+ * }
+ */
+export const PRIVATE_CHAT = 'PRIVATE_CHAT';
