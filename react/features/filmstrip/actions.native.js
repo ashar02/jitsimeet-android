@@ -3,7 +3,9 @@
 import {
     SET_FILMSTRIP_ENABLED,
     SET_FILMSTRIP_VISIBLE,
-    SET_TILE_VIEW_DIMENSIONS
+    SET_TILE_VIEW_DIMENSIONS,
+    PROFILE_INFO,
+    PRIVATE_CHAT
 } from './actionTypes';
 
 /**
@@ -58,5 +60,35 @@ export function setTileViewDimensions({ thumbnailSize }: Object) {
         dimensions: {
             thumbnailSize
         }
+    };
+}
+
+/**
+ * Action to signal the opening of the profile info dialog.
+ *
+ * @returns {{
+ *     type: PROFILE_INFO,
+ *     email: email
+ * }}
+ */
+export function profileInfo(email: string) {
+    return {
+        type: PROFILE_INFO,
+        email
+    };
+}
+
+/**
+ * Action to signal the opening of the private chat dialog.
+ *
+ * @returns {{
+ *     type: PRIVATE_CHAT,
+ *     email: email
+ * }}
+ */
+export function privateChat(email: string) {
+    return {
+        type: PRIVATE_CHAT,
+        email
     };
 }

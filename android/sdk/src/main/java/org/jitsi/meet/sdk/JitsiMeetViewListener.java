@@ -62,4 +62,18 @@ public interface JitsiMeetViewListener {
      * @param data Map with empty key.
      */
     void onInvitePeopleButtonPressed(Map<String, Object> data);
+
+    /**
+     * Called when profile info button pressed.
+     *
+     * @param data Map with a "email" key with the participant email address.
+     */
+    void onProfileInfoButtonPressed(Map<String, Object> data);
+
+    /**
+     * Called when private chat button pressed.
+     *
+     * @param data Map with a "email" key with the participant email address.
+     */
+    void onPrivateChatButtonPressed(Map<String, Object> data);
 }

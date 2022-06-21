@@ -6,7 +6,7 @@ import Collapsible from 'react-native-collapsible';
 import _ from 'lodash';
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
 import { BottomSheet, hideDialog, isDialogOpen } from '../../../base/dialog';
-import { IconDragHandle, IconChatSend, IconRecording, IconLeaveCall, IconDeviceSpeaker } from '../../../base/icons';
+import { IconDragHandle, IconChatSend, IconRecording, IconLeaveCall } from '../../../base/icons';
 import { connect } from '../../../base/redux';
 import { ColorPalette, StyleType } from '../../../base/styles';
 import { SharedDocumentButton } from '../../../etherpad';
@@ -36,6 +36,13 @@ import AudioRoutePickerDialog from '../../../mobile/audio-mode/components/AudioR
 import { RawDevice, deviceInfoMap } from '../../../mobile/audio-mode/components/AudioRoutePickerDialog';
 import { openDialog } from '../../../base/dialog';
 import { closeChat } from '../../../chat/actions.native';
+import {
+    Icon,
+    IconDeviceBluetooth,
+    IconDeviceEarpiece,
+    IconDeviceHeadphone,
+    IconDeviceSpeaker
+} from '../../../base/icons';
 const { AudioMode } = NativeModules;
 
 /**
@@ -112,7 +119,8 @@ class OverflowMenu extends PureComponent<Props, State> {
         this.state = {
             scrolledToTop: true,
             showMore: false,
-            selectedAudioDevice: ''
+            selectedAudioDevice: '',
+            selectedAudioDeviceIcon: ''
         };
 
         AudioMode.updateDeviceList && AudioMode.updateDeviceList();
@@ -121,7 +129,7 @@ class OverflowMenu extends PureComponent<Props, State> {
                 const infoMap = deviceInfoMap[device.type];
                 const text = device.type === 'BLUETOOTH' && device.name ? device.name : infoMap.text;
                 const textArray = text.split('.');
-
+                this.state.selectedAudioDeviceIcon = infoMap.icon;
                 this.state.selectedAudioDevice = textArray.length > 1 ? textArray[1].toUpperCase() : text.toUpperCase();
             }
         }
@@ -137,14 +145,14 @@ class OverflowMenu extends PureComponent<Props, State> {
             }
         });
 
-        this._audioRoute = () => {
+        this._audioRoute = _.once(() => {
             this.props.dispatch(openDialog(AudioRoutePickerDialog));
-        };
+        });
 
-        this._chat = () => {
+        this._chat = _.once(() => {
             this.props.dispatch(closeChat());
             this.props.dispatch(hideDialog(OverflowMenu_));
-        };
+        });
        
         // Bind event handlers so they are only bound once per instance.
         this._onCancel = this._onCancel.bind(this);
@@ -188,7 +196,7 @@ class OverflowMenu extends PureComponent<Props, State> {
             <TouchableOpacity onPress={this._audioRoute}>
                 <View style={styles.actionItem}>
                     <Text style={styles.actionTitle}>{this.state.selectedAudioDevice}</Text>
-                    <IconDeviceSpeaker fill={ColorPalette.white} width={15} height={15} />
+                    <Icon  src={this.state.selectedAudioDeviceIcon} fill={ColorPalette.white} size={15} />
                 </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._chat}>
