@@ -88,11 +88,11 @@ class ThumbnailMenu extends PureComponent<Props, State> {
 
 
         this._privateChat = _.once(() => {
-            this.props.dispatch(privateChat('email2'));
+            this.props.dispatch(privateChat(this.props.participantEmail));
         });
 
         this._profileInfo = _.once(() => {
-            this.props.dispatch(profileInfo('email1'));
+            this.props.dispatch(profileInfo(this.props.participantEmail));
         });
 
         // Bind event handlers so they are only bound once per instance.

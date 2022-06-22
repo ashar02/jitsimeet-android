@@ -205,10 +205,10 @@ class OverflowMenu extends PureComponent<Props, State> {
                     <IconChatSend fill={ColorPalette.white} width={15} height={15} />
                 </View>
             </TouchableOpacity>
-            <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
+            {/* <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                 <Text style={styles.actionTitle}>RECORD CALL</Text>
                 <IconRecording  width={15} height={15} />
-            </View>
+            </View> */}
             <TouchableOpacity onPress={this._hangup}>
             <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                 <Text style={[styles.actionTitle, { color: ColorPalette.red}]}>LEAVE CALL</Text>
