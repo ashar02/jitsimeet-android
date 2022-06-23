@@ -91,7 +91,8 @@ function LocalThumbnail (props: Props) {
         marginRight:15,
         marginTop:55,
         alignSelf: 'center',
-        borderColor: ColorPalette.gray
+        borderColor: ColorPalette.gray,
+        backgroundColor: ColorPalette.appBackground
     }
         return (
             <View style = {{aspectRatio: 0.6 }}>

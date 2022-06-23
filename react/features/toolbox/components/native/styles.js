@@ -103,7 +103,7 @@ const styles = {
     },
     overflowMenuContainer:{
         width: 165,
-        height: 130,
+        height: 100,
         backgroundColor: '#171717',
         position: 'absolute',
         bottom: 120,
