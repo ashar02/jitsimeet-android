@@ -208,8 +208,8 @@ class VideoTileView extends Component<Props> {
                                         styleOverrides={{
                                             aspectRatio: null,
                                             flex: 0.7,
-                                            height: Dimensions.get('screen').height / 2.2,
-                                            maxHeight: Dimensions.get('screen').height / 2.2,
+                                            height: Dimensions.get('screen').height / 2,
+                                            maxHeight: Dimensions.get('screen').height / 2,
                                             maxWidth: boxWidth,
                                             width: boxWidth,
                                             
