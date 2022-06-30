@@ -137,7 +137,8 @@ function Thumbnail(props: Props) {
         tileView,
         _participantEmail,
         isLocalUser,
-        _participantCount
+        _participantCount,
+        userIndex
 
     } = props;
 
@@ -194,7 +195,7 @@ function Thumbnail(props: Props) {
                 onPress = { _onClick }
                 zOrder = { 1 } />
 
-            {renderDisplayName && <Container style={[styles.displayNameContainer, { backgroundColor: renderDominantSpeakerIndicator ? ColorPalette.seaGreen : ColorPalette.black }]}>
+            {renderDisplayName && <Container style={[styles.displayNameContainer, { backgroundColor: renderDominantSpeakerIndicator ? ColorPalette.seaGreen : ColorPalette.black, marginTop: userIndex < 2 && _participantCount !== 5 && _participantCount !== 7  ?  50 : userIndex == -1 ? 50 : userIndex == 2 && _participantCount == 9 ? 50 :  0 }]}>
                 {
                     isLocalUser ? (
                         <Text style={{

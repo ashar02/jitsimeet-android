@@ -188,7 +188,7 @@ ColorSchemeRegistry.register('Thumbnail', {
      * Coloring if the thumbnail background.
      */
     participantViewStyle: {
-        backgroundColor: schemeColor('background')
+        backgroundColor: ColorPalette.appBackground
     },
 
     /**

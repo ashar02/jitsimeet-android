@@ -139,6 +139,7 @@ class VideoTileView extends Component<Props> {
                                         disableTint={true}
                                         key={this.state.pinnedParticipant?.id}
                                         participant={this.state.pinnedParticipant}
+                                        userIndex={-1}
                                         renderDisplayName={true}
                                         styleOverrides={{
                                             aspectRatio: 2,
@@ -201,7 +202,7 @@ class VideoTileView extends Component<Props> {
                                     <Thumbnail
                                         key={index}
                                         disableTint={true}
-                                        key={item?.id}
+                                        userIndex={index}
                                         participant={item}
                                         renderDisplayName={true}
                                         styleOverrides={{
@@ -362,7 +363,7 @@ class VideoTileView extends Component<Props> {
         }
 
         return {
-            height: participantCount == 3 ? tileWidth / 1.12 : tileWidth,
+            height: participantCount == 3 ? tileWidth / 0.47 : tileWidth,
             width: tileWidth
         };
     }
@@ -411,17 +412,18 @@ class VideoTileView extends Component<Props> {
     _renderThumbnails() {
 
         return this._getSortedParticipants()
-            .map(participant => (
+            .map((participant, index) => (
                 <Thumbnail
                     disableTint = { true }
                     key = { participant.id }
+                    userIndex={index}
                     participant = { participant }
                     renderDisplayName = { true }
                     styleOverrides = {{
-                        aspectRatio: 0.65,
+                        aspectRatio: 0.47,
                         flex: 1,
-                        height: null,
-                        maxHeight: null,
+                        height: this._getTileDimensions().height,
+                        maxHeight: this._getTileDimensions().height,
                         maxWidth: null,
                         width: null,
                         backgroundColor: ColorPalette.appBackground,
@@ -435,14 +437,15 @@ class VideoTileView extends Component<Props> {
     _renderAllThumbnails() {
 
         return this._getSortedParticipants()
-            .map(participant => (
+            .map((participant, index) => (
                 <Thumbnail
                     disableTint = { true }
                     key = { participant.id }
+                    userIndex={index}
                     participant = { participant }
                     renderDisplayName = { true }
                     styleOverrides = {{
-                        aspectRatio: this.props._participants.length == 9 ? 0.5 :  this.props._participants.length > 8 ? 0.7 : this.props._participants.length == 6 ? 0.76 : this.props._participants.length == 7 ? 0.45 : this.props._participants.length > 7 ? 1  : 0.6,
+                        aspectRatio: this.props._participants.length == 9 ? 0.5 :  this.props._participants.length > 8 ? 0.7 : this.props._participants.length == 6 ? 0.7 : this.props._participants.length == 7 ? 0.41 : this.props._participants.length > 7 ? 0.8  : 0.6,
                         flex: 1,
                         height: null,
                         maxHeight: null,
