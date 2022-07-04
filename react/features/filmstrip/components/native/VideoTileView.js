@@ -212,12 +212,9 @@ class VideoTileView extends Component<Props> {
                                             maxHeight: Dimensions.get('screen').height / 2,
                                             maxWidth: boxWidth,
                                             width: boxWidth,
-                                            
-                                            backgroundColor: ColorPalette.appBackground,
-                                            
-                                            
-                                            
-                                            borderColor: ColorPalette.appBackground
+                                            backgroundColor: ColorPalette.appBackground,                                        
+                                            margin:0,
+                                            borderWidth: 0
                                         }}
                                         tileView={true}
                                         isLocalUser={false}
@@ -427,7 +424,8 @@ class VideoTileView extends Component<Props> {
                         maxWidth: null,
                         width: null,
                         backgroundColor: ColorPalette.appBackground,
-                        borderColor: ColorPalette.appBackground
+                        margin:0,
+                        borderWidth: 0
                     }}
                     tileView = { true }
                     isLocalUser ={ false }
@@ -452,7 +450,8 @@ class VideoTileView extends Component<Props> {
                         maxWidth: null,
                         width: null,
                         backgroundColor: ColorPalette.appBackground,
-                        borderColor: ColorPalette.appBackground
+                        margin:0,
+                        borderWidth: 0
                     }}
                     tileView = { true }
                     isLocalUser ={ false }
