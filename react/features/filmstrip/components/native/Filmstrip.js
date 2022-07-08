@@ -90,10 +90,10 @@ class Filmstrip extends Component<Props> {
      */
     render() {
         const { _aspectRatio, _participants, _visible, _videoMuted, onPress, _startAudioOnly } = this.props;
-        if(!_startAudioOnly && _participants.length > 1){
+        if(!_startAudioOnly && _participants.length > 2 || _participants.length == 1){
             return null;
         }
-        if (_participants.length + 1 > 3 ) {
+        if (_participants.length > 3 ) {
             return null;
         }
 
@@ -181,7 +181,7 @@ function _mapStateToProps(state) {
     const participants = state['features/base/participants'];
     const { enabled } = state['features/filmstrip'];
     const tracks = state['features/base/tracks'];
-    const { startAudioOnly } = state['features/base/settings'];
+    const startAudioOnly  = state['features/base/audio-only'].enabled;
 
     return {
         _aspectRatio: state['features/base/responsive-ui'].aspectRatio,

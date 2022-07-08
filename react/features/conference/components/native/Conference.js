@@ -451,7 +451,7 @@ function _mapStateToProps(state) {
     } = state['features/base/conference'];
     const participant = getParticipantById(state, state['features/large-video'].participantId);
     const { aspectRatio, reducedUI } = state['features/base/responsive-ui'];
-    const { startAudioOnly } = state['features/base/settings'];
+    const  startAudioOnly  = state['features/base/audio-only'].enabled;
     const tracks = state['features/base/tracks'];
     const audioTrack = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, participant?.id);
 
