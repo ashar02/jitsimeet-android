@@ -133,7 +133,7 @@ class ThumbnailMenu extends PureComponent<Props, State> {
                 position = 'top'
                 show = { true }
            >
-                <View  style={[styles.thumbnailMenuContainer, {zIndex: participantCount == 7 || participantCount == 10 ? 1 : 0, elevation: 5}]}>
+                <View style={[styles.thumbnailMenuContainer, {zIndex: 1, elevation: 5}]}>
                 <TouchableOpacity>
                     <View style={styles.actionItem}>
                         <Text style={styles.actionTitle}>PIN</Text>

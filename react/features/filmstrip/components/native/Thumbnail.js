@@ -1,7 +1,7 @@
 // @flow
 
 import React, {useState} from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import type { Dispatch } from 'redux';
 
 import { ColorSchemeRegistry } from '../../../base/color-scheme';
@@ -213,17 +213,12 @@ function Thumbnail(props: Props) {
             </Container>}
 
             {
-                    showThumbnailMenu && !isLocalUser && (
-                        <View style={{ alignSelf: 'center',
-                        top: 4,
-                        flex: 1,
-                        margin: 4,
-                        position: 'absolute',zIndex: 1, elevation: 5, overflow:'visible'}}>
-                        <ThumbnailMenu_ participantCount={_participantCount} participantEmail={_participantEmail} />
-                        </View>
-
-                    )
-                }
+                showThumbnailMenu && !isLocalUser && (
+                    <TouchableWithoutFeedback onPress={_onClick}>
+                        <ThumbnailMenu_ participantCount={_participantCount} participantEmail={_participantEmail}/>
+                    </TouchableWithoutFeedback>
+                )
+            }
 
             {/* { renderModeratorIndicator
                 && <View style = { styles.moderatorIndicatorContainer }>
