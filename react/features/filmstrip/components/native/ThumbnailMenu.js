@@ -39,6 +39,10 @@ type Props = {
      */
     _width: number,
 
+    /**
+     * Handles click/tap event on the thumbnail.
+     */
+     _onItemClick: Function,
 
     /**
      * Used for hiding the dialog when the selection was completed.
@@ -80,19 +84,28 @@ class ThumbnailMenu extends PureComponent<Props, State> {
      */
     constructor(props: Props) {
         super(props);
+        
+        const {
+            _onItemClick
+        } = this.props;
 
         this.state = {
             scrolledToTop: true,
             showMore: false
         };
 
+        this._pinParticipant = _.once(() => {
+            _onItemClick();
+        });
 
         this._privateChat = _.once(() => {
             this.props.dispatch(privateChat(this.props.participantEmail));
+            _onItemClick();
         });
 
         this._profileInfo = _.once(() => {
             this.props.dispatch(profileInfo(this.props.participantEmail));
+            _onItemClick();
         });
 
         // Bind event handlers so they are only bound once per instance.
@@ -134,7 +147,7 @@ class ThumbnailMenu extends PureComponent<Props, State> {
                 show = { true }
            >
                 <View style={[styles.thumbnailMenuContainer, {zIndex: 1, elevation: 5}]}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this._pinParticipant}>
                     <View style={styles.actionItem}>
                         <Text style={styles.actionTitle}>PIN</Text>
                         <IconUserPin width={15} height={15} />
@@ -194,6 +207,8 @@ class ThumbnailMenu extends PureComponent<Props, State> {
      * @returns {boolean}
      */
     _onCancel() {
+        this.props._onItemClick();
+        
         if (this.props._isOpen) {
             this.props.dispatch(hideDialog(ThumbnailMenu_));
 
