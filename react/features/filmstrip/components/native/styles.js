@@ -45,8 +45,7 @@ export default {
         borderWidth: 1.25,
         borderColor: ColorPalette.gray,
         borderRadius: 8,
-        width: 150,
-        height: 100
+        width: 150
     },
     actionItem: {
         flexDirection: 'row',

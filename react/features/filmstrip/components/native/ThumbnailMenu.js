@@ -150,12 +150,16 @@ class ThumbnailMenu extends PureComponent<Props, State> {
                 show = { true }
            >
                 <View style={[styles.thumbnailMenuContainer, {zIndex: 1, elevation: 5}]}>
-                <TouchableOpacity onPress={this._pinParticipant}>
+                {
+                    participantCount == 5 || participantCount == 7 || participantCount == 10 ? ( 
+                    <TouchableOpacity onPress={this._pinParticipant}>
                     <View style={styles.actionItem}>
                         <Text style={styles.actionTitle}>PIN</Text>
                         <IconUserPin width={15} height={15} />
                     </View>
                 </TouchableOpacity>
+                ):(<></>)
+                }
                 <TouchableOpacity onPress={this._privateChat}>
                     <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
                         <Text style={styles.actionTitle}>PRIVATE MESSAGE</Text>
