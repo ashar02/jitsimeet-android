@@ -87,12 +87,14 @@ function LocalThumbnail (props: Props) {
         maxHeight:  boxHeight,
         maxWidth: boxWidth,
         width: boxWidth,
-        borderRadius:12,
+        borderRadius:8,
         marginRight:15,
         marginTop:55,
         alignSelf: 'center',
         borderColor: ColorPalette.gray,
-        backgroundColor: ColorPalette.appBackground
+        backgroundColor: ColorPalette.appBackground,
+        padding:0,
+        borderWidth: 2
     }
         return (
             <View style = {{aspectRatio: 0.6 }}>

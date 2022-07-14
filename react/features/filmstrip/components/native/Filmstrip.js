@@ -185,7 +185,7 @@ function _mapStateToProps(state) {
 
     return {
         _aspectRatio: state['features/base/responsive-ui'].aspectRatio,
-        _participants: participants.filter(p => !p.local),
+        _participants: participants,
         _visible: enabled && isFilmstripVisible(state),
         _videoMuted: isLocalCameraTrackMuted(tracks),
         _startAudioOnly: startAudioOnly
