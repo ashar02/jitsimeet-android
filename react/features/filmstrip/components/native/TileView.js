@@ -15,7 +15,10 @@ import { connect } from '../../../base/redux';
 import { ASPECT_RATIO_NARROW } from '../../../base/responsive-ui/constants';
 import { setTileViewDimensions } from '../../actions.native';
 import { getAvatarBackgroundColor } from '../../../base/avatar/functions';
-
+import {
+    pinParticipant,
+    getPinnedParticipant
+} from '../../../base/participants';
 import Thumbnail from './Thumbnail';
 import styles from './styles';
 import { ColorPalette } from '../../../base/styles';
@@ -53,7 +56,9 @@ type Props = {
     /**
      * Callback to invoke when tile view is tapped.
      */
-    onClick: Function
+    onClick: Function,
+
+    _pinnedParticipant: Object
 };
 
 /**
@@ -112,7 +117,7 @@ class TileView extends Component<Props> {
      * @returns {ReactElement}
      */
     render() {
-        const { _height, _width, onClick } = this.props;
+        const { _height, _width, onClick, _pinnedParticipant } = this.props;
         const rowElements = this._groupIntoRows(this._renderThumbnails(), this._getColumnCount());
         const rowallElements = this._groupIntoRows(this._renderAllThumbnails(), this._getColumnCount());
         const pinnedElement = this._pinnedElement();
@@ -130,13 +135,13 @@ class TileView extends Component<Props> {
                             width: _width
                         }}>
                         {
-                            this.state.pinnedParticipant && (
+                            _pinnedParticipant && (
                                 <View>
                                     <Thumbnail
                                         
                                         disableTint={true}
-                                        key={this.state.pinnedParticipant?.id}
-                                        participant={this.state.pinnedParticipant}
+                                        key={_pinnedParticipant?.id}
+                                        participant={_pinnedParticipant}
                                         renderDisplayName={true}
                                         styleOverrides={{
                                             aspectRatio: 2,
@@ -199,7 +204,6 @@ class TileView extends Component<Props> {
                                 numColumns={2}
                                 renderItem={({ item, index }) => (
                                     <Thumbnail
-                                        key={index}
                                         disableTint={true}
                                         key={item?.id}
                                         participant={item}
@@ -229,27 +233,6 @@ class TileView extends Component<Props> {
                     )
                 }
           
-            {/* <View style={{position:'absolute', right:12,bottom:12}}>
-                {
-                    this.state.localParticipant &&  <Thumbnail
-                    disableTint = { true }
-                    key = { this.state.localParticipant?.id }
-                    participant = { this.state?.localParticipant }
-                    renderDisplayName = { this.props._participants.length == 3 ? false : this.props._participants.length > 5 ? false : true }
-                    styleOverrides = {{
-                        aspectRatio: null,
-                        flex: 1,
-                        height: 140,
-                        maxHeight: this.props._participants.length == 3 ? 100 : this.props._participants.length > 5 ? 100 :  140 ,
-                        maxWidth: this.props._participants.length == 3 ? 100 : this.props._participants.length > 5 ? 100 :  140 ,
-                        width: 140,
-                        borderRadius:16,
-                        backgroundColor:getAvatarBackgroundColor(this.state?.localParticipant.name)
-                    }}
-                    tileView = { false } />
-                }
-           
-            </View> */}
             </View>
             </TouchableWithoutFeedback>
         );
@@ -294,28 +277,33 @@ class TileView extends Component<Props> {
         let pinnedParticipant;
 
         for (const [index,participant] of this.props._participants.entries()) {
-            if(this.props._participants.length == 7 || this.props._participants.length == 10){
-                if(index == this.props._participants.length - 1){
-                    pinnedParticipant = participant
-                }else{
-                    participants.push(participant);
+            if(this.props._participants.length == 7 || this.props._participants.length == 10 || this.props._participants.length == 5){
+                if(index == this.props._participants.length - 1 && !this.props._pinnedParticipant){
+                    this.props.dispatch(pinParticipant(participant.id));
                 }
+                else{
+                    if(!participant.pinned){
+                        participants.push(participant);
+                    }
+                }
+                
             }else {
-                if(participant.local && this.props._participants.length == 3){
-
+                if(participant.local && this.props._participants.length == 3 && this.props._isAudioCall){
+                    this.props.dispatch(pinParticipant(null));
                 }else{
-                    participants.push(participant);
+                    if(participant.pinned){
+                        this.props.dispatch(pinParticipant(null));
+                    }else{
+                        participants.push(participant);
+                    }
+                    
                 }
+                   
+                
             }
+           
         }
-        if(this.state.pinnedParticipant && this.props._participants.length != 10){
-            if(this.props._participants.length > 7 || this.props._participants.length < 7)
-            this.setState({pinnedParticipant: null})
-        }
-        if(!this.state.pinnedParticipant){
-        pinnedParticipant && this.setState({ pinnedParticipant: pinnedParticipant });
-        }
-
+       
         return participants;
     }
 
@@ -470,12 +458,15 @@ class TileView extends Component<Props> {
  */
 function _mapStateToProps(state) {
     const responsiveUi = state['features/base/responsive-ui'];
+    const participants = state['features/base/participants'];
+    const pinnedParticipant = getPinnedParticipant(participants);
 
     return {
         _aspectRatio: responsiveUi.aspectRatio,
         _height: responsiveUi.clientHeight,
         _participants: state['features/base/participants'],
-        _width: responsiveUi.clientWidth
+        _width: responsiveUi.clientWidth,
+        _pinnedParticipant: pinnedParticipant
     };
 }
 

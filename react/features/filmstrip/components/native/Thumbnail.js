@@ -247,7 +247,7 @@ function Thumbnail(props: Props) {
             {
                 showThumbnailMenu && !isLocalUser && (
                     <View style={{position: 'absolute', height: '100%', width: '100%'}}>
-                        <ThumbnailMenu_ participantCount={_participantCount} participantEmail={_participantEmail} _onItemClick={_onClick}/>
+                        <ThumbnailMenu_ participantCount={_participantCount} participantEmail={_participantEmail} _onItemClick={_onClick} participant={participant}/>
                     </View>
                 )
             }

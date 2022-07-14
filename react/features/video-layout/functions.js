@@ -134,7 +134,7 @@ export function shouldDisplayTileView(state: Object = {}) {
         state['features/etherpad']?.editing
 
         // We pinned a participant
-        || getPinnedParticipant(state)
+        // || getPinnedParticipant(state)
 
         // It's a 1-on-1 meeting
         || participantCount < 3

@@ -8,7 +8,9 @@ import { BottomSheet, hideDialog, isDialogOpen } from '../../../base/dialog';
 import { IconDragHandle, IconUserProfile, IconChatSend, IconUserPin } from '../../../base/icons';
 import { connect } from '../../../base/redux';
 import { ColorPalette, StyleType } from '../../../base/styles';
-
+import {
+    pinParticipant
+} from '../../../base/participants';
 
 import { SlidingView } from '../../../base/react';
 import styles from './styles';
@@ -95,6 +97,7 @@ class ThumbnailMenu extends PureComponent<Props, State> {
         };
 
         this._pinParticipant = _.once(() => {
+            this.props.dispatch(pinParticipant(this.props.participant.pinned ? null : this.props.participant.id));
             _onItemClick();
         });
 
