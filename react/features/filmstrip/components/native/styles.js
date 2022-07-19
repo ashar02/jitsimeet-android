@@ -38,7 +38,9 @@ export default {
     },
 
     thumbnailMenuContainer:{
-        top: 36,
+        alignSelf: 'center',
+        top: 24,
+        flex: 1,
         margin: 4,
         position: 'absolute',
         backgroundColor: '#171717',

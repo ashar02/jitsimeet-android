@@ -142,43 +142,30 @@ class ThumbnailMenu extends PureComponent<Props, State> {
         };
 
         return (
-            <SlidingView 
-                accessibilityRole = 'menu'
-                //accessibilityViewIsModal = { true }
-                onHide = { this._onCancel }
-                position = 'top'
-                show = { true }
-           >
-                <View style={[styles.thumbnailMenuContainer, {zIndex: 1, elevation: 5}]}>
-                {
-                    participantCount == 5 || participantCount == 7 || participantCount == 10 ? ( 
-                    <TouchableOpacity onPress={this._pinParticipant}>
-                    <View style={styles.actionItem}>
-                        <Text style={styles.actionTitle}>PIN</Text>
-                        <IconUserPin width={15} height={15} />
-                    </View>
+            <View style={[styles.thumbnailMenuContainer, {zIndex: 1, elevation: 5}]}>
+            {
+                participantCount == 5 || participantCount == 7 || participantCount == 10 ? ( 
+                <TouchableOpacity onPress={this._pinParticipant}>
+                <View style={styles.actionItem}>
+                    <Text style={styles.actionTitle}>PIN</Text>
+                    <IconUserPin width={15} height={15} />
+                </View>
                 </TouchableOpacity>
-                ):(<></>)
-                }
-                <TouchableOpacity onPress={this._privateChat}>
-                    <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
-                        <Text style={styles.actionTitle}>PRIVATE MESSAGE</Text>
-                        <IconChatSend width={15} height={15} />
-                    </View>
-                </TouchableOpacity>
-                {/* <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
-                    <Text style={styles.actionTitle}>RECORD CALL</Text>
-                    <IconRecording  width={15} height={15} />
-                </View> */}
-                <TouchableOpacity onPress={this._profileInfo}>
+            ):(<></>)
+            }
+            <TouchableOpacity onPress={this._privateChat}>
                 <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
-                    <Text style={styles.actionTitle }>PROFILE INFO</Text>
-                    <IconUserProfile width={15} height={15} />
+                    <Text style={styles.actionTitle}>PRIVATE MESSAGE</Text>
+                    <IconChatSend width={15} height={15} />
                 </View>
-                </TouchableOpacity>
-                </View>
-            </SlidingView>
-
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._profileInfo}>
+            <View style={[styles.actionItem, {borderTopWidth: 1.25, borderTopColor: ColorPalette.gray}]}>
+                <Text style={styles.actionTitle }>PROFILE INFO</Text>
+                <IconUserProfile width={15} height={15} />
+            </View>
+            </TouchableOpacity>
+            </View>
         );
     }
 
