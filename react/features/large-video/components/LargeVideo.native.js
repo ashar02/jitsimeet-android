@@ -124,11 +124,13 @@ class LargeVideo extends PureComponent<Props, State> {
             _participantId,
             _styles,
             onClick,
-            _participantName
+            _participantName,
+            isAudioCall
         } = this.props;
 
         return (
             <ParticipantView
+                isAudioCall={isAudioCall}
                 avatarSize = { avatarSize }
                 disableVideo = { _disableVideo }
                 onPress = { onClick }
