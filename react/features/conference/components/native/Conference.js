@@ -143,6 +143,10 @@ class Conference extends AbstractConference<Props, *> {
               this.pan.flattenOffset();
             }
           });
+
+          this.state={
+              isAudioCall: false
+          }
     }
 
     /**
@@ -154,6 +158,10 @@ class Conference extends AbstractConference<Props, *> {
      */
     componentDidMount() {
         BackButtonRegistry.addListener(this._onHardwareBackPress);
+
+        if(this.props._isAudioCall){
+            this.setState({isAudioCall: this.props._isAudioCall})
+        }
     }
 
     /**
@@ -201,7 +209,7 @@ class Conference extends AbstractConference<Props, *> {
         if (!this.props._toolboxVisible) {
             movedPosition = 164;
         }
-        if(!this.props._isAudioCall){
+        if(!this.state.isAudioCall){
             Animated.spring(
                 this._panelPosition,
                 {
@@ -280,8 +288,7 @@ class Conference extends AbstractConference<Props, *> {
             _connecting,
             _largeVideoParticipantId,
             _reducedUI,
-            _shouldDisplayTileView,
-            _isAudioCall
+            _shouldDisplayTileView
         } = this.props;
 
         if (_reducedUI) {
@@ -294,9 +301,9 @@ class Conference extends AbstractConference<Props, *> {
                   * The LargeVideo is the lowermost stacking layer.
                   */
                     _shouldDisplayTileView
-                        ? _isAudioCall ? <TileView onClick = { this._onClick }/>
-                        : <VideoTileView onClick = { this._onClick } />
-                        : <LargeVideo onClick = { this._onClick } />
+                        ? this.state.isAudioCall ? <TileView onClick = { this._onClick } isAudioCall={this.state.isAudioCall} />
+                        : <VideoTileView onClick = { this._onClick } isAudioCall={this.state.isAudioCall} />
+                        : <LargeVideo onClick = { this._onClick } isAudioCall={this.state.isAudioCall} />
                 }
 
                 {/*
@@ -337,7 +344,7 @@ class Conference extends AbstractConference<Props, *> {
                         }}
                         {...this.panResponder.panHandlers}
                     > */}
-                    <Filmstrip onPress = { this._onClick } />
+                    <Filmstrip onPress = { this._onClick } isAudioCall={this.state.isAudioCall} />
                     {/* </Animated.View> */}
                     
                     <Toolbox />
@@ -453,7 +460,6 @@ function _mapStateToProps(state) {
     const { aspectRatio, reducedUI } = state['features/base/responsive-ui'];
     const  startAudioOnly  = state['features/base/audio-only'].enabled;
     const tracks = state['features/base/tracks'];
-    const audioTrack = getTrackByMediaTypeAndParticipant(tracks, MEDIA_TYPE.AUDIO, participant?.id);
 
     // XXX There is a window of time between the successful establishment of the
     // XMPP connection and the subsequent commencement of joining the MUC during

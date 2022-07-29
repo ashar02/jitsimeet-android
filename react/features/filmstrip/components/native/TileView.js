@@ -117,7 +117,7 @@ class TileView extends Component<Props> {
      * @returns {ReactElement}
      */
     render() {
-        const { _height, _width, onClick, _pinnedParticipant } = this.props;
+        const { _height, _width, onClick, _pinnedParticipant, isAudioCall } = this.props;
         const rowElements = this._groupIntoRows(this._renderThumbnails(), this._getColumnCount());
         const rowallElements = this._groupIntoRows(this._renderAllThumbnails(), this._getColumnCount());
         const pinnedElement = this._pinnedElement();
@@ -138,7 +138,7 @@ class TileView extends Component<Props> {
                             _pinnedParticipant && (
                                 <View>
                                     <Thumbnail
-                                        
+                                        isAudioCall={isAudioCall}
                                         disableTint={true}
                                         key={_pinnedParticipant?.id}
                                         participant={_pinnedParticipant}
@@ -204,6 +204,7 @@ class TileView extends Component<Props> {
                                 numColumns={2}
                                 renderItem={({ item, index }) => (
                                     <Thumbnail
+                                        isAudioCall={isAudioCall}
                                         disableTint={true}
                                         key={item?.id}
                                         participant={item}
@@ -288,8 +289,8 @@ class TileView extends Component<Props> {
                 }
                 
             }else {
-                if(participant.local && this.props._participants.length == 3 && this.props._isAudioCall){
-                    this.props.dispatch(pinParticipant(null));
+                if(participant.local && this.props._participants.length == 3){
+                    //this.props.dispatch(pinParticipant(null));
                 }else{
                     if(participant.pinned){
                         this.props.dispatch(pinParticipant(null));
@@ -381,6 +382,7 @@ class TileView extends Component<Props> {
         return this._getSortedParticipants()
             .map(participant => (
                 <Thumbnail
+                    isAudioCall={this.props.isAudioCall}
                     disableTint = { true }
                     key = { participant.id }
                     participant = { participant }
@@ -407,6 +409,7 @@ class TileView extends Component<Props> {
         return this._getSortedParticipants()
             .map(participant => (
                 <Thumbnail
+                    isAudioCall={this.props.isAudioCall}
                     disableTint = { true }
                     key = { participant.id }
                     participant = { participant }

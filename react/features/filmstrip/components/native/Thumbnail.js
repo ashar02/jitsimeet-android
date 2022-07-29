@@ -139,8 +139,8 @@ function Thumbnail(props: Props) {
         isLocalUser,
         _participantCount,
         userIndex,
-        onClick
-
+        onClick,
+        isAudioCall
     } = props;
 
     const participantId = participant.id;
@@ -196,6 +196,7 @@ function Thumbnail(props: Props) {
                 tintEnabled = { participantInLargeVideo && !disableTint }
                 tintStyle = { _styles.activeThumbnailTint }
                 onPress = { _onClick }
+                isAudioCall={isAudioCall}
                 zOrder = { 1 } />
 
             {renderDisplayName && <Container style={[styles.displayNameContainer, { backgroundColor: renderDominantSpeakerIndicator ? ColorPalette.seaGreen : ColorPalette.black, marginTop: userIndex < 2 && _participantCount !== 5 && _participantCount !== 7  ?  28 : userIndex == -1 ? 28 : userIndex == 2 && _participantCount == 9 ? 28 :  0 }]}>

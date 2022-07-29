@@ -53,8 +53,6 @@ type Props = {
      */
     _renderVideo: boolean,
 
-    _audioOnly: boolean,
-
     /**
      * The video Track of the participant with {@link #participantId}.
      */
@@ -201,10 +199,10 @@ class ParticipantView extends Component<Props> {
             disableVideo,
             onPress,
             tintStyle,
-            _audioOnly,
             _totalParticiapnts,
             _isLocalUser,
-            _participantName
+            _participantName,
+            isAudioCall
         } = this.props;
 
         // If the connection has problems, we will "tint" the video / avatar.
@@ -251,7 +249,7 @@ class ParticipantView extends Component<Props> {
                         zOrder = { this.props.zOrder }
                         zoomEnabled = { this.props.zoomEnabled } /> }
 
-                {!renderYoutubeLargeVideo && !renderVideo && _audioOnly || videoTrack && videoTrack.muted ?
+                {!renderYoutubeLargeVideo && !renderVideo && isAudioCall || videoTrack && videoTrack.muted ?
                     <View style={styles.avatarContainer}>
                         <Avatar
                             participantId={this.props.participantId}
@@ -287,7 +285,6 @@ function _mapStateToProps(state, ownProps) {
     const { disableVideo, participantId } = ownProps;
     const participant = getParticipantById(state, participantId);
     const participants = state['features/base/participants'];
-    const audioOnly = state['features/base/audio-only'].enabled;
     let connectionStatus;
     let participantName = participant?.name;
 
@@ -303,7 +300,6 @@ function _mapStateToProps(state, ownProps) {
                 state['features/base/tracks'],
                 MEDIA_TYPE.VIDEO,
                 participantId),
-        _audioOnly: audioOnly,
         _totalParticiapnts: participants?.length,
         _isLocalUser: participant?.local ?? false
     };
